@@ -31,8 +31,9 @@ class PhotoAlbumFrameSettingsController extends PhotoAlbumsAppController {
  */
 	public $uses = array(
 		'PhotoAlbums.PhotoAlbum',
-		'PhotoAlbums.PhotoAlbumFrameSetting'
-	);
+		'PhotoAlbums.PhotoAlbumFrameSetting',
+		'PhotoAlbums.PhotoAlbumDisplayAlbum'
+			);
 
 /**
  * use components
@@ -57,8 +58,8 @@ class PhotoAlbumFrameSettingsController extends PhotoAlbumsAppController {
 	public $helpers = array(
 		'Blocks.BlockTabs' => array(
 			'mainTabs' => array(
-				'block_index' => false,
-				'role_permissions' => true,
+				'frame_settings',
+				'role_permissions',
 			)
 		),
 		'NetCommons.DisplayNumber',
@@ -72,26 +73,33 @@ class PhotoAlbumFrameSettingsController extends PhotoAlbumsAppController {
 */
 	public function edit() {
 		if ($this->request->is(array('post', 'put'))) {
-			//登録処理
+			if ($this->PhotoAlbumFrameSetting->savePhotoAlbumFrameSetting($this->data)) {
+				$this->redirect(NetCommonsUrl::backToPageUrl());
+				return;
+			}
+			$this->NetCommons->handleValidationError($this->PhotoAlbumFrameSetting->validationErrors);
+		} else {
+			$this->data =  $this->PhotoAlbumFrameSetting->getFrameSetting();
+
+			$query = array(
+				'fields' => array('PhotoAlbumDisplayAlbum.album_key'),
+				'conditions' => array(
+					'frame_key' => Current::read('Frame.key')
+				),
+				'recursive' => -1
+			);
+			$this->data += $this->PhotoAlbumDisplayAlbum->find('list', $query);
 		}
 
-		$this->set('frameSetting', $this->PhotoAlbumFrameSetting->getFrameSetting());
-
-		// ↓ブロックの設計次第でComponent共通化
+		$conditions = $this->PhotoAlbum->getWorkflowConditions();
+		$conditions['PhotoAlbum.block_id'] = Current::read('Block.id');
 		$this->Paginator->settings = array(
-				'PhotoAlbum' => array(
-						'order' => array('PhotoAlbum.id' => 'desc'),
-						'conditions' => $this->PhotoAlbum->getBlockConditions(),
-				)
+			'PhotoAlbum' => array(
+				'order' => array('PhotoAlbum.id' => 'desc'),
+				'conditions' => $conditions
+			)
 		);
+		$this->set('albums', $this->Paginator->paginate('PhotoAlbum'));
 
-		$albums = $this->Paginator->paginate('PhotoAlbum');
-		// ↑ここまで
-
-		App::uses('PhotoAlbumBlocksController', 'PhotoAlbums.Controller');
-		$dummyClass = new PhotoAlbumBlocksController();
-		$albums = $dummyClass->getDummy();
-
-		$this->set('albums', $albums);
 	}
 }

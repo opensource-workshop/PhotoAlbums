@@ -1,0 +1,10 @@
+
+.photo-albums-frame-setting-page-group {
+	margin:10% 0 60px 10%;
+}
+
+.photo-albums-frame-setting-album-list {
+	max-height:600px;
+	overflow: auto;
+	border-top: 1px solid #ddd;
+}
