@@ -20,46 +20,32 @@
 		<div class="text-right" style="margin: 10px 0px;">
 			<span class="btn-group text-left">
 				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-					新着順
+					<?php
+						// 現在選択されている表示順処理
+						echo __d('net_commons', 'Title');
+					?>
 					<span class="caret">
 					</span>
 				</button>
 				<ul class="dropdown-menu" role="menu">
 					<li>
-						<a href="">登録順</a>
+						<a href="">
+							<?php echo __d('net_commons', 'Newest'); ?>
+						</a>
 					</li>
 					<li>
-						<a href="">タイトル順</a>
+						<a href="">
+							<?php echo __d('net_commons', 'Oldest'); ?>
+						</a>
+					</li>
+					<li>
+						<a href="">
+							<?php echo __d('net_commons', 'Title'); ?>
+						</a>
 					</li>
 				</ul>
 			</span>
-			<span class="btn-group">
-				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-					5件
-					<span class="caret">
-					</span>
-				</button>
-				<ul class="dropdown-menu" role="menu">
-					<li>
-						<a href="">1件</a>
-					</li>
-					<li class="active">
-						<a href="">5件</a>
-					</li>
-					<li>
-						<a href="">10件</a>
-					</li>
-					<li>
-						<a href="">20件</a>
-					</li>
-					<li>
-						<a href="">50件</a>
-					</li>
-					<li>
-						<a href="">100件</a>
-					</li>
-				</ul>
-			</span>
+			<?php echo $this->DisplayNumber->dropDownToggle(); ?>
 		</div>
 
 
@@ -194,21 +180,6 @@
 		</table>
 
 		<?php echo $this->element('NetCommons.paginator'); ?>
-		<div class="text-center">
-			<ul class="pagination">
-				<li class="active">
-					<a>1</a>
-				</li>
-				<li>
-					<a href="/videos/videos/view/6/ceda84f7987a7da0788fa7dff55f3719/page:2?frame_id=9">2</a>
-				</li>
-				<li>
-					<a href="/videos/videos/view/6/ceda84f7987a7da0788fa7dff55f3719/page:3?frame_id=9">3</a>
-				</li>
-				<li>
-					<a href="/videos/videos/view/6/ceda84f7987a7da0788fa7dff55f3719/page:3?frame_id=9" rel="last">»</a>
-				</li>
-			</ul>
-		</div>
+
 	</div>
 </article>

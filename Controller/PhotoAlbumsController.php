@@ -22,7 +22,7 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
  * @var array
  */
 	public $uses = array(
-			'PhotoAlbums.PhotoAlbum'
+		'PhotoAlbums.PhotoAlbum'
 	);
 
 /**
@@ -44,7 +44,7 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 	public $helpers = array(
 		'Workflow.Workflow',
 		'Users.DisplayUser',
-		'Workflow.Workflow',
+		'NetCommons.DisplayNumber',
 	);
 
 /**
@@ -54,11 +54,37 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
  */
 	public function index() {
 		// ↓ブロックの設計次第でComponent共通化
+		// 　　→ブロックは1個保持する
+		//　　　　→ルームのパーミッションで権限を保持すると拡張性がなくなるため。
+		$conditions = $this->PhotoAlbum->getWorkflowConditions();
+		$conditions['PhotoAlbum.block_id'] = Current::read('Block.id');
+		$conditions['PhotoAlbum.key'] = array();	// ←表示チェックついているアルバムを指定
+
 		$this->Paginator->settings = array(
 			'PhotoAlbum' => array(
 				'order' => array('PhotoAlbum.id' => 'desc'),
-				'conditions' => $this->PhotoAlbum->getBlockConditions(),
+				'conditions' => $conditions
 			)
+		);
+
+		$albums = $this->Paginator->paginate('PhotoAlbum');
+		// ↑ここまで
+
+		$this->set('albums', $albums);
+	}
+
+/**
+ * setting method
+ *
+ * @return void
+ */
+	public function setting() {
+		// ↓ブロックの設計次第でComponent共通化
+		$this->Paginator->settings = array(
+				'PhotoAlbum' => array(
+						'order' => array('PhotoAlbum.id' => 'desc'),
+						'conditions' => $this->PhotoAlbum->getBlockConditions(),
+				)
 		);
 
 		$albums = $this->Paginator->paginate('PhotoAlbum');
@@ -92,17 +118,15 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
  * @return void
  */
 	public function add() {
-			$this->view = 'edit';
-
 		if ($this->request->is('post')) {
-			//登録処理
-
-
-		} else {
-			//表示処理(初期データセット)
-			$this->request->data = $this->PhotoAlbum->createAll();
-			//$this->request->data['Frame'] = Current::read('Frame');
+			$this->PhotoAlbum->create();
+			if ($this->PhotoAlbum->save($this->request->data)) {
+				return $this->flash(__('The photo album has been saved.'), array('action' => 'index'));
+			}
 		}
+		$trackableCreators = $this->PhotoAlbum->TrackableCreator->find('list');
+		$trackableUpdaters = $this->PhotoAlbum->TrackableUpdater->find('list');
+		$this->set(compact('trackableCreators', 'trackableUpdaters'));
 	}
 
 /**
@@ -113,17 +137,20 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
  * @return void
  */
 	public function edit($id = null) {
-				$this->view = 'edit';
-
-		if ($this->request->is('post')) {
-			//登録処理
-
-
-		} else {
-			//表示処理(初期データセット)
-			$this->request->data = $this->PhotoAlbum->createAll();
-			//$this->request->data['Frame'] = Current::read('Frame');
+		if (!$this->PhotoAlbum->exists($id)) {
+			throw new NotFoundException(__('Invalid photo album'));
 		}
+		if ($this->request->is(array('post', 'put'))) {
+			if ($this->PhotoAlbum->save($this->request->data)) {
+				return $this->flash(__('The photo album has been saved.'), array('action' => 'index'));
+			}
+		} else {
+			$options = array('conditions' => array('PhotoAlbum.' . $this->PhotoAlbum->primaryKey => $id));
+			$this->request->data = $this->PhotoAlbum->find('first', $options);
+		}
+		$trackableCreators = $this->PhotoAlbum->TrackableCreator->find('list');
+		$trackableUpdaters = $this->PhotoAlbum->TrackableUpdater->find('list');
+		$this->set(compact('trackableCreators', 'trackableUpdaters'));
 	}
 
 /**
@@ -140,10 +167,9 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 		}
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->PhotoAlbum->delete()) {
-			$this->Session->setFlash(__('The photo album has been deleted.'));
+			return $this->flash(__('The photo album has been deleted.'), array('action' => 'index'));
 		} else {
-			$this->Session->setFlash(__('The photo album could not be deleted. Please, try again.'));
+			return $this->flash(__('The photo album could not be deleted. Please, try again.'), array('action' => 'index'));
 		}
-		return $this->redirect(array('action' => 'index'));
 	}
 }

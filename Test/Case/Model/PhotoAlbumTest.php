@@ -1,18 +1,18 @@
 <?php
 /**
- * PhotoAlbumPhoto Test Case
+ * PhotoAlbum Test Case
  *
 * @author   Jun Nishikawa <topaz2@m0n0m0n0.com>
 * @link     http://www.netcommons.org NetCommons Project
 * @license  http://www.netcommons.org/license.txt NetCommons License
  */
 
-App::uses('PhotoAlbumPhoto', 'Model');
+App::uses('PhotoAlbum', 'Model');
 
 /**
- * Summary for PhotoAlbumPhoto Test Case
+ * Summary for PhotoAlbum Test Case
  */
-class PhotoAlbumPhotoTest extends CakeTestCase {
+class PhotoAlbumTest extends CakeTestCase {
 
 /**
  * Fixtures
@@ -20,7 +20,7 @@ class PhotoAlbumPhotoTest extends CakeTestCase {
  * @var array
  */
 	public $fixtures = array(
-		'app.photo_album_photo',
+		'app.photo_album',
 		'app.user',
 		'app.role',
 		'app.language',
@@ -44,7 +44,7 @@ class PhotoAlbumPhotoTest extends CakeTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$this->PhotoAlbumPhoto = ClassRegistry::init('PhotoAlbumPhoto');
+		$this->PhotoAlbum = ClassRegistry::init('PhotoAlbum');
 	}
 
 /**
@@ -53,7 +53,7 @@ class PhotoAlbumPhotoTest extends CakeTestCase {
  * @return void
  */
 	public function tearDown() {
-		unset($this->PhotoAlbumPhoto);
+		unset($this->PhotoAlbum);
 
 		parent::tearDown();
 	}

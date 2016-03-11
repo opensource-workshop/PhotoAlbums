@@ -16,6 +16,13 @@ App::uses('PhotoAlbumsAppModel', 'PhotoAlbums.Model');
 class PhotoAlbum extends PhotoAlbumsAppModel {
 
 /**
+ * Use database config
+ *
+ * @var string
+ */
+	public $useDbConfig = 'master';
+
+/**
  * use behaviors
  *
  * @var array
@@ -26,32 +33,5 @@ class PhotoAlbum extends PhotoAlbumsAppModel {
 		'Workflow.WorkflowComment'
 	);
 
-/**
- * belongsTo associations
- *
- * @var array
- */
-	public $belongsTo = array(
-		'Block' => array(
-			'className' => 'Blocks.Block',
-			'foreignKey' => 'block_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-	);
-
-/**
- * hasMany associations
- *
- * @var array
- */
-	public $hasMany = array(
-		'PhotoAlbumPhoto' => array(
-			'className' => 'PhotoAlbums.PhotoAlbumPhoto',
-			'foreignKey' => 'photo_album_key',
-			'dependent' => true
-		),
-	);
 
 }

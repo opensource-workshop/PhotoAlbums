@@ -1,18 +1,18 @@
 <?php
 /**
- * PhotoAlbumPhoto Test Case
+ * PhotoAlbumsController Test Case
  *
 * @author   Jun Nishikawa <topaz2@m0n0m0n0.com>
 * @link     http://www.netcommons.org NetCommons Project
 * @license  http://www.netcommons.org/license.txt NetCommons License
  */
 
-App::uses('PhotoAlbumPhoto', 'Model');
+App::uses('PhotoAlbumsController', 'Controller');
 
 /**
- * Summary for PhotoAlbumPhoto Test Case
+ * Summary for PhotoAlbumsController Test Case
  */
-class PhotoAlbumPhotoTest extends CakeTestCase {
+class PhotoAlbumsControllerTest extends ControllerTestCase {
 
 /**
  * Fixtures
@@ -20,7 +20,7 @@ class PhotoAlbumPhotoTest extends CakeTestCase {
  * @var array
  */
 	public $fixtures = array(
-		'app.photo_album_photo',
+		'app.photo_album',
 		'app.user',
 		'app.role',
 		'app.language',
@@ -34,28 +34,48 @@ class PhotoAlbumPhotoTest extends CakeTestCase {
 		'app.room_role_permission',
 		'app.roles_rooms_user',
 		'app.user_role_setting',
-		'app.users_language'
+		'app.users_language',
+		'app.site_setting'
 	);
 
 /**
- * setUp method
+ * testIndex method
  *
  * @return void
  */
-	public function setUp() {
-		parent::setUp();
-		$this->PhotoAlbumPhoto = ClassRegistry::init('PhotoAlbumPhoto');
+	public function testIndex() {
 	}
 
 /**
- * tearDown method
+ * testView method
  *
  * @return void
  */
-	public function tearDown() {
-		unset($this->PhotoAlbumPhoto);
+	public function testView() {
+	}
 
-		parent::tearDown();
+/**
+ * testAdd method
+ *
+ * @return void
+ */
+	public function testAdd() {
+	}
+
+/**
+ * testEdit method
+ *
+ * @return void
+ */
+	public function testEdit() {
+	}
+
+/**
+ * testDelete method
+ *
+ * @return void
+ */
+	public function testDelete() {
 	}
 
 }
