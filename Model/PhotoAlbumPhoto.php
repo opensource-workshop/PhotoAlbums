@@ -8,7 +8,7 @@
 * @license  http://www.netcommons.org/license.txt NetCommons License
  */
 
-App::uses('AppModel', 'Model');
+App::uses('PhotoAlbumsAppModel', 'PhotoAlbums.Model');
 
 /**
  * Summary for PhotoAlbumPhoto Model
