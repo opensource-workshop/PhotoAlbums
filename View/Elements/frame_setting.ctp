@@ -14,15 +14,51 @@
 <?php echo $this->NetCommonsForm->hidden('id'); ?>
 <?php echo $this->NetCommonsForm->hidden('frame_key'); ?>
 
+<div class="form-group">
+	<?php echo $this->NetCommonsForm->label(__d('PhotoAlbums', 'Display type')); ?>
+	<?php
+		echo $this->NetCommonsForm->input(
+			'PhotoAlbumFrameSetting.display_type',
+			array(
+				'type' => 'radio',
+				'options' => array(
+					PhotoAlbumFrameSetting::DISPLAY_TYPE_ALBUMS => __d('PhotoAlbums', 'List of album'),
+					PhotoAlbumFrameSetting::DISPLAY_TYPE_PHOTOS => __d('PhotoAlbums', 'List of photo'),
+					PhotoAlbumFrameSetting::DISPLAY_TYPE_SLIDE => __d('PhotoAlbums', 'Slide show')
+				),
+				'legend' => false,
+				'div' => true,
+				'class' => false,
+				'label' => false,
+				'before' => '<label class="radio-inline">',
+				'after' => '</label>',
+				'separator' => '</label><label class="radio-inline">',
+			)
+		);
+	?>
+</div>
+
+<div class="form-group">
+	<?php echo $this->NetCommonsForm->label(__d('PhotoAlbums', 'Select display albums')); ?>
+
+	<?php
+		if (empty($albums)) {
+			echo '<div>' . __d('PhotoAlbums', 'Album is not found') . '</div>';
+		} else {
+			echo $thuis->element('PhotoAlbums.alubum_list');
+		}
+	?>
+</div>
+
 <?php
 	echo $this->NetCommonsForm->input(
 		'PhotoAlbumFrameSetting.albums_order',
 		array(
 			'type' => 'select',
 			'options' => array(
-				'PhotoAlbum.modified DESC' => __d('net_commons', 'Newest'),
-				'PhotoAlbum.created ASC' => __d('net_commons', 'Oldest'),
-				'PhotoAlbum.name ASC' => __d('net_commons', 'Title')
+				'PhotoAlbum.modified DESC' => __d('NetCommons', 'Newest'),
+				'PhotoAlbum.created ASC' => __d('NetCommons', 'Oldest'),
+				'PhotoAlbum.name ASC' => __d('NetCommons', 'Title')
 			),
 			'label' => __d('PhotoAlbums', 'Albums display order')
 		)
@@ -43,9 +79,9 @@
 			array(
 					'type' => 'select',
 					'options' => array(
-							'PhotoAlbum.modified DESC' => __d('net_commons', 'Newest'),
-							'PhotoAlbum.created ASC' => __d('net_commons', 'Oldest'),
-							'PhotoAlbum.name ASC' => __d('net_commons', 'Title')
+							'PhotoAlbum.modified DESC' => __d('NetCommons', 'Newest'),
+							'PhotoAlbum.created ASC' => __d('NetCommons', 'Oldest'),
+							'PhotoAlbum.name ASC' => __d('NetCommons', 'Title')
 					),
 					'label' => __d('PhotoAlbums', 'Photos display order')
 			)
@@ -60,29 +96,3 @@
 	?>
 </div>
 
-<?php
-	echo $this->NetCommonsForm->input(
-		'PhotoAlbumFrameSetting.display_type',
-		array(
-				'type' => 'radio',
-				'options' => array(
-						'PhotoAlbum.modified DESC' => __d('net_commons', 'Newest'),
-						'PhotoAlbum.created ASC' => __d('net_commons', 'Oldest'),
-						'PhotoAlbum.name ASC' => __d('net_commons', 'Title')
-				),
-				'label' => __d('PhotoAlbums', 'Photos display order')
-		)
-	);
-?>
-
-<div class="form-group">
-	<?php echo $this->NetCommonsForm->label(__d('PhotoAlbums', 'Select display albums')); ?>
-
-	<?php
-		if (empty($albums)) {
-			echo '<div>' . __d('PhotoAlbums', 'Album is not found') . '</div>';
-		} else {
-			echo $thuis->element('PhotoAlbums.alubum_list');
-		}
-	?>
-</div>

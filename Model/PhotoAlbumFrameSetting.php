@@ -14,6 +14,14 @@ App::uses('PhotoAlbumsAppModel', 'PhotoAlbums.Model');
  * Summary for PhotoAlbumFrameSetting Model
  */
 class PhotoAlbumFrameSetting extends PhotoAlbumsAppModel {
+/**
+ * Constant for display type
+ *
+ * @var int
+ */
+	const DISPLAY_TYPE_ALBUMS = 1;
+	const DISPLAY_TYPE_PHOTOS = 2;
+	const DISPLAY_TYPE_SLIDE = 3;
 
 /**
  * Use database config
