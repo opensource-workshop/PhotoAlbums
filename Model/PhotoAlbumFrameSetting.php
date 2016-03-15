@@ -14,6 +14,7 @@ App::uses('PhotoAlbumsAppModel', 'PhotoAlbums.Model');
  * Summary for PhotoAlbumFrameSetting Model
  */
 class PhotoAlbumFrameSetting extends PhotoAlbumsAppModel {
+
 /**
  * Constant for display type
  *
@@ -36,7 +37,7 @@ class PhotoAlbumFrameSetting extends PhotoAlbumsAppModel {
  * @var array
  */
 	public $actsAs = array(
-			'Frames.FrameSetting',
+		'Frames.FrameSetting',
 	);
 
 /**
@@ -80,7 +81,7 @@ class PhotoAlbumFrameSetting extends PhotoAlbumsAppModel {
 /**
  * Save PhotoAlbumFrameSetting
  *
- * @param array $data received post data
+ * @param array $data Data to save
  * @return mixed On success Model::$data if its not empty or true, false on failure
  * @throws InternalErrorException
  */
@@ -94,7 +95,7 @@ class PhotoAlbumFrameSetting extends PhotoAlbumsAppModel {
 		}
 
 		try {
-			if (! $videoFrameSetting = $this->save(null, false)) {
+			if (!$photoAlbumSetting = $this->save(null, false)) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
 
@@ -122,6 +123,6 @@ class PhotoAlbumFrameSetting extends PhotoAlbumsAppModel {
 			$this->rollback($ex);
 		}
 
-		return $videoFrameSetting;
+		return $photoAlbumSetting;
 	}
 }

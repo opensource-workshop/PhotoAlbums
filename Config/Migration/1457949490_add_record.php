@@ -25,7 +25,7 @@ class AddRecord extends NetCommonsMigration {
 				'name' => 'フォトアルバム',
 				'type' => 1,
 				'default_action' => 'photo_albums/index',
-				'default_setting_action' => 'photo_album_blocks/index',
+				'default_setting_action' => 'photo_album_frame_settings/edit',
 			),
 			//英語
 			array(
@@ -52,6 +52,14 @@ class AddRecord extends NetCommonsMigration {
 			//グループスペース
 			array('room_id' => '3', 'plugin_key' => 'photo_albums', ),
 		),
+		'DefaultRolePermission' => array(
+			// 写真の投稿権限
+			array('role_key' => 'room_administrator', 'type' => 'room_role', 'permission' => 'photo_albums_photo_creatable', 'value' => '1', 'fixed' => '1', ),
+			array('role_key' => 'chief_editor', 'type' => 'room_role', 'permission' => 'photo_albums_photo_creatable', 'value' => '1', 'fixed' => '1', ),
+			array('role_key' => 'editor', 'type' => 'room_role', 'permission' => 'photo_albums_photo_creatable', 'value' => '1', 'fixed' => '1', ),
+			array('role_key' => 'general_user', 'type' => 'room_role', 'permission' => 'photo_albums_photo_creatable', 'value' => '1', 'fixed' => '0', ),
+			array('role_key' => 'visitor', 'type' => 'room_role', 'permission' => 'photo_albums_photo_creatable', 'value' => '0', 'fixed' => '1', ),
+		)
 	);
 
 /**

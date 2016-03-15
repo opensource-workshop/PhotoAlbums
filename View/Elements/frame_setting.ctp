@@ -30,9 +30,9 @@
 				'div' => true,
 				'class' => false,
 				'label' => false,
-				'before' => '<label class="radio-inline">',
-				'after' => '</label>',
-				'separator' => '</label><label class="radio-inline">',
+				'before' => '<div class="radio-inline"><label class="radio-inline">',
+				'after' => '</div></label>',
+				'separator' => '</label></div><div class="radio-inline"><label class="radio-inline">',
 			)
 		);
 	?>

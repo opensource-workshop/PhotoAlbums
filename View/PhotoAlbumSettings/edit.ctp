@@ -1,6 +1,6 @@
 <?php
 /**
- * PhotoAlbumFrameSettings edit template
+ * BlockRolePermission edit template
  *
  * @copyright Copyright 2014, NetCommons Project
  * @author Kohei Teraguchi <kteraguchi@commonsnet.org>
@@ -9,18 +9,18 @@
  */
 ?>
 
-<article class="block-setting-body">
-	<?php echo $this->BlockTabs->main(BlockTabsHelper::MAIN_TAB_FRAME_SETTING); ?>
+<div class="block-setting-body">
+	<?php echo $this->BlockTabs->main(BlockTabsHelper::MAIN_TAB_PERMISSION); ?>
 
 	<div class="tab-content">
 		<?php
 			echo $this->element(
 				'Blocks.edit_form',
 				array(
-					'model' => 'PhotoAlbumFrameSetting',
-					'callback' => 'PhotoAlbums.frame_setting'
+					'model' => 'PhotoAlbumSetting',
+					'callback' => 'PhotoAlbums.setting'
 				)
 			);
 		?>
 	</div>
-</article>
+</div>

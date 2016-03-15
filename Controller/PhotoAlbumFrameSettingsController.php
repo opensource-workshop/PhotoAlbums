@@ -47,7 +47,8 @@ class PhotoAlbumFrameSettingsController extends PhotoAlbumsAppController {
 				'edit' => 'page_editable',
 			),
 		),
-		'Paginator'
+		'Paginator',
+		'PhotoAlbums.PhotoAlbums'
 	);
 
 /**
@@ -59,7 +60,7 @@ class PhotoAlbumFrameSettingsController extends PhotoAlbumsAppController {
 		'Blocks.BlockTabs' => array(
 			'mainTabs' => array(
 				'frame_settings',
-				'role_permissions',
+				'role_permissions' => array('url' => array('controller' => 'PhotoAlbumSettings')),
 			)
 		),
 		'NetCommons.DisplayNumber',
@@ -72,14 +73,16 @@ class PhotoAlbumFrameSettingsController extends PhotoAlbumsAppController {
  * @return void
 */
 	public function edit() {
+		$this->PhotoAlbums->initializeSetting();
+
 		if ($this->request->is(array('post', 'put'))) {
-			if ($this->PhotoAlbumFrameSetting->savePhotoAlbumFrameSetting($this->data)) {
+			if ($this->PhotoAlbumFrameSetting->savePhotoAlbumFrameSetting($this->request->data)) {
 				$this->redirect(NetCommonsUrl::backToPageUrl());
 				return;
 			}
 			$this->NetCommons->handleValidationError($this->PhotoAlbumFrameSetting->validationErrors);
 		} else {
-			$this->data =  $this->PhotoAlbumFrameSetting->getFrameSetting();
+			$this->request->data =  $this->PhotoAlbumFrameSetting->getFrameSetting();
 
 			$query = array(
 				'fields' => array('PhotoAlbumDisplayAlbum.album_key'),
@@ -88,7 +91,7 @@ class PhotoAlbumFrameSettingsController extends PhotoAlbumsAppController {
 				),
 				'recursive' => -1
 			);
-			$this->data += $this->PhotoAlbumDisplayAlbum->find('list', $query);
+			$this->request->data += $this->PhotoAlbumDisplayAlbum->find('list', $query);
 		}
 
 		$conditions = $this->PhotoAlbum->getWorkflowConditions();
