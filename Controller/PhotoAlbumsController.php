@@ -22,7 +22,8 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
  * @var array
  */
 	public $uses = array(
-		'PhotoAlbums.PhotoAlbum'
+		'PhotoAlbums.PhotoAlbum',
+		'PhotoAlbums.PhotoAlbumFrameSetting',
 	);
 
 /**
@@ -71,6 +72,8 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 		// ↑ここまで
 
 		$this->set('albums', $albums);
+
+		$this->set('frameSetting', $this->PhotoAlbumFrameSetting->getFrameSetting());
 	}
 
 /**
