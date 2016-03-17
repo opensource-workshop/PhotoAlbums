@@ -33,7 +33,7 @@ class PhotoAlbumFrameSettingsController extends PhotoAlbumsAppController {
 		'PhotoAlbums.PhotoAlbum',
 		'PhotoAlbums.PhotoAlbumFrameSetting',
 		'PhotoAlbums.PhotoAlbumDisplayAlbum'
-			);
+	);
 
 /**
  * use components
