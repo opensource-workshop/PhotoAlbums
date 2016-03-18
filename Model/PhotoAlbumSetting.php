@@ -71,6 +71,29 @@ class PhotoAlbumSetting extends PhotoAlbumsAppModel {
 	}
 
 /**
+ * Get PhotoAlbumSetting data
+ * If not exists, call create method for set default data
+ *
+ * @return array PhotoAlbumSetting data
+ */
+	public function getPhotoAlbumSetting() {
+		$data = array(
+			'block_key' => Current::read('Block.key'),
+		);
+		$query = array(
+			'conditions' => $data,
+			'recursive' => -1
+		);
+		$blockSetting = $this->find('first', $query);
+
+		if (!$blockSetting) {
+			$blockSetting = $this->create();
+		}
+
+		return $blockSetting;
+	}
+
+/**
  * Save PhotoAlbumSetting
  *
  * @param array $data Data to save

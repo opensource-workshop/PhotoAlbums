@@ -32,15 +32,6 @@ class PhotoAlbumFrameSetting extends PhotoAlbumsAppModel {
 	public $useDbConfig = 'master';
 
 /**
- * List of behaviors
- *
- * @var array
- */
-	public $actsAs = array(
-		'Frames.FrameSetting',
-	);
-
-/**
  * Called during validation operations, before validation. Please note that custom
  * validation rules can be defined in $validate.
  *
@@ -76,6 +67,29 @@ class PhotoAlbumFrameSetting extends PhotoAlbumsAppModel {
 		));
 
 		return parent::beforeValidate($options);
+	}
+
+/**
+ * Get PhotoAlbumFrameSetting data
+ * If not exists, call create method for set default data
+ *
+ * @return array FrameSetting data
+ */
+	public function getPhotoAlbumFrameSetting() {
+		$data = array(
+			'frame_key' => Current::read('Frame.key'),
+		);
+		$query = array(
+			'conditions' => $data,
+			'recursive' => -1
+		);
+		$frameSetting = $this->find('first', $query);
+
+		if (!$frameSetting) {
+			$frameSetting = $this->create();
+		}
+
+		return $frameSetting;
 	}
 
 /**
