@@ -34,9 +34,6 @@ class PhotoAlbumsComponent extends Component {
 			if (!$photoAlbumSetting->savePhotoAlbumSetting($data)) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
-
-			// Save BlockRolePermission
-			$this->__initializeBlockRolePermission();
 		}
 
 		$frameSetting = ClassRegistry::getObject('PhotoAlbums.PhotoAlbumFrameSetting');
@@ -58,61 +55,6 @@ class PhotoAlbumsComponent extends Component {
 		}
 	}
 
-/**
- * Initialize block role permissiona
- *
- * @return void
- */
-	public function __initializeBlockRolePermission() {
-		$rolePermission = ClassRegistry::getObject('Roles.DefaultRolePermission');
-		if (!$rolePermission) {
-			$rolePermission = ClassRegistry::init('Roles.DefaultRolePermission');
-		}
-		$query = array(
-			'conditions' => array(
-				'DefaultRolePermission.permission' => 'photo_albums_photo_creatable',
-				'DefaultRolePermission.fixed' => 0
-			),
-			'recursive' => -1
-		);
-		$defaultPermissions = $rolePermission->find('all', $query);
-
-		$rolesRoom = ClassRegistry::getObject('Rooms.RolesRoom');
-		if (!$rolesRoom) {
-			$rolesRoom = ClassRegistry::init('Rooms.RolesRoom');
-		}
-		$query = array(
-			'conditions' => array(
-				'RolesRoom.room_id' => Current::read('Room.id'),
-				'RolesRoom.role_key' => Hash::extract($defaultPermissions, '{n}.DefaultRolePermission.role_key')
-			),
-			'fields' => array(
-				'RolesRoom.role_key',
-				'RolesRoom.id'
-			),
-			'recursive' => -1
-		);
-		$rolesRoomIds = $rolesRoom->find('list', $query);
-
-		$rolePermission = ClassRegistry::getObject('Blocks.BlockRolePermission');
-		if (!$rolePermission) {
-			$rolePermission = ClassRegistry::init('Blocks.BlockRolePermission');
-		}
-		foreach ($defaultPermissions as $defaultPermission) {
-			$roleKey = $defaultPermission['DefaultRolePermission']['role_key'];
-			$blockPermission = array(
-				'roles_room_id' => $rolesRoomIds[$roleKey],
-				'block_key' => Current::read('Block.key'),
-				'permission' => $defaultPermission['DefaultRolePermission']['permission'],
-				'value' => $defaultPermission['DefaultRolePermission']['value'],
-			);
-
-			// TODO transaction....
-			if (!$rolePermission->save($blockPermission)) {
-				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-			}
-		}
-	}
 
 /**
  * Set album data to view

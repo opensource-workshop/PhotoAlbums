@@ -73,7 +73,7 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 
 		$this->set('albums', $albums);
 
-		$this->set('frameSetting', $this->PhotoAlbumFrameSetting->getFrameSetting());
+		$this->set('frameSetting', $this->PhotoAlbumFrameSetting->getPhotoAlbumFrameSetting());
 	}
 
 /**
