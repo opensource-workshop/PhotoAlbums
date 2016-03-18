@@ -121,15 +121,14 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
  * @return void
  */
 	public function add() {
+		$album = $this->PhotoAlbum->create();
 		if ($this->request->is('post')) {
-			$this->PhotoAlbum->create();
 			if ($this->PhotoAlbum->save($this->request->data)) {
 				return $this->flash(__('The photo album has been saved.'), array('action' => 'index'));
 			}
+		} else {
+			$this->request->data = $album;
 		}
-		$trackableCreators = $this->PhotoAlbum->TrackableCreator->find('list');
-		$trackableUpdaters = $this->PhotoAlbum->TrackableUpdater->find('list');
-		$this->set(compact('trackableCreators', 'trackableUpdaters'));
 	}
 
 /**
