@@ -22,4 +22,21 @@ class PhotoAlbumDisplayAlbum extends PhotoAlbumsAppModel {
  */
 	public $useDbConfig = 'master';
 
+
+/**
+ * Get display album key list
+ *
+ * @return display album key list
+ */
+	public function getDisplayList() {
+		$query = array(
+			'fields' => array('PhotoAlbumDisplayAlbum.album_key'),
+			'conditions' => array(
+				'frame_key' => Current::read('Frame.key')
+			),
+			'recursive' => -1
+		);
+
+		return $this->find('list', $query);
+	}
 }

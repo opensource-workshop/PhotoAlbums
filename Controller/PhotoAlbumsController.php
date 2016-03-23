@@ -24,6 +24,7 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 	public $uses = array(
 		'PhotoAlbums.PhotoAlbum',
 		'PhotoAlbums.PhotoAlbumFrameSetting',
+		'PhotoAlbums.PhotoAlbumDisplayAlbum',
 	);
 
 /**
@@ -59,7 +60,7 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 		//　　　　→ルームのパーミッションで権限を保持すると拡張性がなくなるため。
 		$conditions = $this->PhotoAlbum->getWorkflowConditions();
 		$conditions['PhotoAlbum.block_id'] = Current::read('Block.id');
-		$conditions['PhotoAlbum.key'] = array();	// ←表示チェックついているアルバムを指定
+		$conditions['PhotoAlbum.key'] = $this->PhotoAlbumDisplayAlbum->getDisplayList();
 
 		$this->Paginator->settings = array(
 			'PhotoAlbum' => array(

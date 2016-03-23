@@ -83,15 +83,7 @@ class PhotoAlbumFrameSettingsController extends PhotoAlbumsAppController {
 			$this->NetCommons->handleValidationError($this->PhotoAlbumFrameSetting->validationErrors);
 		} else {
 			$this->request->data =  $this->PhotoAlbumFrameSetting->getPhotoAlbumFrameSetting();
-
-			$query = array(
-				'fields' => array('PhotoAlbumDisplayAlbum.album_key'),
-				'conditions' => array(
-					'frame_key' => Current::read('Frame.key')
-				),
-				'recursive' => -1
-			);
-			$this->request->data += $this->PhotoAlbumDisplayAlbum->find('list', $query);
+			$this->request->data += $this->PhotoAlbumDisplayAlbum->getDisplayList();
 		}
 
 		$conditions = $this->PhotoAlbum->getWorkflowConditions();
