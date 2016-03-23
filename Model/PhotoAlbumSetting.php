@@ -76,7 +76,7 @@ class PhotoAlbumSetting extends PhotoAlbumsAppModel {
  *
  * @return array PhotoAlbumSetting data
  */
-	public function getPhotoAlbumSetting() {
+	public function getSetting() {
 		$data = array(
 			'block_key' => Current::read('Block.key'),
 		);

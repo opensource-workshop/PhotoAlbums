@@ -82,7 +82,7 @@ class PhotoAlbumFrameSettingsController extends PhotoAlbumsAppController {
 			}
 			$this->NetCommons->handleValidationError($this->PhotoAlbumFrameSetting->validationErrors);
 		} else {
-			$this->request->data =  $this->PhotoAlbumFrameSetting->getPhotoAlbumFrameSetting();
+			$this->request->data =  $this->PhotoAlbumFrameSetting->getFrameSetting();
 			$this->request->data += $this->PhotoAlbumDisplayAlbum->getDisplayList();
 		}
 

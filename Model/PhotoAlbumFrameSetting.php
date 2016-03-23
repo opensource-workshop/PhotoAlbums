@@ -75,7 +75,7 @@ class PhotoAlbumFrameSetting extends PhotoAlbumsAppModel {
  *
  * @return array FrameSetting data
  */
-	public function getPhotoAlbumFrameSetting() {
+	public function getFrameSetting() {
 		$data = array(
 			'frame_key' => Current::read('Frame.key'),
 		);

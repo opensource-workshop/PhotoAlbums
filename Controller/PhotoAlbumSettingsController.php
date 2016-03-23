@@ -89,7 +89,7 @@ class PhotoAlbumSettingsController extends PhotoAlbumsAppController {
 			);
 
 		} else {
-			$this->request->data = $this->PhotoAlbumSetting->getPhotoAlbumSetting();
+			$this->request->data = $this->PhotoAlbumSetting->getSetting();
 			$this->request->data['BlockRolePermission'] = $permissions['BlockRolePermissions'];
 			$this->request->data['Frame']['id'] = Current::read('Frame.id');
 			$this->request->data['Block'] = Current::read('Block');
