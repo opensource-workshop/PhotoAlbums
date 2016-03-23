@@ -20,16 +20,16 @@
 		if (empty($albums)) {
 			echo h(__d('photoAlbums', 'Album data not found'));
 		} else {
-			switch ($frameSetting['display_type']) {
+			switch ($frameSetting['PhotoAlbumFrameSetting']['display_type']) {
 				case PhotoAlbumFrameSetting::DISPLAY_TYPE_PHOTOS:
-					echo $this->element('photoAlbums.photo_list');
+					echo $this->element('PhotoAlbums.photo_list');
 					break;
 				case PhotoAlbumFrameSetting::DISPLAY_TYPE_PHOTOS:
-					echo $this->element('photoAlbums.slide');
+					echo $this->element('PhotoAlbums.slide');
 					break;
 				default:
-					echo $this->element('photoAlbums.album_list_operation');
-					echo $this->element('photoAlbums.album_list');
+					echo $this->element('PhotoAlbums.album_list_operation');
+					echo $this->element('PhotoAlbums.album_list');
 			}
 		}
 	?>
