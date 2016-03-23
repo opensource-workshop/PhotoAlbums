@@ -123,9 +123,14 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 	public function add() {
 		$album = $this->PhotoAlbum->create();
 		if ($this->request->is('post')) {
-			if ($this->PhotoAlbum->save($this->request->data)) {
-				return $this->flash(__('The photo album has been saved.'), array('action' => 'index'));
+			$this->request->data['PhotoAlbum']['status'] = $this->Workflow->parseStatus();
+			if ($this->PhotoAlbum->saveAlbum($this->request->data)) {
+				$this->redirect(
+					// TODO 写真の追加ページへ
+					NetCommonsUrl::backToPageUrl()
+				);
 			}
+			$this->NetCommons->handleValidationError($this->PhotoAlbum->validationErrors);
 		} else {
 			$this->request->data = $album;
 		}

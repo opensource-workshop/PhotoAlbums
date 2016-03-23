@@ -9,7 +9,7 @@
  */
 ?>
 
-<?php echo $this->NetCommonsForm->create('PhotoAlbum'); ?>
+<?php echo $this->NetCommonsForm->create('PhotoAlbum', array('type' => 'file')); ?>
 	<?php echo $this->element('PhotoAlbums.album_form'); ?>
 
 	<hr />
