@@ -47,6 +47,7 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 		'Workflow.Workflow',
 		'Users.DisplayUser',
 		'NetCommons.DisplayNumber',
+		'PhotoAlbums.PhotoAlbums',
 	);
 
 /**

@@ -41,23 +41,7 @@
 					 -->
 						<div class="pull-left">
 							<div class="thumbnail" style="width: 150px;height:150px;">
-								<?php
-									echo $this->NetCommonsHtml->image(
-										'PhotoAlbums.' . $album['PhotoAlbum']['jacket'],
-										array(
-											'alt' => $album['Block']['name'],
-											'class' => 'img-responsive',
-											'style' => 'width: 140px;height:140px;',
-											'url' => $this->NetCommonsHtml->url(
-												array(
-													'plugin' => 'photo_albums',
-													'controller' => 'photo_album_photos',
-													'action' => 'slide'
-												)
-											)
-										)
-									);
-								?>
+								<?php echo $this->PhotoAlbums->jacket($album); ?>
 							</div>
 						</div>
 
@@ -74,7 +58,7 @@
 										)
 									)
 								);*/
-								echo '<h2 style="display: inline-block;margin:15px 10px; 0">' . $album['Block']['name'] . '</h2>';
+								echo '<h2 style="display: inline-block;margin:15px 10px; 0">' . $album['PhotoAlbum']['name'] . '</h2>';
 								echo $this->Workflow->label($album['PhotoAlbum']['status']);
 							?>
 							<p style="margin:5px 0 0 20px; height: 50px;">

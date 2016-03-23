@@ -15,38 +15,7 @@
 <div class = "row">
 	<div class="col-md-4">
 		<div class="thumbnail">
-			<?php
-				if (isset($this->request->data['UploadFile']['jacket']['id'])) {
-					echo $this->Html->image(
-						array(
-							'action' => 'jacket',
-							Current::read('Block.id'),
-							$this->request->data['UploadFile']['jacket']['id']
-						),
-						array(
-							'alt' => __d('PhotoAlbums', 'jacket')
-						)
-					);
-					/* https://github.com/NetCommons3/NetCommons3/issues/161
-					echo $this->NetCommonsHtml->image(
-						array(
-							'action' => 'jacket',
-							$this->_View->request->data['UploadFile']['jacket']['id']
-						),
-						array(
-							'alt' => __d('PhotoAlbums', 'jacket')
-						)
-					);
-					*/
-				} else {
-					echo $this->Html->image(
-						'PhotoAlbums.noimage.gif',
-						array(
-							'alt' => __d('PhotoAlbums', 'jacket')
-						)
-					);
-				}
-			?>
+			<?php echo $this->PhotoAlbums->jacket($this->request->data); ?>
 		</div>
 		<?php
 			echo $this->NetCommonsForm->uploadFile(
