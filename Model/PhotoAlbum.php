@@ -86,9 +86,24 @@ class PhotoAlbum extends PhotoAlbumsAppModel {
 		}
 
 		try {
+			$doSaveDisplay = !$this->exists();
 			if (!$album = $this->save(null, false)) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
+
+			if ($doSaveDisplay) {
+				$displayAlbum = ClassRegistry::getObject('PhotoAlbums.PhotoAlbumDisplayAlbum');
+				if (!$displayAlbum) {
+					$displayAlbum = ClassRegistry::init('PhotoAlbums.PhotoAlbumDisplayAlbum');
+				}
+				$data = $displayAlbum->create();
+				$data['PhotoAlbumDisplayAlbum']['frame_key'] = Current::read('Frame.key');
+				$data['PhotoAlbumDisplayAlbum']['album_key'] = $album['PhotoAlbum']['key'];
+				if (!$displayAlbum->save($data)) {
+					throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+				}
+			}
+
 			$this->commit();
 
 		} catch (Exception $ex) {
