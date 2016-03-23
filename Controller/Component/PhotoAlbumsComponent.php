@@ -24,10 +24,7 @@ class PhotoAlbumsComponent extends Component {
 	public function initializeSetting() {
 		$blockKey = Current::read('Block.key');
 		if (!isset($blockKey)) {
-			$photoAlbumSetting = ClassRegistry::getObject('PhotoAlbums.PhotoAlbumSetting');
-			if (!$photoAlbumSetting) {
-				$photoAlbumSetting = ClassRegistry::init('PhotoAlbums.PhotoAlbumSetting');
-			}
+			$photoAlbumSetting = ClassRegistry::init('PhotoAlbums.PhotoAlbumSetting');
 
 			$data = $photoAlbumSetting->create();
 			$data['Frame']['id'] = Current::read('Frame.id');
@@ -36,11 +33,7 @@ class PhotoAlbumsComponent extends Component {
 			}
 		}
 
-		$frameSetting = ClassRegistry::getObject('PhotoAlbums.PhotoAlbumFrameSetting');
-		if (!$frameSetting) {
-			$frameSetting = ClassRegistry::init('PhotoAlbums.PhotoAlbumFrameSetting');
-		}
-
+		$frameSetting = ClassRegistry::init('PhotoAlbums.PhotoAlbumFrameSetting');
 		$query = array(
 			'conditions' => array(
 				'PhotoAlbumFrameSetting.frame_key' => Current::read('Frame.key')
