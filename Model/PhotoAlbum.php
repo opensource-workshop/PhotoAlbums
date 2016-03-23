@@ -91,27 +91,25 @@ class PhotoAlbum extends PhotoAlbumsAppModel {
 			return $results;
 		}
 
-		// コンテンツコメント件数をセット
-		$contents = array();
-		foreach ($results as $content) {
-			$contentKey = $content[$model->alias]['key'];
+		$keyList = array();
+		foreach ($results as &$result) {
+			$albumKey = $result[$this->alias]['key'];
 
-			$content['ContentCommentCnt'] = array(
-					'content_key' => $contentKey,
-					'cnt' => 0
-			);
-			$contents[$contentKey] = $content;
+			$result[$this->alias]['photo_count'] = 0;
+			$result[$this->alias]['published_photo_count'] = 0;
+			$result[$this->alias]['approval_waiting_photo_count'] = 0;
+			$result[$this->alias]['disapproved_photo_count'] = 0;
+
+			$keyList[$albumKey] = $result;
 		}
 
-		$ContentComment = ClassRegistry::init('ContentComments.ContentComment');
-
-		$contentKeys = array_keys($contents);
-		/* @see ContentComment::getConditions() */
-		$conditions = $ContentComment->getConditions($contentKeys);
-
-		// バーチャルフィールドを追加
-		/* @link http://book.cakephp.org/2.0/ja/models/virtual-fields.html#sql */
-		$ContentComment->virtualFields['cnt'] = 0;
+		$photo = ClassRegistry::init('PhotoAlbums.PhotoAlbumPhoto');
+		$query = array(
+			'conditions' => $photo->getWorkflowConditions() + array(
+				'PhotoAlbumPhoto.album_key' => array_keys($keyList)
+			),
+			'recursive' => -1
+		);
 
 		$contentCommentCnts = $ContentComment->find('all', array(
 				'recursive' => -1,
@@ -176,11 +174,11 @@ class PhotoAlbum extends PhotoAlbumsAppModel {
 			}
 
 			if ($doSaveDisplay) {
-				$displayAlbum = ClassRegistry::init('PhotoAlbums.PhotoAlbumDisplayAlbum');
-				$data = $displayAlbum->create();
+				$DisplayAlbum = ClassRegistry::init('PhotoAlbums.PhotoAlbumDisplayAlbum');
+				$data = $DisplayAlbum->create();
 				$data['PhotoAlbumDisplayAlbum']['frame_key'] = Current::read('Frame.key');
 				$data['PhotoAlbumDisplayAlbum']['album_key'] = $album['PhotoAlbum']['key'];
-				if (!$displayAlbum->save($data)) {
+				if (!$DisplayAlbum->save($data)) {
 					throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 				}
 			}

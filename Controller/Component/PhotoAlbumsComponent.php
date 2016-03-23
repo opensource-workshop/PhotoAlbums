@@ -24,25 +24,25 @@ class PhotoAlbumsComponent extends Component {
 	public function initializeSetting() {
 		$blockKey = Current::read('Block.key');
 		if (!isset($blockKey)) {
-			$photoAlbumSetting = ClassRegistry::init('PhotoAlbums.PhotoAlbumSetting');
+			$PhotoAlbumSetting = ClassRegistry::init('PhotoAlbums.PhotoAlbumSetting');
 
-			$data = $photoAlbumSetting->create();
+			$data = $PhotoAlbumSetting->create();
 			$data['Frame']['id'] = Current::read('Frame.id');
-			if (!$photoAlbumSetting->savePhotoAlbumSetting($data)) {
+			if (!$PhotoAlbumSetting->savePhotoAlbumSetting($data)) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
 		}
 
-		$frameSetting = ClassRegistry::init('PhotoAlbums.PhotoAlbumFrameSetting');
+		$FrameSetting = ClassRegistry::init('PhotoAlbums.PhotoAlbumFrameSetting');
 		$query = array(
 			'conditions' => array(
 				'PhotoAlbumFrameSetting.frame_key' => Current::read('Frame.key')
 			),
 			'recursive' => -1
 		);
-		if (!$frameSetting->find('count', $query)) {
-			$data = $frameSetting->create();
-			if (!$frameSetting->savePhotoAlbumFrameSetting($data)) {
+		if (!$FrameSetting->find('count', $query)) {
+			$data = $FrameSetting->create();
+			if (!$FrameSetting->savePhotoAlbumFrameSetting($data)) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
 		}

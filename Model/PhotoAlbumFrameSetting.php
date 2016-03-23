@@ -114,19 +114,19 @@ class PhotoAlbumFrameSetting extends PhotoAlbumsAppModel {
 			}
 
 			// TODO 不正なアルバムキーバリデーション
-			$displayAlbum = ClassRegistry::init('PhotoAlbums.PhotoAlbumDisplayAlbum', true);
+			$DisplayAlbum = ClassRegistry::init('PhotoAlbums.PhotoAlbumDisplayAlbum', true);
 
 			$conditions = array('frame_key' => $data['PhotoAlbumFrameSetting']['frame_key']);
-			if (!$displayAlbum->deleteAll($conditions, false)) {
+			if (!$DisplayAlbum->deleteAll($conditions, false)) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
 
 			if (empty($data['PhotoAlbumDisplayAlbum'])) {
 				$data['PhotoAlbumDisplayAlbum'] = array();
 			}
-			foreach ($data['PhotoAlbumDisplayAlbum'] as $displayAlbum) {
-				$displayAlbum['frame_key'] = $data['PhotoAlbumFrameSetting']['frame_key'];
-				if (!$displayAlbum->saveDisplayAlbum($displayAlbum)) {
+			foreach ($data['PhotoAlbumDisplayAlbum'] as $displayAlbumData) {
+				$displayAlbumData['frame_key'] = $data['PhotoAlbumFrameSetting']['frame_key'];
+				if (!$DisplayAlbum->saveDisplayAlbum($displayAlbumData)) {
 					throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 				}
 			}
