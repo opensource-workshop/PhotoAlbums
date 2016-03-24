@@ -89,10 +89,16 @@
 
 				<td style="padding:40px 20px 0 0;">
 					<?php
-						echo $album['PhotoAlbum']['photo_count'] . '枚の写真';
-						if ($album['PhotoAlbum']['isEdit']) {
-							echo '<br><span class="label label-warning">11枚未承認</span>';
-							echo '<br><span class="label label-warning">3枚差し戻し</span>';
+						echo __d('photoAlbums', '%s photos', $album['PhotoAlbum']['photo_count']);
+						if (Current::permission('content_publishable')) {
+							echo '<br><span class="label label-warning">' .
+									__d('photoAlbums', '%s waiting approval', $album['PhotoAlbum']['approval_waiting_photo_count']) .
+									'</span>';
+						}
+						if (Current::permission('photo_albums_photo_creatable')) {
+							echo '<br><span class="label label-warning">' .
+									__d('photoAlbums', '%s denied', $album['PhotoAlbum']['disapproved_photo_count']) .
+									'</span>';
 						}
 					?>
 					<br>
@@ -104,7 +110,7 @@
 
 				<td style="vertical-align:middle;">
 					<?php
-						if ($album['PhotoAlbum']['isEdit']) {
+						if (Current::permission('photo_albums_photo_creatable')) {
 							echo $this->Button->editLink(
 								'',
 								array(

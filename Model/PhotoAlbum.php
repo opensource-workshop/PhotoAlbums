@@ -9,6 +9,7 @@
  */
 
 App::uses('PhotoAlbumsAppModel', 'PhotoAlbums.Model');
+App::uses('WorkflowComponent', 'Workflow.Controller/Component');
 
 /**
  * Summary for PhotoAlbum Model
@@ -87,12 +88,13 @@ class PhotoAlbum extends PhotoAlbumsAppModel {
 		if (empty($results)) {
 			return $results;
 		}
-		if (!isset($results[0][$this->alias]['key']) {
+		// いる？
+		if (!isset($results[0][$this->alias]['key'])) {
 			return $results;
 		}
 
-		$keyList = array();
-		foreach ($results as &$result) {
+		$keyResults = array();
+		foreach ($results as $result) {
 			$albumKey = $result[$this->alias]['key'];
 
 			$result[$this->alias]['photo_count'] = 0;
@@ -100,55 +102,46 @@ class PhotoAlbum extends PhotoAlbumsAppModel {
 			$result[$this->alias]['approval_waiting_photo_count'] = 0;
 			$result[$this->alias]['disapproved_photo_count'] = 0;
 
-			$keyList[$albumKey] = $result;
+			$keyResults[$albumKey] = $result;
 		}
 
-		$photo = ClassRegistry::init('PhotoAlbums.PhotoAlbumPhoto');
+		$Photo = ClassRegistry::init('PhotoAlbums.PhotoAlbumPhoto');
 		$query = array(
-			'conditions' => $photo->getWorkflowConditions() + array(
-				'PhotoAlbumPhoto.album_key' => array_keys($keyList)
+			'conditions' => $Photo->getWorkflowConditions() + array(
+				'PhotoAlbumPhoto.album_key' => array_keys($keyResults)
 			),
-			'recursive' => -1
+			'fields' => array(
+				'PhotoAlbumPhoto.album_key',
+				'COUNT(PhotoAlbumPhoto.album_key) as PhotoAlbum__photo_count'
+			),
+			'recursive' => -1,
+			'group' => array('PhotoAlbumPhoto.album_key'),
+			'order' => array('PhotoAlbumPhoto.album_key' => 'asc')
 		);
 
-		$contentCommentCnts = $ContentComment->find('all', array(
-				'recursive' => -1,
-				'fields' => array('content_key', 'count(content_key) as ContentComment__cnt'),	// Model__エイリアスにする
-				'conditions' => $conditions,
-				'group' => array('content_key'),
-		));
+		$query['conditions']['status'] = WorkflowComponent::STATUS_PUBLISHED;
+		$published = $Photo->find('all', $query);
 
-		foreach ($contentCommentCnts as $contentCommentCnt) {
-			$contentKey = $contentCommentCnt['ContentComment']['content_key'];
-			$contents[$contentKey]['ContentCommentCnt']['cnt'] = $contentCommentCnt['ContentComment']['cnt'];
+		$query['conditions']['status'] = WorkflowComponent::STATUS_APPROVED;
+		$approvalWaiting = $Photo->find('all', $query);
+
+		$query['conditions']['status'] = WorkflowComponent::STATUS_DISAPPROVED;
+		$disapproved = $Photo->find('all', $query);
+
+		foreach ($published as $index => $publishedData) {
+			$approvalWaitingData = $approvalWaiting[$index];
+			$disapprovedData = $$disapproved[$index];
+			$albumKey = $publishedData['PhotoAlbumPhoto']['album_key'];
+
+			$keyResults[$albumKey][$this->alias]['published_photo_count'] = $publishedData['photo_count'];
+			$keyResults[$albumKey][$this->alias]['photo_count'] += $publishedData['photo_count'];
+			$keyResults[$albumKey][$this->alias]['approval_waiting_photo_count'] = $approvalWaitingData['photo_count'];
+			$keyResults[$albumKey][$this->alias]['photo_count'] += $approvalWaitingData['photo_count'];
+			$keyResults[$albumKey][$this->alias]['disapproved_photo_count'] = $disapprovedData['photo_count'];
+			$keyResults[$albumKey][$this->alias]['photo_count'] += $disapprovedData['photo_count'];
 		}
 
-		// 公開権限なし
-		if (! Current::permission('content_comment_publishable')) {
-			$results = array_values($contents);
-			return $results;
-		}
-
-		// --- 未承認件数の取得
-		// 未承認のみ
-		$conditions['ContentComment.status'] = WorkflowComponent::STATUS_APPROVED;
-
-		// バーチャルフィールドを追加
-		$ContentComment->virtualFields['approval_cnt'] = 0;
-
-		$approvalCnts = $ContentComment->find('all', array(
-				'recursive' => -1,
-				'fields' => array('content_key', 'count(content_key) as ContentComment__approval_cnt'),	// Model__エイリアスにする
-				'conditions' => $conditions,
-				'group' => array('content_key'),
-		));
-
-		foreach ($approvalCnts as $approvalCnt) {
-			$contentKey = $approvalCnt['ContentComment']['content_key'];
-			$contents[$contentKey]['ContentCommentCnt']['approval_cnt'] = $approvalCnt['ContentComment']['approval_cnt'];
-		}
-
-		$results = array_values($contents);
+		$results = array_values($keyResults);
 		return $results;
 	}
 
