@@ -49,7 +49,7 @@ class PhotoAlbum extends PhotoAlbumsAppModel {
 	public $hasMany = array(
 		'PhotoAlbumPhoto' => array(
 			'className' => 'PhotoAlbums.PhotoAlbumPhoto',
-			'foreignKey' => 'photo_album_key',
+			'foreignKey' => 'album_key',
 			'dependent' => true
 		),
 	);
