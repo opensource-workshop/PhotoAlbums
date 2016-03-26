@@ -9,7 +9,30 @@
  */
  ?>
 
-<table class="table table-hover" ng-controller="PhotoAlbumsAlbumController as AlbumController">
+<script>
+	NetCommonsApp.value('photoAlbumsValues', {
+		addUrl: '<?php
+					echo $this->Html->url(
+						array(
+							'controller' => 'photo_album_photos',
+							'action' => 'add',
+							Current::read('Block.id')
+						)
+					) . '/';
+				?>',
+		slideUrl: '<?php
+					echo $this->Html->url(
+						array(
+							'controller' => 'photo_album_photos',
+							'action' => 'slide',
+							Current::read('Block.id')
+						)
+					). '/';
+				?>'
+	});
+</script>
+
+<table class="table table-hover" ng-controller="PhotoAlbumsPhotoController as PhotoController">
 	<!--
 	<thead>
 	<tr>
@@ -70,7 +93,7 @@
 								<!--
 								<button type="button" class="btn btn-default" ng-click="$modal.open({templateUrl: 'http://localhost:9090/trial/test/phpinfo.php'});">
 								 -->
-								<button type="button" class="btn btn-default" ng-click="AlbumController.slide(<?php echo $album['PhotoAlbum']['id']; ?>)">
+								<button type="button" class="btn btn-default" ng-click="PhotoController.slide('<?php echo $album['PhotoAlbum']['key']; ?>')">
 									<span class="glyphicon glyphicon-play" aria-hidden="true"></span> スライドショー
 								</button>
 								<!--
@@ -110,14 +133,28 @@
 
 				<td style="vertical-align:middle;">
 					<?php
-						if (Current::permission('photo_albums_photo_creatable')) {
+						if ($this->Workflow->canEdit('PhotoAlbum', $album)) {
 							echo $this->Button->editLink(
 								'',
 								array(
 									'plugin' => 'photo_albums',
 									'controller' => 'photo_albums',
 									'action' => 'edit',
-									'key' => ''
+									'key' =>  $album['PhotoAlbum']['key']
+								),
+								array(
+									'tooltip' => __d('photoAlbums', 'Edit album')
+								)
+							);
+						}
+
+						if (Current::permission('photo_albums_photo_creatable')) {
+							echo $this->Button->addLink(
+								'',
+								'#',
+								array(
+									'tooltip' => __d('photoAlbums', 'Add photo'),
+									'ng-click' => 'PhotoController.add(\'' . $album['PhotoAlbum']['key'] . '\')'
 								)
 							);
 						}

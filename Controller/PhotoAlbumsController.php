@@ -35,7 +35,8 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 	public $components = array(
 		'Pages.PageLayout',
 		'Paginator',
-		'Security'
+		'Security',
+		'Workflow.Workflow',
 	);
 
 /**

@@ -12,7 +12,15 @@
 <?php echo $this->NetCommonsHtml->script('/photo_albums/js/photo_albums.js'); ?>
 
 <div class='text-right'>
-	<?php echo $this->Workflow->addLinkButton('', null, array('tooltip' => __d('faqs', 'Create question'))); ?>
+	<?php
+		echo $this->Workflow->addLinkButton(
+			'',
+			null,
+			array(
+				'tooltip' => __d('photoAlbums', 'Create albums')
+			)
+		);
+	?>
 </div>
 
 <?php

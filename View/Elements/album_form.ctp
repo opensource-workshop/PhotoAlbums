@@ -46,7 +46,7 @@
 		'PhotoAlbum.description',
 		array(
 			'type' => 'textarea',
-			'label' => __d('PhotoAlbums', 'Description'),
+			'label' => __d('PhotoAlbums', 'Album description'),
 		)
 	);
 ?>
