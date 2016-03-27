@@ -93,55 +93,66 @@ class PhotoAlbum extends PhotoAlbumsAppModel {
 			return $results;
 		}
 
-		$keyResults = array();
-		foreach ($results as $result) {
-			$albumKey = $result[$this->alias]['key'];
-
-			$result[$this->alias]['photo_count'] = 0;
-			$result[$this->alias]['published_photo_count'] = 0;
-			$result[$this->alias]['approval_waiting_photo_count'] = 0;
-			$result[$this->alias]['disapproved_photo_count'] = 0;
-
-			$keyResults[$albumKey] = $result;
-		}
-
 		$Photo = ClassRegistry::init('PhotoAlbums.PhotoAlbumPhoto');
+		$Photo->virtualFields = array('photo_count' => 0);
 		$query = array(
 			'conditions' => $Photo->getWorkflowConditions() + array(
-				'PhotoAlbumPhoto.album_key' => array_keys($keyResults)
+				'PhotoAlbumPhoto.album_key' => Hash::extract($results, '{n}.PhotoAlbum.key')
 			),
 			'fields' => array(
 				'PhotoAlbumPhoto.album_key',
-				'COUNT(PhotoAlbumPhoto.album_key) as PhotoAlbum__photo_count'
+				'PhotoAlbumPhoto.status',
+				'COUNT(PhotoAlbumPhoto.album_key) as PhotoAlbumPhoto__photo_count'
 			),
 			'recursive' => -1,
-			'group' => array('PhotoAlbumPhoto.album_key'),
-			'order' => array('PhotoAlbumPhoto.album_key' => 'asc')
+			'group' => array(
+				'PhotoAlbumPhoto.album_key',
+				'PhotoAlbumPhoto.status',
+			),
+		);
+		$photoCount = $Photo->find('all', $query);
+		$photoCount = Hash::combine(
+			$photoCount,
+			'{n}.PhotoAlbumPhoto.status',
+			'{n}.PhotoAlbumPhoto.photo_count',
+			'{n}.PhotoAlbumPhoto.album_key'
 		);
 
-		$query['conditions']['status'] = WorkflowComponent::STATUS_PUBLISHED;
-		$published = $Photo->find('all', $query);
+		foreach ($results as $index => $result) {
+			$albumKey = $result[$this->alias]['key'];
 
-		$query['conditions']['status'] = WorkflowComponent::STATUS_APPROVED;
-		$approvalWaiting = $Photo->find('all', $query);
-
-		$query['conditions']['status'] = WorkflowComponent::STATUS_DISAPPROVED;
-		$disapproved = $Photo->find('all', $query);
-
-		foreach ($published as $index => $publishedData) {
-			$approvalWaitingData = $approvalWaiting[$index];
-			$disapprovedData = $$disapproved[$index];
-			$albumKey = $publishedData['PhotoAlbumPhoto']['album_key'];
-
-			$keyResults[$albumKey][$this->alias]['published_photo_count'] = $publishedData['photo_count'];
-			$keyResults[$albumKey][$this->alias]['photo_count'] += $publishedData['photo_count'];
-			$keyResults[$albumKey][$this->alias]['approval_waiting_photo_count'] = $approvalWaitingData['photo_count'];
-			$keyResults[$albumKey][$this->alias]['photo_count'] += $approvalWaitingData['photo_count'];
-			$keyResults[$albumKey][$this->alias]['disapproved_photo_count'] = $disapprovedData['photo_count'];
-			$keyResults[$albumKey][$this->alias]['photo_count'] += $disapprovedData['photo_count'];
+			$publishedPhotoCount = Hash::get(
+				$photoCount,
+				[$albumKey, WorkflowComponent::STATUS_PUBLISHED],
+				0
+			);
+			$approvalWaitingPhotoCount = Hash::get(
+				$photoCount,
+				[$albumKey, WorkflowComponent::STATUS_APPROVED],
+				0
+			);
+			$draftPhotoCount = Hash::get(
+				$photoCount,
+				[$albumKey, WorkflowComponent::STATUS_IN_DRAFT],
+				0
+			);
+			$disapprovedPhotoCount = Hash::get(
+				$photoCount,
+				[$albumKey, WorkflowComponent::STATUS_DISAPPROVED],
+				0
+			);
+			$results[$index][$this->alias] += array(
+				'published_photo_count' => $publishedPhotoCount,
+				'approval_waiting_photo_count' => $approvalWaitingPhotoCount,
+				'draft_photo_count' => $draftPhotoCount,
+				'disapproved_photo_count' => $disapprovedPhotoCount,
+				'photo_count' => $publishedPhotoCount +
+					$approvalWaitingPhotoCount +
+					$draftPhotoCount +
+					$disapprovedPhotoCount,
+			);
 		}
 
-		$results = array_values($keyResults);
 		return $results;
 	}
 
