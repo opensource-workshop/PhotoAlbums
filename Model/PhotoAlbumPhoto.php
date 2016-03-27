@@ -16,6 +16,13 @@ App::uses('PhotoAlbumsAppModel', 'PhotoAlbums.Model');
 class PhotoAlbumPhoto extends PhotoAlbumsAppModel {
 
 /**
+ * Field name for attachment behavior
+ *
+ * @var int
+ */
+	const ATTACHMENT_FIELD_NAME = 'photo';
+
+/**
  * Use database config
  *
  * @var string
@@ -23,21 +30,44 @@ class PhotoAlbumPhoto extends PhotoAlbumsAppModel {
 	public $useDbConfig = 'master';
 
 /**
- * Display field
- *
- * @var string
- */
-	public $displayField = 'title';
-
-
-/**
  * use behaviors
  *
  * @var array
  */
 	public $actsAs = array(
-		//'NetCommons.OriginalKey',
+		'NetCommons.OriginalKey',
+		'Files.Attachment' => [PhotoAlbumPhoto::ATTACHMENT_FIELD_NAME],
 		'Workflow.Workflow',
 		'Workflow.WorkflowComment',
 	);
+
+
+/**
+ * Save photo
+ *
+ * @param array $data received post data
+ * @return bool True on success, false on validation errors
+ * @throws InternalErrorException
+ */
+	public function savePhoto($data) {
+		$this->begin();
+
+		$this->set($data);
+		if (!$this->validates()) {
+			return false;
+		}
+
+		try {
+			if (!$album = $this->save(null, false)) {
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+			}
+
+			$this->commit();
+
+		} catch (Exception $ex) {
+			$this->rollback($ex);
+		}
+
+		return $album;
+	}
 }

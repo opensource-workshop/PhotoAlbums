@@ -15,13 +15,15 @@ NetCommonsApp.requires.push('ui.bootstrap.modal');
  * @param {string} Controller name
  * @param {function($scope, $sce)} Controller constructor function.
  */
-NetCommonsApp.controller('PhotoAlbumsPhotoController',
+NetCommonsApp
+.controller('PhotoAlbumsPhotoController',
 ['$modal', '$http', 'photoAlbumsValues', function($modal, $http, photoAlbumsValues) {
 
   this.add = function(albumKey) {
     $http.defaults.headers.common["Accept"] = "text/html";
     $modal.open({
-      templateUrl: photoAlbumsValues.addUrl + albumKey
+      templateUrl: photoAlbumsValues.addUrl + albumKey,
+      controller: 'PhotoAlbumsModalController'
     });
   }
 
@@ -29,8 +31,18 @@ NetCommonsApp.controller('PhotoAlbumsPhotoController',
     $http.defaults.headers.common["Accept"] = "text/html";
     $modal.open({
       templateUrl: photoAlbumsValues.slideUrl + albumKey,
+      controller: 'ModalInstanceCtrl',
       size: 'lg'
     });
   }
 
+}])
+
+.controller('PhotoAlbumsModalController',['$scope', '$modalInstance', function($scope, $modalInstance) {
+
+  $scope.cancel = function() {
+    $modalInstance.dismiss('cancel');
+  }
+
 }]);
+

@@ -36,6 +36,7 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 	public $components = array(
 		'Paginator',
 		'Workflow.Workflow',
+		'PhotoAlbums.PhotoAlbumPhotos',
 	);
 
 /**
@@ -82,6 +83,7 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 			}
 		} else {
 			$this->request->data = $photo;
+			$this->request->data['PhotoAlbumPhoto']['album_key'] = $this->request->params['pass'][1];
 		}
 	}
 

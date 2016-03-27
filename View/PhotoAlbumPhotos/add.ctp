@@ -12,12 +12,13 @@
 <?php $this->assign('title_for_modal', __d('PhotoAlbums', 'Add photo')); ?>
 
 <?php echo $this->NetCommonsForm->create('PhotoAlbumPhoto', array('type' => 'file')); ?>
-	<?php echo $this->NetCommonsForm->input('key', array('type' => 'hidden')); ?>
+	<?php echo $this->NetCommonsForm->hidden('album_key'); ?>
+	<?php echo $this->NetCommonsForm->hidden('key'); ?>
 	<?php echo $this->NetCommonsForm->hidden('language_id'); ?>
 
 	<?php
 		echo $this->NetCommonsForm->uploadFile(
-			'photo',
+			PhotoAlbumPhoto::ATTACHMENT_FIELD_NAME,
 			array(
 				'label' => __d('PhotoAlbums', 'Photo file'),
 				'remove' => false
