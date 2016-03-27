@@ -24,17 +24,20 @@ class PhotoAlbumPhotosComponent extends Component {
  * @link http://book.cakephp.org/2.0/en/controllers/components.html#Component::startup
  */
 	public function startup(Controller $controller) {
-		$Album = ClassRegistry::init('PhotoAlbums.PhotoAlbum');
 		$query = array(
-			'conditions' => $Album->getWorkflowConditions() + array(
+			'conditions' => $controller->PhotoAlbum->getWorkflowConditions() + array(
 				'PhotoAlbum.block_id' => Current::read('Block.id'),
 				'PhotoAlbum.key' =>$controller->request->params['pass'][1]
 			),
 			'recursive' => -1,
 		);
-		if (!$Album->find('count', $query)) {
+		$album = $controller->PhotoAlbum->find('first', $query);
+
+		if (empty($album)) {
 			throw new NotFoundException(__('Invalid photo album photo'));
 		}
+
+		$controller->set('album', $album);
 	}
 
 }

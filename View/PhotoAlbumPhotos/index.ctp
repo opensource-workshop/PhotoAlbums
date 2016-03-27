@@ -1,72 +1,165 @@
-<div class="photoAlbumPhotos index">
-	<h2><?php echo __('Photo Album Photos'); ?></h2>
-	<table cellpadding="0" cellspacing="0">
-	<tr>
-			<th><?php echo $this->Paginator->sort('id'); ?></th>
-			<th><?php echo $this->Paginator->sort('block_id'); ?></th>
-			<th><?php echo $this->Paginator->sort('album_key'); ?></th>
-			<th><?php echo $this->Paginator->sort('weight'); ?></th>
-			<th><?php echo $this->Paginator->sort('key'); ?></th>
-			<th><?php echo $this->Paginator->sort('language_id'); ?></th>
-			<th><?php echo $this->Paginator->sort('status'); ?></th>
-			<th><?php echo $this->Paginator->sort('is_active'); ?></th>
-			<th><?php echo $this->Paginator->sort('is_latest'); ?></th>
-			<th><?php echo $this->Paginator->sort('title'); ?></th>
-			<th><?php echo $this->Paginator->sort('description'); ?></th>
-			<th><?php echo $this->Paginator->sort('created_user'); ?></th>
-			<th><?php echo $this->Paginator->sort('created'); ?></th>
-			<th><?php echo $this->Paginator->sort('modified_user'); ?></th>
-			<th><?php echo $this->Paginator->sort('modified'); ?></th>
-			<th class="actions"><?php echo __('Actions'); ?></th>
-	</tr>
-	<?php foreach ($photoAlbumPhotos as $photoAlbumPhoto): ?>
-	<tr>
-		<td><?php echo h($photoAlbumPhoto['PhotoAlbumPhoto']['id']); ?>&nbsp;</td>
-		<td><?php echo h($photoAlbumPhoto['PhotoAlbumPhoto']['block_id']); ?>&nbsp;</td>
-		<td><?php echo h($photoAlbumPhoto['PhotoAlbumPhoto']['album_key']); ?>&nbsp;</td>
-		<td><?php echo h($photoAlbumPhoto['PhotoAlbumPhoto']['weight']); ?>&nbsp;</td>
-		<td><?php echo h($photoAlbumPhoto['PhotoAlbumPhoto']['key']); ?>&nbsp;</td>
-		<td><?php echo h($photoAlbumPhoto['PhotoAlbumPhoto']['language_id']); ?>&nbsp;</td>
-		<td><?php echo h($photoAlbumPhoto['PhotoAlbumPhoto']['status']); ?>&nbsp;</td>
-		<td><?php echo h($photoAlbumPhoto['PhotoAlbumPhoto']['is_active']); ?>&nbsp;</td>
-		<td><?php echo h($photoAlbumPhoto['PhotoAlbumPhoto']['is_latest']); ?>&nbsp;</td>
-		<td><?php echo h($photoAlbumPhoto['PhotoAlbumPhoto']['title']); ?>&nbsp;</td>
-		<td><?php echo h($photoAlbumPhoto['PhotoAlbumPhoto']['description']); ?>&nbsp;</td>
-		<td>
-			<?php echo $this->Html->link($photoAlbumPhoto['TrackableCreator']['id'], array('controller' => 'users', 'action' => 'view', $photoAlbumPhoto['TrackableCreator']['id'])); ?>
-		</td>
-		<td><?php echo h($photoAlbumPhoto['PhotoAlbumPhoto']['created']); ?>&nbsp;</td>
-		<td>
-			<?php echo $this->Html->link($photoAlbumPhoto['TrackableUpdater']['id'], array('controller' => 'users', 'action' => 'view', $photoAlbumPhoto['TrackableUpdater']['id'])); ?>
-		</td>
-		<td><?php echo h($photoAlbumPhoto['PhotoAlbumPhoto']['modified']); ?>&nbsp;</td>
-		<td class="actions">
-			<?php echo $this->Html->link(__('View'), array('action' => 'view', $photoAlbumPhoto['PhotoAlbumPhoto']['id'])); ?>
-			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $photoAlbumPhoto['PhotoAlbumPhoto']['id'])); ?>
-			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $photoAlbumPhoto['PhotoAlbumPhoto']['id']), null, __('Are you sure you want to delete # %s?', $photoAlbumPhoto['PhotoAlbumPhoto']['id'])); ?>
-		</td>
-	</tr>
-<?php endforeach; ?>
-	</table>
-	<p>
-	<?php
-	echo $this->Paginator->counter(array(
-	'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
-	));
-	?>	</p>
-	<div class="paging">
-	<?php
-		echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
-		echo $this->Paginator->numbers(array('separator' => ''));
-		echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
-	?>
+<?php
+/**
+ * photoAlbum content list view template
+ *
+ * @copyright Copyright 2014, NetCommons Project
+ * @author Kohei Teraguchi <kteraguchi@commonsnet.org>
+ * @link http://www.netcommons.org NetCommons Project
+ * @license http://www.netcommons.org/license.txt NetCommons License
+ */
+?>
+
+<h2><?php echo $album['PhotoAlbum']['name']; ?></h2>
+<p>
+<?php echo $album['PhotoAlbum']['description']; ?>
+</p>
+
+<div class="text-right">
+	<?php echo $this->Button->addLink(); ?>
+</div>
+
+<div style="margin: 10px 0px;">
+	<div class="pull-left form-group questionnaire-list-select">
+		<span class="btn-group">
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+				全て表示
+				<span class="caret">
+				</span>
+			</button>
+			<ul class="dropdown-menu" role="menu">
+				<li>
+					<a href="/questionnaires/questionnaires/index/12/answer_status:viewall?frame_id=11">未承認のみ</a>
+				</li>
+				<li>
+					<a href="/questionnaires/questionnaires/index/12/answer_status:unanswered?frame_id=11">差し戻しのみ</a>
+				</li>
+				<li>
+					<a href="/questionnaires/questionnaires/index/12/answer_status:answered?frame_id=11">一時保存のみ</a>
+				</li>
+			</ul>
+		</span>
+	</div>
+
+	<div class="text-right">
+		<span class="btn-group text-left">
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+				新着順
+				<span class="caret">
+				</span>
+			</button>
+			<ul class="dropdown-menu" role="menu">
+				<li>
+					<a href="">登録順</a>
+				</li>
+				<li>
+					<a href="">タイトル順</a>
+				</li>
+			</ul>
+		</span>
+		<span class="btn-group">
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+				5件
+				<span class="caret">
+				</span>
+			</button>
+			<ul class="dropdown-menu" role="menu">
+				<li>
+					<a href="">1件</a>
+				</li>
+				<li class="active">
+					<a href="">5件</a>
+				</li>
+				<li>
+					<a href="">10件</a>
+				</li>
+				<li>
+					<a href="">20件</a>
+				</li>
+				<li>
+					<a href="">50件</a>
+				</li>
+				<li>
+					<a href="">100件</a>
+				</li>
+			</ul>
+		</span>
 	</div>
 </div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('New Photo Album Photo'), array('action' => 'add')); ?></li>
-		<li><?php echo $this->Html->link(__('List Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Trackable Creator'), array('controller' => 'users', 'action' => 'add')); ?> </li>
-	</ul>
+
+<hr>
+
+<div class="row">
+	<?php foreach ($photos as $index => $photo) : ?>
+		<div class="col-sm-6 col-md-4">
+			<div class="thumbnail">
+				<a href="/photo_albums/photo_album_photos/slide?frame_id=37">
+					<?php
+						echo $this->Html->image(
+							array(
+								'action' => 'photo',
+								Current::read('Block.id'),
+								$photo['PhotoAlbumPhoto']['album_key'],
+								$photo['PhotoAlbumPhoto']['id']
+							),
+							array(
+								'alt' => __d('PhotoAlbums', 'photo')
+							)
+						);
+					?>
+				</a>
+				<div class="caption">
+					<div style="overflow: hidden;height: 4em;">
+						<a href="/photo_albums/photo_album_photos/view?frame_id=37">
+							<?php echo nl2br($photo['PhotoAlbumPhoto']['description']) ?>
+						</a>
+					</div>
+					<p>
+						<?php if ($photo['PhotoAlbumPhoto']['status'] == 1): ?>
+							<span class="label" style="display: inline;"></span>
+						<?php else: ?>
+							<?php echo $this->Workflow->label($photo['PhotoAlbumPhoto']['status']); ?>
+						<?php endif; ?>
+
+						<span class="pull-right">
+							<?php if ($photo['PhotoAlbumPhoto']['status'] == 2 || $photo['PhotoAlbumPhoto']['status'] == 4): ?>
+								<a href="" class="btn btn-warning">
+									<span class="glyphicon glyphicon-ok"></span>
+								</a>
+							<?php endif; ?>
+
+							<?php
+								echo $this->Button->editLink(
+									'',
+									array(
+										'plugin' => 'photo_albums',
+										'controller' => '/photo_albums/photo_album_photos/index?frame_id=37',
+										'action' => 'edit',
+										'key' => ''
+									)
+								);
+							?>
+						</span>
+					</p>
+				</div>
+			</div>
+		</div>
+	<?php endforeach; ?>
 </div>
+
+<div class="text-right">
+	<a href="" class="btn btn-warning">
+		<span class="glyphicon glyphicon-ok"></span> 表示している写真をすべて承認する
+	</a>
+</div>
+
+<hr>
+<?php echo $this->element('NetCommons.paginator'); ?>
+<hr>
+
+<footer>
+	<div class="row">
+		<div class="col-xs-12 text-center">
+			<?php echo $this->BackTo->pageLinkButton(__d("videos", "アルバム一覧へ戻る"), array('icon' => '')); ?>
+		</div>
+	</div>
+</footer>

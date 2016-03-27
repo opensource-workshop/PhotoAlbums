@@ -101,8 +101,8 @@
 									<span class="glyphicon glyphicon-play"></span> スライドショー
 								</a>
 								 -->
-								<a href="/photo_albums/photo_album_photos/index?frame_id=37" class="btn btn-default">
-									<span class="glyphicon glyphicon-th"></span> 写真一覧
+								<a href="<?php echo $this->NetCommonsHtml->url(array('controller' => 'photo_album_photos', 'action' => 'index', $album['PhotoAlbum']['key'])); ?>" class="btn btn-default">
+									<span class="glyphicon glyphicon-th"></span> <?php echo __d('photoAlbums', 'Photo list'); ?>
 								</a>
 							</div>
 

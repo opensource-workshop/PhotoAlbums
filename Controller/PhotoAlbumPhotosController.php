@@ -25,6 +25,7 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
  * @var array
  */
 	public $uses = array(
+		'PhotoAlbums.PhotoAlbum',
 		'PhotoAlbums.PhotoAlbumPhoto',
 	);
 
@@ -34,9 +35,12 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
  * @var array
  */
 	public $components = array(
+		'Pages.PageLayout',
 		'Paginator',
+		'Security',
 		'Workflow.Workflow',
 		'PhotoAlbums.PhotoAlbumPhotos',
+		'Files.Download'
 	);
 
 /**
@@ -45,8 +49,16 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
  * @return void
  */
 	public function index() {
-		$this->PhotoAlbumPhoto->recursive = 0;
-		$this->set('photoAlbumPhotos', $this->Paginator->paginate());
+		$conditions = $this->PhotoAlbumPhoto->getWorkflowConditions();
+		$conditions['PhotoAlbumPhoto.album_key'] = $this->request->params['pass'][1];
+
+		$this->Paginator->settings = array(
+			'PhotoAlbumPhoto' => array(
+				'order' => array('PhotoAlbumPhoto.id' => 'desc'),
+				'conditions' => $conditions
+			)
+		);
+		$this->set('photos', $this->Paginator->paginate('PhotoAlbumPhoto'));
 	}
 
 /**
@@ -130,4 +142,19 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 			return $this->flash(__('The photo album photo could not be deleted. Please, try again.'), array('action' => 'index'));
 		}
 	}
+
+
+/**
+ * photo method
+ *
+ * @param string $id id
+ * @throws NotFoundException
+ * @return void
+ */
+	public function photo($options = array()) {
+		App::uses('PhotoAlbumPhoto', 'PhotoAlbums.Model');
+
+		return $this->Download->doDownload($this->request->params['pass'][2], ['field' => PhotoAlbumPhoto::ATTACHMENT_FIELD_NAME]);
+	}
+
 }
