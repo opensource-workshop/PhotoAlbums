@@ -9,8 +9,6 @@
  */
 ?>
 
-<?php echo $this->NetCommonsHtml->script('/photo_albums/js/photo_albums.js'); ?>
-
 <div class='text-right'>
 	<?php
 		echo $this->Workflow->addLinkButton(
@@ -27,16 +25,7 @@
 	if (empty($albums)) {
 		echo h(__d('photoAlbums', 'Album data not found'));
 	} else {
-		switch ($frameSetting['PhotoAlbumFrameSetting']['display_type']) {
-			case PhotoAlbumFrameSetting::DISPLAY_TYPE_PHOTOS:
-				echo $this->element('PhotoAlbums.photo_list');
-				break;
-			case PhotoAlbumFrameSetting::DISPLAY_TYPE_PHOTOS:
-				echo $this->element('PhotoAlbums.slide');
-				break;
-			default:
-				echo $this->element('PhotoAlbums.album_list_operation');
-				echo $this->element('PhotoAlbums.album_list');
-		}
+		echo $this->element('PhotoAlbums.album_list_operation');
+		echo $this->element('PhotoAlbums.album_list');
 	}
 ?>

@@ -27,6 +27,14 @@ NetCommonsApp
     });
   }
 
+  this.edit = function(photoId) {
+    $http.defaults.headers.common["Accept"] = "text/html";
+    $modal.open({
+      templateUrl: photoAlbumsValues.editUrl + photoId,
+      controller: 'PhotoAlbumsModalController'
+    });
+  }
+
   this.slide = function(albumKey) {
     $http.defaults.headers.common["Accept"] = "text/html";
     $modal.open({

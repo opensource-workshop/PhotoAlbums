@@ -9,13 +9,25 @@
  */
 ?>
 
+<?php echo $this->element('PhotoAlbums.value_provider_js'); ?>
+
 <h2><?php echo $album['PhotoAlbum']['name']; ?></h2>
 <p>
 <?php echo $album['PhotoAlbum']['description']; ?>
 </p>
 
-<div class="text-right">
-	<?php echo $this->Button->addLink(); ?>
+<div class="text-right" ng-controller="PhotoAlbumsPhotoController as PhotoController">
+	<?php if (Current::permission('photo_albums_photo_creatable')): ?>
+		<?php
+			echo $this->Button->addLink(
+				'',
+				'#',
+				array(
+					'ng-click' => 'PhotoController.add(\'' . $album['PhotoAlbum']['key'] . '\')'
+				)
+			);
+		?>
+	<?php endif; ?>
 </div>
 
 <div style="margin: 10px 0px;">
@@ -88,7 +100,7 @@
 
 <hr>
 
-<div class="row">
+<div class="row" ng-controller="PhotoAlbumsPhotoController as PhotoController">
 	<?php foreach ($photos as $index => $photo) : ?>
 		<div class="col-sm-6 col-md-4">
 			<div class="thumbnail">
@@ -96,6 +108,7 @@
 					<?php
 						echo $this->Html->image(
 							array(
+								'controller' => 'photo_album_photos',
 								'action' => 'photo',
 								Current::read('Block.id'),
 								$photo['PhotoAlbumPhoto']['album_key'],
@@ -127,17 +140,11 @@
 								</a>
 							<?php endif; ?>
 
-							<?php
-								echo $this->Button->editLink(
-									'',
-									array(
-										'plugin' => 'photo_albums',
-										'controller' => '/photo_albums/photo_album_photos/index?frame_id=37',
-										'action' => 'edit',
-										'key' => ''
-									)
-								);
-							?>
+							<?php if (Current::permission('photo_albums_photo_creatable') && $this->Workflow->canEdit('PhotoAlbumPhoto', $photo)): ?>
+								<a href="#" class="btn btn-primary " ng-click="PhotoController.edit('<?php echo $photo['PhotoAlbumPhoto']['id']; ?>')">
+									<span class="glyphicon glyphicon-edit"></span>
+								</a>
+							<?php endif; ?>
 						</span>
 					</p>
 				</div>

@@ -9,28 +9,7 @@
  */
  ?>
 
-<script>
-	NetCommonsApp.value('photoAlbumsValues', {
-		addUrl: '<?php
-					echo $this->Html->url(
-						array(
-							'controller' => 'photo_album_photos',
-							'action' => 'add',
-							Current::read('Block.id')
-						)
-					) . '/';
-				?>',
-		slideUrl: '<?php
-					echo $this->Html->url(
-						array(
-							'controller' => 'photo_album_photos',
-							'action' => 'slide',
-							Current::read('Block.id')
-						)
-					). '/';
-				?>'
-	});
-</script>
+<?php echo $this->element('PhotoAlbums.value_provider_js'); ?>
 
 <table class="table table-hover" ng-controller="PhotoAlbumsPhotoController as PhotoController">
 	<!--

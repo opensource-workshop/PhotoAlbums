@@ -23,6 +23,7 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
  */
 	public $uses = array(
 		'PhotoAlbums.PhotoAlbum',
+		'PhotoAlbums.PhotoAlbumPhoto',
 		'PhotoAlbums.PhotoAlbumFrameSetting',
 		'PhotoAlbums.PhotoAlbumDisplayAlbum',
 	);
@@ -57,12 +58,14 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
  * @return void
  */
 	public function index() {
-		// ↓ブロックの設計次第でComponent共通化
-		// 　　→ブロックは1個保持する
-		//　　　　→ルームのパーミッションで権限を保持すると拡張性がなくなるため。
+		$frameSetting = $this->PhotoAlbumFrameSetting->getFrameSetting();
+		$this->set('frameSetting', $frameSetting);
+
+		$displayAlbum = $this->PhotoAlbumDisplayAlbum->getDisplayList();
+
 		$conditions = $this->PhotoAlbum->getWorkflowConditions();
 		$conditions['PhotoAlbum.block_id'] = Current::read('Block.id');
-		$conditions['PhotoAlbum.key'] = $this->PhotoAlbumDisplayAlbum->getDisplayList();
+		$conditions['PhotoAlbum.key'] = $displayAlbum;
 
 		$this->Paginator->settings = array(
 			'PhotoAlbum' => array(
@@ -70,13 +73,35 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 				'conditions' => $conditions
 			)
 		);
-
 		$albums = $this->Paginator->paginate('PhotoAlbum');
-		// ↑ここまで
-
 		$this->set('albums', $albums);
+		if (empty($albums)) {
+			return;
+		}
 
-		$this->set('frameSetting', $this->PhotoAlbumFrameSetting->getFrameSetting());
+		if ($frameSetting['PhotoAlbumFrameSetting']['display_type'] != PhotoAlbumFrameSetting::DISPLAY_TYPE_ALBUMS ) {
+			$this->set('album', $albums[0]);
+
+			$conditions = $this->PhotoAlbumPhoto->getWorkflowConditions();
+			$conditions['PhotoAlbumPhoto.album_key'] = $albums[0]['PhotoAlbum']['key'];
+
+			$this->Paginator->settings = array(
+				'PhotoAlbumPhoto' => array(
+					'order' => array('PhotoAlbumPhoto.id' => 'desc'),
+					'conditions' => $conditions
+				)
+			);
+			$this->set('photos', $this->Paginator->paginate('PhotoAlbumPhoto'));
+			$this->set('albumKey', $albums[0]['PhotoAlbum']['key']);
+		}
+
+		if ($frameSetting['PhotoAlbumFrameSetting']['display_type'] == PhotoAlbumFrameSetting::DISPLAY_TYPE_PHOTOS ) {
+			$this->view = 'PhotoAlbums.PhotoAlbumPhotos/index';
+		}
+
+		if ($frameSetting['PhotoAlbumFrameSetting']['display_type'] == PhotoAlbumFrameSetting::DISPLAY_TYPE_SLIDE ) {
+			$this->view = 'PhotoAlbums.PhotoAlbumPhotos/slide';
+		}
 	}
 
 /**
@@ -129,8 +154,13 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 			$this->request->data['PhotoAlbum']['status'] = $this->Workflow->parseStatus();
 			if ($this->PhotoAlbum->saveAlbum($this->request->data)) {
 				$this->redirect(
-					// TODO 写真の追加ページへ
-					NetCommonsUrl::backToPageUrl()
+					array(
+						'controller' => 'photo_album_photos',
+						'action' => 'index',
+						Current::read('Block.id'),
+						$this->request->params['pass'][1],
+						'frame_id' => Current::read('Frame.id')
+					)
 				);
 			}
 			$this->NetCommons->handleValidationError($this->PhotoAlbum->validationErrors);

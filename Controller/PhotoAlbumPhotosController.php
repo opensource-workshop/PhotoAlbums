@@ -44,6 +44,15 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 	);
 
 /**
+ * use helpers
+ *
+ * @var array
+ */
+	public $helpers = array(
+		'Workflow.Workflow',
+	);
+
+/**
  * index method
  *
  * @return void
@@ -59,6 +68,7 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 			)
 		);
 		$this->set('photos', $this->Paginator->paginate('PhotoAlbumPhoto'));
+		$this->set('albumKey', $this->request->params['pass'][1]);
 	}
 
 /**
@@ -107,8 +117,13 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 			$this->request->data['PhotoAlbumPhoto']['status'] = $this->Workflow->parseStatus();
 			if ($this->PhotoAlbumPhoto->savePhoto($this->request->data)) {
 				$this->redirect(
-					// TODO 写真の追加ページへ
-					NetCommonsUrl::backToPageUrl()
+					array(
+						'controller' => 'photo_album_photos',
+						'action' => 'index',
+						Current::read('Block.id'),
+						$this->request->params['pass'][1],
+						'frame_id' => Current::read('Frame.id')
+					)
 				);
 			}
 		} else {
@@ -124,21 +139,31 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
  * @throws NotFoundException
  * @return void
  */
-	public function edit($id = null) {
+	public function edit() {
+		$this->layout = 'NetCommons.modal';
+		$this->view = 'PhotoAlbums.PhotoAlbumPhotos/add';
+		$id = $this->request->params['pass'][2];
+
 		if (!$this->PhotoAlbumPhoto->exists($id)) {
 			throw new NotFoundException(__('Invalid photo album photo'));
 		}
 		if ($this->request->is(array('post', 'put'))) {
-			if ($this->PhotoAlbumPhoto->save($this->request->data)) {
-				return $this->flash(__('The photo album photo has been saved.'), array('action' => 'index'));
+			$this->request->data['PhotoAlbumPhoto']['status'] = $this->Workflow->parseStatus();
+			if ($this->PhotoAlbumPhoto->savePhoto($this->request->data)) {
+				$this->redirect(
+					array(
+						'controller' => 'photo_album_photos',
+						'action' => 'index',
+						Current::read('Block.id'),
+						$this->request->params['pass'][1],
+						'frame_id' => Current::read('Frame.id')
+					)
+				);
 			}
 		} else {
 			$options = array('conditions' => array('PhotoAlbumPhoto.' . $this->PhotoAlbumPhoto->primaryKey => $id));
 			$this->request->data = $this->PhotoAlbumPhoto->find('first', $options);
 		}
-		$trackableCreators = $this->PhotoAlbumPhoto->TrackableCreator->find('list');
-		$trackableUpdaters = $this->PhotoAlbumPhoto->TrackableUpdater->find('list');
-		$this->set(compact('trackableCreators', 'trackableUpdaters'));
 	}
 
 /**

@@ -12,6 +12,25 @@
 <?php $this->assign('title_for_modal', __d('PhotoAlbums', 'Add photo')); ?>
 
 <?php echo $this->NetCommonsForm->create('PhotoAlbumPhoto', array('type' => 'file')); ?>
+	<?php if (!empty($this->request->data['PhotoAlbumPhoto']['key'])): ?>
+		<div class="thumbnail">
+			<?php
+				echo $this->Html->image(
+					array(
+						'controller' => 'photo_album_photos',
+						'action' => 'photo',
+						Current::read('Block.id'),
+						$this->request->data['PhotoAlbumPhoto']['album_key'],
+						$this->request->data['PhotoAlbumPhoto']['id']
+					),
+					array(
+						'alt' => __d('PhotoAlbums', 'photo')
+					)
+				);
+			?>
+		</div>
+	<?php endif; ?>
+
 	<?php echo $this->NetCommonsForm->hidden('album_key'); ?>
 	<?php echo $this->NetCommonsForm->hidden('key'); ?>
 	<?php echo $this->NetCommonsForm->hidden('language_id'); ?>
