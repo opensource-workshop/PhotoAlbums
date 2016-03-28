@@ -97,20 +97,14 @@
 										<span class="glyphicon glyphicon-th"></span> <?php echo __d('photoAlbums', 'Photo list'); ?>
 									</a>
 								<?php elseif (Current::permission('photo_albums_photo_creatable')): ?>
-									<a href="<?php echo $this->NetCommonsHtml->url(array('controller' => 'photo_album_photos', 'action' => 'add', $album['PhotoAlbum']['key'])); ?>" class="btn btn-success">
-										<span class="glyphicon glyphicon-plus"></span> <?php echo __d('photoAlbums', '写真を追加'); ?>
-									</a>
-
 									<?php
-										/*
 										echo $this->Button->addLink(
-											'',
+											__d('photoAlbums', '写真を追加'),
 											'#',
 											array(
-												'tooltip' => __d('photoAlbums', 'Add photo'),
 												'ng-click' => 'PhotoController.add(\'' . $album['PhotoAlbum']['key'] . '\')'
 											)
-										);*/
+										);
 									?>
 								<?php endif; ?>
 							</div>
