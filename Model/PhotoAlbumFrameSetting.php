@@ -124,9 +124,11 @@ class PhotoAlbumFrameSetting extends PhotoAlbumsAppModel {
 			if (empty($data['PhotoAlbumDisplayAlbum'])) {
 				$data['PhotoAlbumDisplayAlbum'] = array();
 			}
+
 			foreach ($data['PhotoAlbumDisplayAlbum'] as $displayAlbumData) {
+				$displayAlbumData = $DisplayAlbum->create($displayAlbumData);
 				$displayAlbumData['frame_key'] = $data['PhotoAlbumFrameSetting']['frame_key'];
-				if (!$DisplayAlbum->saveDisplayAlbum($displayAlbumData)) {
+				if (!$DisplayAlbum->save($displayAlbumData)) {
 					throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 				}
 			}

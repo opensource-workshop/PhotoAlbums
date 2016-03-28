@@ -64,7 +64,8 @@ class PhotoAlbumFrameSettingsController extends PhotoAlbumsAppController {
 			)
 		),
 		'NetCommons.DisplayNumber',
-		'NetCommons.Date'
+		'NetCommons.Date',
+		'Workflow.Workflow',
 	);
 
 /**
@@ -83,7 +84,18 @@ class PhotoAlbumFrameSettingsController extends PhotoAlbumsAppController {
 			$this->NetCommons->handleValidationError($this->PhotoAlbumFrameSetting->validationErrors);
 		} else {
 			$this->request->data =  $this->PhotoAlbumFrameSetting->getFrameSetting();
-			$this->request->data += $this->PhotoAlbumDisplayAlbum->getDisplayList();
+
+			$query = array(
+				'fields' => array(
+					'PhotoAlbumDisplayAlbum.album_key'
+				),
+				'conditions' => array(
+					'frame_key' => Current::read('Frame.key')
+				),
+				'recursive' => -1
+			);
+			$displayAlbum = $this->PhotoAlbumDisplayAlbum->find('all', $query);
+			$this->request->data['PhotoAlbumDisplayAlbum'] = Hash::extract($displayAlbum, '{n}.PhotoAlbumDisplayAlbum');
 		}
 
 		$conditions = $this->PhotoAlbum->getWorkflowConditions();
@@ -95,6 +107,7 @@ class PhotoAlbumFrameSettingsController extends PhotoAlbumsAppController {
 			)
 		);
 		$this->set('albums', $this->Paginator->paginate('PhotoAlbum'));
+		$this->set('displayAlbumKeys', Hash::extract($this->request->data['PhotoAlbumDisplayAlbum'], '{n}.album_key'));
 
 	}
 }

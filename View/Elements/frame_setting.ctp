@@ -38,6 +38,7 @@
 	?>
 </div>
 
+<!-- TODO ここで良い？下だと表示タイプの選択と距離が出る -->
 <div class="form-group">
 	<?php echo $this->NetCommonsForm->label(__d('PhotoAlbums', 'Select display albums')); ?>
 
@@ -45,7 +46,7 @@
 		if (empty($albums)) {
 			echo '<div>' . __d('PhotoAlbums', 'Album is not found') . '</div>';
 		} else {
-			echo $this->element('PhotoAlbums.alubum_list');
+			echo $this->element('PhotoAlbums.album_setting_list');
 		}
 	?>
 </div>
@@ -77,13 +78,13 @@
 		echo $this->NetCommonsForm->input(
 			'PhotoAlbumFrameSetting.photos_order',
 			array(
-					'type' => 'select',
-					'options' => array(
-							'PhotoAlbum.modified DESC' => __d('NetCommons', 'Newest'),
-							'PhotoAlbum.created ASC' => __d('NetCommons', 'Oldest'),
-							'PhotoAlbum.name ASC' => __d('NetCommons', 'Title')
-					),
-					'label' => __d('PhotoAlbums', 'Photos display order')
+				'type' => 'select',
+				'options' => array(
+					'PhotoAlbum.modified DESC' => __d('NetCommons', 'Newest'),
+					'PhotoAlbum.created ASC' => __d('NetCommons', 'Oldest'),
+					'PhotoAlbum.name ASC' => __d('NetCommons', 'Title')
+				),
+				'label' => __d('PhotoAlbums', 'Photos display order')
 			)
 		);
 

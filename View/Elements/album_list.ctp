@@ -84,26 +84,35 @@
 								echo '<h2 style="display: inline-block;margin:15px 10px; 0">' . $album['PhotoAlbum']['name'] . '</h2>';
 								echo $this->Workflow->label($album['PhotoAlbum']['status']);
 							?>
-							<p style="margin:5px 0 0 20px; height: 50px;">
+							<p style="margin: 0 0 5px 20px;height: 3em;overflow: hidden;">
 								<?php echo $album['PhotoAlbum']['description']; ?>
 							</p>
 
 							<div>
-								<?php //echo sprintf('%s枚の写真があります。', $album['PhotoAlbum']['photo_count']); ?>
-								<!--
-								<button type="button" class="btn btn-default" ng-click="$modal.open({templateUrl: 'http://localhost:9090/trial/test/phpinfo.php'});">
-								 -->
-								<button type="button" class="btn btn-default" ng-click="PhotoController.slide('<?php echo $album['PhotoAlbum']['key']; ?>')">
-									<span class="glyphicon glyphicon-play" aria-hidden="true"></span> スライドショー
-								</button>
-								<!--
-								<a href="/photo_albums/photo_album_photos/slide?frame_id=37" class="btn btn-default">
-									<span class="glyphicon glyphicon-play"></span>  <?php echo __d('photoAlbums', 'スライドショー'); ?>
-								</a>
-								 -->
-								<a href="<?php echo $this->NetCommonsHtml->url(array('controller' => 'photo_album_photos', 'action' => 'index', $album['PhotoAlbum']['key'])); ?>" class="btn btn-default">
-									<span class="glyphicon glyphicon-th"></span> <?php echo __d('photoAlbums', 'Photo list'); ?>
-								</a>
+								<?php if ($album['PhotoAlbum']['photo_count']): ?>
+									<button type="button" class="btn btn-default" ng-click="PhotoController.slide('<?php echo $album['PhotoAlbum']['key']; ?>')">
+										<span class="glyphicon glyphicon-play" aria-hidden="true"></span> スライドショー
+									</button>
+									<a href="<?php echo $this->NetCommonsHtml->url(array('controller' => 'photo_album_photos', 'action' => 'index', $album['PhotoAlbum']['key'])); ?>" class="btn btn-default">
+										<span class="glyphicon glyphicon-th"></span> <?php echo __d('photoAlbums', 'Photo list'); ?>
+									</a>
+								<?php elseif (Current::permission('photo_albums_photo_creatable')): ?>
+									<a href="<?php echo $this->NetCommonsHtml->url(array('controller' => 'photo_album_photos', 'action' => 'add', $album['PhotoAlbum']['key'])); ?>" class="btn btn-success">
+										<span class="glyphicon glyphicon-plus"></span> <?php echo __d('photoAlbums', '写真を追加'); ?>
+									</a>
+
+									<?php
+										/*
+										echo $this->Button->addLink(
+											'',
+											'#',
+											array(
+												'tooltip' => __d('photoAlbums', 'Add photo'),
+												'ng-click' => 'PhotoController.add(\'' . $album['PhotoAlbum']['key'] . '\')'
+											)
+										);*/
+									?>
+								<?php endif; ?>
 							</div>
 
 						</div>
@@ -144,17 +153,6 @@
 								),
 								array(
 									'tooltip' => __d('photoAlbums', 'Edit album')
-								)
-							);
-						}
-
-						if (Current::permission('photo_albums_photo_creatable')) {
-							echo $this->Button->addLink(
-								'',
-								'#',
-								array(
-									'tooltip' => __d('photoAlbums', 'Add photo'),
-									'ng-click' => 'PhotoController.add(\'' . $album['PhotoAlbum']['key'] . '\')'
 								)
 							);
 						}
