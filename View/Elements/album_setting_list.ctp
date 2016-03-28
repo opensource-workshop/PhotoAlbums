@@ -9,8 +9,9 @@
  */
  ?>
 
+
 <div style="height:600px;overflow-y:scroll;border-top: 1px solid #ddd;">
-	<table class="table table-hover" ng-controller="PhotoAlbumsPhotoController as PhotoController">
+	<table class="table table-hover">
 
 		<tbody>
 			<?php foreach ($albums as $album) : ?>
@@ -27,6 +28,26 @@
 									'div' => false,
 									'class' => false,
 									'hiddenField' => false,
+									//'ng-model' => 'FrameSettingController.checkModel[' . $index . ']',
+									'ng-disabled' => 'FrameSettingController.displayType != ' . PhotoAlbumFrameSetting::DISPLAY_TYPE_ALBUMS,
+									'ng-hide' => 'FrameSettingController.displayType != ' . PhotoAlbumFrameSetting::DISPLAY_TYPE_ALBUMS
+								)
+							);
+
+							echo $this->Form->input(
+								'PhotoAlbumDisplayAlbum..album_key',
+								array(
+									'type' => 'radio',
+									'options' => array($album['PhotoAlbum']['key'] => null),
+									'value' =>$album['PhotoAlbum']['key'],
+									'checked' => in_array($album['PhotoAlbum']['key'], $displayAlbumKeys),
+									'label' => false,
+									'div' => false,
+									'class' => false,
+									'hiddenField' => false,
+									//'ng-model' => 'FrameSettingController.checkModel[' . $index . ']',
+									'ng-disabled' => 'FrameSettingController.displayType == ' . PhotoAlbumFrameSetting::DISPLAY_TYPE_ALBUMS,
+									'ng-hide' => 'FrameSettingController.displayType == ' . PhotoAlbumFrameSetting::DISPLAY_TYPE_ALBUMS
 								)
 							);
 						?>

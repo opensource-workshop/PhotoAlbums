@@ -13,7 +13,7 @@ NetCommonsApp.requires.push('ui.bootstrap.modal');
  * PhotoAlbums Controller
  *
  * @param {string} Controller name
- * @param {function($scope, $sce)} Controller constructor function.
+ * @param {'$modal', '$http', 'photoAlbumsValues')} Controller constructor function.
  */
 NetCommonsApp
 .controller('PhotoAlbumsPhotoController',
@@ -37,6 +37,12 @@ NetCommonsApp
 
 }])
 
+/**
+ * PhotoAlbums modal Controller
+ *
+ * @param {string} Controller name
+ * @param {$scope, $modalInstance)} Controller constructor function.
+ */
 .controller('PhotoAlbumsModalController',['$scope', '$modalInstance', function($scope, $modalInstance) {
 
   $scope.cancel = function() {
@@ -44,4 +50,3 @@ NetCommonsApp
   }
 
 }]);
-

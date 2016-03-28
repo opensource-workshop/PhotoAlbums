@@ -33,6 +33,8 @@
 				'before' => '<div class="radio-inline"><label class="radio-inline">',
 				'after' => '</div></label>',
 				'separator' => '</label></div><div class="radio-inline"><label class="radio-inline">',
+				'ng-change' => 'FrameSettingController.changeDisplayType()',
+				'ng-model' => 'FrameSettingController.displayType',
 			)
 		);
 	?>
