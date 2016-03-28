@@ -98,7 +98,7 @@
 								</button>
 								<!--
 								<a href="/photo_albums/photo_album_photos/slide?frame_id=37" class="btn btn-default">
-									<span class="glyphicon glyphicon-play"></span> スライドショー
+									<span class="glyphicon glyphicon-play"></span>  <?php echo __d('photoAlbums', 'スライドショー'); ?>
 								</a>
 								 -->
 								<a href="<?php echo $this->NetCommonsHtml->url(array('controller' => 'photo_album_photos', 'action' => 'index', $album['PhotoAlbum']['key'])); ?>" class="btn btn-default">

@@ -62,6 +62,24 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 	}
 
 /**
+ * index method
+ *
+ * @return void
+ */
+	public function slide() {
+		$conditions = $this->PhotoAlbumPhoto->getWorkflowConditions();
+		$conditions['PhotoAlbumPhoto.album_key'] = $this->request->params['pass'][1];
+
+		$this->Paginator->settings = array(
+				'PhotoAlbumPhoto' => array(
+						'order' => array('PhotoAlbumPhoto.id' => 'desc'),
+						'conditions' => $conditions
+				)
+		);
+		$this->set('photos', $this->Paginator->paginate('PhotoAlbumPhoto'));
+	}
+
+/**
  * view method
  *
  * @param string $id id

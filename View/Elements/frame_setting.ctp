@@ -45,7 +45,7 @@
 		if (empty($albums)) {
 			echo '<div>' . __d('PhotoAlbums', 'Album is not found') . '</div>';
 		} else {
-			echo $thuis->element('PhotoAlbums.alubum_list');
+			echo $this->element('PhotoAlbums.alubum_list');
 		}
 	?>
 </div>
