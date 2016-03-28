@@ -15,7 +15,7 @@
 			'',
 			null,
 			array(
-				'tooltip' => __d('photoAlbums', 'Create albums')
+				'tooltip' => __d('photo_albums', 'Create albums')
 			)
 		);
 	?>
@@ -23,7 +23,7 @@
 
 <?php
 	if (empty($albums)) {
-		echo h(__d('photoAlbums', 'Album data not found'));
+		echo h(__d('photo_albums', 'Album data not found'));
 	} else {
 		echo $this->element('PhotoAlbums.album_list_operation');
 		echo $this->element('PhotoAlbums.album_list');

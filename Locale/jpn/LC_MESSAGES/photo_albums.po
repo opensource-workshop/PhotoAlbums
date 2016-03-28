@@ -1,0 +1,116 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"PO-Revision-Date: 2016-03-28 22:37+0900\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"POT-Creation-Date: \n"
+"X-Generator: Poedit 1.8.7\n"
+"Language: ja\n"
+
+#: View/Elements/album_form.ctp:36
+msgid "Album Name"
+msgstr "アルバム名称"
+
+#: View/Elements/album_form.ctp:49
+msgid "Album description"
+msgstr "アルバムの説明"
+
+#: View/Elements/album_list.ctp:76
+msgid "Photo list"
+msgstr "写真一覧"
+
+#: View/Elements/album_list.ctp:97 View/Elements/album_setting_list.ctp:76
+msgid "%s photos"
+msgstr "%s 枚の写真"
+
+#: View/Elements/album_list.ctp:100 View/Elements/album_setting_list.ctp:79
+msgid "%s waiting approval"
+msgstr "未承認 %s 枚"
+
+#: View/Elements/album_list.ctp:105 View/Elements/album_setting_list.ctp:84
+msgid "%s denied"
+msgstr "差戻し %s 枚"
+
+#: View/Elements/album_list.ctp:128
+msgid "Edit album"
+msgstr "アルバム編集"
+
+#: View/Elements/frame_setting.ctp:18
+msgid "Display type"
+msgstr "表示タイプ"
+
+#: View/Elements/frame_setting.ctp:25
+msgid "List of album"
+msgstr "アルバムの一覧"
+
+#: View/Elements/frame_setting.ctp:26
+msgid "List of photo"
+msgstr "写真の一覧"
+
+#: View/Elements/frame_setting.ctp:27
+msgid "Slide show"
+msgstr "スライドショー"
+
+#: View/Elements/frame_setting.ctp:45
+msgid "Select display albums"
+msgstr "表示するアルバムの選択"
+
+#: View/Elements/frame_setting.ctp:49
+msgid "Album is not found"
+msgstr "アルバムがありません。"
+
+#: View/Elements/frame_setting.ctp:66
+msgid "Albums display order"
+msgstr "アルバムの表示順"
+
+#: View/Elements/frame_setting.ctp:73
+msgid "Show albums per page"
+msgstr "アルバムの表示件数"
+
+#: View/Elements/frame_setting.ctp:89
+msgid "Photos display order"
+msgstr "写真の表示順"
+
+#: View/Elements/frame_setting.ctp:96
+msgid "Show photos per page"
+msgstr "写真の表示件数"
+
+#: View/Elements/setting.ctp:22 View/Helper/PhotoAlbumsHelper.php:45;63
+msgid "jacket"
+msgstr "ジャケット"
+
+#: View/PhotoAlbumPhotos/add.ctp:12
+msgid "Add photo"
+msgstr "写真を追加"
+
+#: View/PhotoAlbumPhotos/add.ctp:27 View/PhotoAlbumPhotos/index.ctp:118
+#: View/PhotoAlbumPhotos/slide.ctp:36
+msgid "photo"
+msgstr "写真"
+
+#: View/PhotoAlbumPhotos/add.ctp:42
+msgid "Photo file"
+msgstr "写真"
+
+#: View/PhotoAlbumPhotos/add.ctp:53
+msgid "Photo description"
+msgstr "写真の説明"
+
+#: View/PhotoAlbums/index.ctp:18
+msgid "Create albums"
+msgstr "アルバムを作成"
+
+#: View/PhotoAlbums/index.ctp:26
+msgid "Album data not found"
+msgstr "アルバムがありません。"
+
+msgid "Photo creatable roles"
+msgstr "写真を追加できる権限"

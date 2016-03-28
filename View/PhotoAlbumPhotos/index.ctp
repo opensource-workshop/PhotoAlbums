@@ -115,7 +115,7 @@
 								$photo['PhotoAlbumPhoto']['id']
 							),
 							array(
-								'alt' => __d('PhotoAlbums', 'photo')
+								'alt' => __d('photo_albums', 'photo')
 							)
 						);
 					?>

@@ -33,7 +33,7 @@ echo $this->NetCommonsHtml->css('/photo_albums/css/style.css');
 						$photo['PhotoAlbumPhoto']['id']
 					),
 					array(
-						'alt' => __d('PhotoAlbums', 'photo')
+						'alt' => __d('photo_albums', 'photo')
 					)
 				);
 			?>

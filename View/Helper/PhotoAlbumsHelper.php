@@ -42,7 +42,7 @@ class PhotoAlbumsHelper extends AppHelper {
 					$this->request->data['UploadFile']['jacket']['id']
 				),
 				array(
-					'alt' => __d('PhotoAlbums', 'jacket')
+					'alt' => __d('photo_albums', 'jacket')
 				)
 			);
 			/* https://github.com/NetCommons3/NetCommons3/issues/161
@@ -52,7 +52,7 @@ class PhotoAlbumsHelper extends AppHelper {
 					$this->_View->request->data['UploadFile']['jacket']['id']
 				),
 				array(
-					'alt' => __d('PhotoAlbums', 'jacket')
+					'alt' => __d('photo_albums', 'jacket')
 				)
 			);
 			*/
@@ -60,7 +60,7 @@ class PhotoAlbumsHelper extends AppHelper {
 			$output = $this->Html->image(
 				'PhotoAlbums.noimage.gif',
 				array(
-					'alt' => __d('PhotoAlbums', 'jacket')
+					'alt' => __d('photo_albums', 'jacket')
 				)
 			);
 		}

@@ -9,7 +9,7 @@
  */
 ?>
 
-<?php $this->assign('title_for_modal', __d('PhotoAlbums', 'Add photo')); ?>
+<?php $this->assign('title_for_modal', __d('photo_albums', 'Add photo')); ?>
 
 <?php echo $this->NetCommonsForm->create('PhotoAlbumPhoto', array('type' => 'file')); ?>
 	<?php if (!empty($this->request->data['PhotoAlbumPhoto']['key'])): ?>
@@ -24,7 +24,7 @@
 						$this->request->data['PhotoAlbumPhoto']['id']
 					),
 					array(
-						'alt' => __d('PhotoAlbums', 'photo')
+						'alt' => __d('photo_albums', 'photo')
 					)
 				);
 			?>
@@ -39,7 +39,7 @@
 		echo $this->NetCommonsForm->uploadFile(
 			PhotoAlbumPhoto::ATTACHMENT_FIELD_NAME,
 			array(
-				'label' => __d('PhotoAlbums', 'Photo file'),
+				'label' => __d('photo_albums', 'Photo file'),
 				'remove' => false
 			)
 		)
@@ -50,7 +50,7 @@
 			'description',
 			array(
 				'type' => 'textarea',
-				'label' => __d('PhotoAlbums', 'Photo description'),
+				'label' => __d('photo_albums', 'Photo description'),
 			)
 		);
 	?>

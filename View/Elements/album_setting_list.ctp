@@ -73,15 +73,15 @@
 
 					<td style="padding:40px 20px 0 0;">
 						<?php
-							echo __d('photoAlbums', '%s photos', $album['PhotoAlbum']['photo_count']);
+							echo __d('photo_albums', '%s photos', $album['PhotoAlbum']['photo_count']);
 							if (Current::permission('content_publishable')) {
 								echo '<br><span class="label label-warning">' .
-										__d('photoAlbums', '%s waiting approval', $album['PhotoAlbum']['approval_waiting_photo_count']) .
+										__d('photo_albums', '%s waiting approval', $album['PhotoAlbum']['approval_waiting_photo_count']) .
 										'</span>';
 							}
 							if (Current::permission('photo_albums_photo_creatable')) {
 								echo '<br><span class="label label-warning">' .
-										__d('photoAlbums', '%s denied', $album['PhotoAlbum']['disapproved_photo_count']) .
+										__d('photo_albums', '%s denied', $album['PhotoAlbum']['disapproved_photo_count']) .
 										'</span>';
 							}
 						?>

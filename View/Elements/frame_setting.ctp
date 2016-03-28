@@ -15,16 +15,16 @@
 <?php echo $this->NetCommonsForm->hidden('frame_key'); ?>
 
 <div class="form-group">
-	<?php echo $this->NetCommonsForm->label(__d('PhotoAlbums', 'Display type')); ?>
+	<?php echo $this->NetCommonsForm->label(__d('photo_albums', 'Display type')); ?>
 	<?php
 		echo $this->NetCommonsForm->input(
 			'PhotoAlbumFrameSetting.display_type',
 			array(
 				'type' => 'radio',
 				'options' => array(
-					PhotoAlbumFrameSetting::DISPLAY_TYPE_ALBUMS => __d('PhotoAlbums', 'List of album'),
-					PhotoAlbumFrameSetting::DISPLAY_TYPE_PHOTOS => __d('PhotoAlbums', 'List of photo'),
-					PhotoAlbumFrameSetting::DISPLAY_TYPE_SLIDE => __d('PhotoAlbums', 'Slide show')
+					PhotoAlbumFrameSetting::DISPLAY_TYPE_ALBUMS => __d('photo_albums', 'List of album'),
+					PhotoAlbumFrameSetting::DISPLAY_TYPE_PHOTOS => __d('photo_albums', 'List of photo'),
+					PhotoAlbumFrameSetting::DISPLAY_TYPE_SLIDE => __d('photo_albums', 'Slide show')
 				),
 				'legend' => false,
 				'div' => true,
@@ -42,11 +42,11 @@
 
 <!-- TODO ここで良い？下だと表示タイプの選択と距離が出る -->
 <div class="form-group">
-	<?php echo $this->NetCommonsForm->label(__d('PhotoAlbums', 'Select display albums')); ?>
+	<?php echo $this->NetCommonsForm->label(__d('photo_albums', 'Select display albums')); ?>
 
 	<?php
 		if (empty($albums)) {
-			echo '<div>' . __d('PhotoAlbums', 'Album is not found') . '</div>';
+			echo '<div>' . __d('photo_albums', 'Album is not found') . '</div>';
 		} else {
 			echo $this->element('PhotoAlbums.album_setting_list');
 		}
@@ -63,14 +63,14 @@
 				'PhotoAlbum.created ASC' => __d('NetCommons', 'Oldest'),
 				'PhotoAlbum.name ASC' => __d('NetCommons', 'Title')
 			),
-			'label' => __d('PhotoAlbums', 'Albums display order')
+			'label' => __d('photo_albums', 'Albums display order')
 		)
 	);
 
 	echo $this->DisplayNumber->select(
 		'PhotoAlbumFrameSetting.albums_per_page',
 		array(
-			'label' => __d('PhotoAlbums', 'Show albums per page'),
+			'label' => __d('photo_albums', 'Show albums per page'),
 		)
 	);
 ?>
@@ -86,14 +86,14 @@
 					'PhotoAlbum.created ASC' => __d('NetCommons', 'Oldest'),
 					'PhotoAlbum.name ASC' => __d('NetCommons', 'Title')
 				),
-				'label' => __d('PhotoAlbums', 'Photos display order')
+				'label' => __d('photo_albums', 'Photos display order')
 			)
 		);
 
 		echo $this->DisplayNumber->select(
 			'PhotoAlbumFrameSetting.photos_per_page',
 			array(
-				'label' => __d('PhotoAlbums', 'Show photos per page'),
+				'label' => __d('photo_albums', 'Show photos per page'),
 			)
 		);
 	?>

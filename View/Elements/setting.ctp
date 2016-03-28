@@ -19,7 +19,7 @@
 		array(
 			'settingPermissions' => array(
 				'content_creatable' => __d('blocks', 'Content creatable roles'),
-				'photo_albums_photo_creatable' => __d('PhotoAlbums', 'Photo creatable roles'),
+				'photo_albums_photo_creatable' => __d('photo_albums', 'Photo creatable roles'),
 			),
 		)
 	);

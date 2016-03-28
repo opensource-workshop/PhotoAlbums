@@ -33,7 +33,7 @@
 				'PhotoAlbum.name',
 				array(
 					'type' => 'text',
-					'label' => __d('PhotoAlbums', 'Album Name'),
+					'label' => __d('photo_albums', 'Album Name'),
 					'required' => true,
 				)
 			);
@@ -46,7 +46,7 @@
 		'PhotoAlbum.description',
 		array(
 			'type' => 'textarea',
-			'label' => __d('PhotoAlbums', 'Album description'),
+			'label' => __d('photo_albums', 'Album description'),
 		)
 	);
 ?>

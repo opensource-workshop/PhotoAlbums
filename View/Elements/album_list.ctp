@@ -16,11 +16,11 @@
 	<thead>
 	<tr>
 		<th>
-			<?php //echo $this->Paginator->sort('PhotoAlbum.title', __d('photoAlbums', 'Title')); ?>
+			<?php //echo $this->Paginator->sort('PhotoAlbum.title', __d('photo_albums', 'Title')); ?>
 			<?php echo $this->Paginator->sort('PhotoAlbum.status', 'アルバム'); ?>
 		</th>
 		<th>
-			<?php //echo $this->Paginator->sort('PhotoAlbum.title', __d('photoAlbums', 'Title')); ?>
+			<?php //echo $this->Paginator->sort('PhotoAlbum.title', __d('photo_albums', 'Title')); ?>
 			<?php echo $this->Paginator->sort('PhotoAlbum.status', '写真数'); ?>
 		</th>
 		<th>
@@ -73,12 +73,12 @@
 										<span class="glyphicon glyphicon-play" aria-hidden="true"></span> スライドショー
 									</button>
 									<a href="<?php echo $this->NetCommonsHtml->url(array('controller' => 'photo_album_photos', 'action' => 'index', $album['PhotoAlbum']['key'])); ?>" class="btn btn-default">
-										<span class="glyphicon glyphicon-th"></span> <?php echo __d('photoAlbums', 'Photo list'); ?>
+										<span class="glyphicon glyphicon-th"></span> <?php echo __d('photo_albums', 'Photo list'); ?>
 									</a>
 								<?php elseif (Current::permission('photo_albums_photo_creatable')): ?>
 									<?php
 										echo $this->Button->addLink(
-											__d('photoAlbums', '写真を追加'),
+											__d('photo_albums', '写真を追加'),
 											'#',
 											array(
 												'ng-click' => 'PhotoController.add(\'' . $album['PhotoAlbum']['key'] . '\')'
@@ -94,15 +94,15 @@
 
 				<td style="padding:40px 20px 0 0;">
 					<?php
-						echo __d('photoAlbums', '%s photos', $album['PhotoAlbum']['photo_count']);
+						echo __d('photo_albums', '%s photos', $album['PhotoAlbum']['photo_count']);
 						if (Current::permission('content_publishable')) {
 							echo '<br><span class="label label-warning">' .
-									__d('photoAlbums', '%s waiting approval', $album['PhotoAlbum']['approval_waiting_photo_count']) .
+									__d('photo_albums', '%s waiting approval', $album['PhotoAlbum']['approval_waiting_photo_count']) .
 									'</span>';
 						}
 						if (Current::permission('photo_albums_photo_creatable')) {
 							echo '<br><span class="label label-warning">' .
-									__d('photoAlbums', '%s denied', $album['PhotoAlbum']['disapproved_photo_count']) .
+									__d('photo_albums', '%s denied', $album['PhotoAlbum']['disapproved_photo_count']) .
 									'</span>';
 						}
 					?>
@@ -125,7 +125,7 @@
 									'key' =>  $album['PhotoAlbum']['key']
 								),
 								array(
-									'tooltip' => __d('photoAlbums', 'Edit album')
+									'tooltip' => __d('photo_albums', 'Edit album')
 								)
 							);
 						}
