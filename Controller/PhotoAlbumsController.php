@@ -153,14 +153,15 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 		$album = $this->PhotoAlbum->create();
 		if ($this->request->is('post')) {
 			$this->request->data['PhotoAlbum']['status'] = $this->Workflow->parseStatus();
-			if ($this->PhotoAlbum->saveAlbum($this->request->data)) {
+			$album = $this->PhotoAlbum->saveAlbum($this->request->data);
+			if ($album) {
 				$this->redirect(
 					array(
 						'controller' => 'photo_album_photos',
 						'action' => 'index',
 						Current::read('Block.id'),
-						$this->request->params['pass'][1],
-						'frame_id' => Current::read('Frame.id')
+						$album['PhotoAlbum']['key'],
+						'?' => array('frame_id' => Current::read('Frame.id'))
 					)
 				);
 			}
@@ -178,20 +179,41 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
  * @return void
  */
 	public function edit($id = null) {
-		if (!$this->PhotoAlbum->exists($id)) {
+		$this->view = 'PhotoAlbums.PhotoAlbums/add';
+
+		$query = array(
+			'conditions' => $this->PhotoAlbum->getWorkflowConditions() + array(
+				'PhotoAlbum.block_id' => Current::read('Block.id'),
+				'PhotoAlbum.key' =>$this->request->params['pass'][1]
+			),
+			'recursive' => -1,
+		);
+		$album = $this->PhotoAlbum->find('first', $query);
+
+		if (! $this->PhotoAlbum->canEditWorkflowContent($album)) {
+			$this->throwBadRequest();
+			return false;
+		}
+
+		if (!$album) {
 			throw new NotFoundException(__('Invalid photo album'));
 		}
 		if ($this->request->is(array('post', 'put'))) {
-			if ($this->PhotoAlbum->save($this->request->data)) {
-				return $this->flash(__('The photo album has been saved.'), array('action' => 'index'));
+			$this->request->data['PhotoAlbum']['status'] = $this->Workflow->parseStatus();
+			if ($this->PhotoAlbum->saveAlbum($this->request->data)) {
+				$this->redirect(
+					array(
+						'action' => 'index',
+						Current::read('Block.id'),
+						$this->request->params['pass'][1],
+						'frame_id' => Current::read('Frame.id')
+					)
+				);
 			}
+			$this->NetCommons->handleValidationError($this->PhotoAlbum->validationErrors);
 		} else {
-			$options = array('conditions' => array('PhotoAlbum.' . $this->PhotoAlbum->primaryKey => $id));
-			$this->request->data = $this->PhotoAlbum->find('first', $options);
+			$this->request->data = $album;
 		}
-		$trackableCreators = $this->PhotoAlbum->TrackableCreator->find('list');
-		$trackableUpdaters = $this->PhotoAlbum->TrackableUpdater->find('list');
-		$this->set(compact('trackableCreators', 'trackableUpdaters'));
 	}
 
 /**
