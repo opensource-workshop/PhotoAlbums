@@ -9,6 +9,7 @@
  */
 ?>
 
+<?php echo $this->NetCommonsForm->hidden('PhotoAlbum.block_id'); ?>
 <?php echo $this->NetCommonsForm->hidden('PhotoAlbum.key'); ?>
 <?php echo $this->NetCommonsForm->hidden('PhotoAlbum.language_id'); ?>
 

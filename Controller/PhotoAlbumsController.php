@@ -38,6 +38,7 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 		'Paginator',
 		'Security',
 		'Workflow.Workflow',
+		'Files.Download',
 	);
 
 /**
@@ -205,8 +206,7 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 					array(
 						'action' => 'index',
 						Current::read('Block.id'),
-						$this->request->params['pass'][1],
-						'frame_id' => Current::read('Frame.id')
+						'?' => array('frame_id' => Current::read('Frame.id'))
 					)
 				);
 			}
@@ -214,6 +214,19 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 		} else {
 			$this->request->data = $album;
 		}
+	}
+
+/**
+ * jacket method
+ *
+ * @param string $id id
+ * @throws NotFoundException
+ * @return void
+ */
+	public function jacket($options = array()) {
+		App::uses('PhotoAlbum', 'PhotoAlbums.Model');
+
+		return $this->Download->doDownload($this->request->params['pass'][1], ['field' => PhotoAlbum::ATTACHMENT_FIELD_NAME]);
 	}
 
 /**

@@ -37,9 +37,10 @@ class PhotoAlbumsHelper extends AppHelper {
 		if (isset($data['UploadFile']['jacket']['id'])) {
 			$output = $this->Html->image(
 				array(
+					'controller' => 'photo_albums',
 					'action' => 'jacket',
 					Current::read('Block.id'),
-					$this->request->data['UploadFile']['jacket']['id']
+					$data['PhotoAlbum']['id']
 				),
 				array(
 					'alt' => __d('photo_albums', 'jacket')
