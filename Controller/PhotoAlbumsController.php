@@ -75,6 +75,7 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 		);
 		$albums = $this->Paginator->paginate('PhotoAlbum');
 		$this->set('albums', $albums);
+		$this->set('albumKey', '');
 		if (empty($albums)) {
 			return;
 		}
