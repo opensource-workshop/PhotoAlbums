@@ -13,12 +13,10 @@
 echo $this->NetCommonsHtml->css('/photo_albums/css/style.css');
 ?>
 
-<h2>アルバムのタイトル</h2>
-<div style="margin:0 20px 30px;">
-アルバムの説明<br>
-・・・・・・・・<br>
-・・・・・・・・・・
-</div>
+<h2><?php echo $album['PhotoAlbum']['name']; ?></h2>
+<p>
+<?php echo $album['PhotoAlbum']['description']; ?>
+</p>
 
 <carousel interval="5000">
 	<!-- Wrapper for slides -->
@@ -27,13 +25,15 @@ echo $this->NetCommonsHtml->css('/photo_albums/css/style.css');
 			<?php
 				echo $this->Html->image(
 					array(
+						'controller' => 'photo_album_photos',
 						'action' => 'photo',
 						Current::read('Block.id'),
 						$photo['PhotoAlbumPhoto']['album_key'],
 						$photo['PhotoAlbumPhoto']['id']
 					),
 					array(
-						'alt' => __d('photo_albums', 'photo')
+						'alt' => __d('photo_albums', 'photo'),
+						'style' => 'display: inline'
 					)
 				);
 			?>
