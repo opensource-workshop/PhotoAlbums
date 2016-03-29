@@ -122,9 +122,7 @@
 				</a>
 				<div class="caption">
 					<div style="overflow: hidden;height: 4em;">
-						<a href="/photo_albums/photo_album_photos/view?frame_id=37">
-							<?php echo nl2br($photo['PhotoAlbumPhoto']['description']) ?>
-						</a>
+						<?php echo nl2br($photo['PhotoAlbumPhoto']['description']) ?>
 					</div>
 					<p>
 						<?php if ($photo['PhotoAlbumPhoto']['status'] == 1): ?>

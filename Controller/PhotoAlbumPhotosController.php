@@ -122,7 +122,7 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 						'action' => 'index',
 						Current::read('Block.id'),
 						$this->request->params['pass'][1],
-						'frame_id' => Current::read('Frame.id')
+						'?' => array('frame_id' => Current::read('Frame.id'))
 					)
 				);
 			}
@@ -156,7 +156,7 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 						'action' => 'index',
 						Current::read('Block.id'),
 						$this->request->params['pass'][1],
-						'frame_id' => Current::read('Frame.id')
+						'?' => array('frame_id' => Current::read('Frame.id'))
 					)
 				);
 			}

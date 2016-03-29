@@ -70,4 +70,55 @@ class PhotoAlbumPhoto extends PhotoAlbumsAppModel {
 
 		return $album;
 	}
+
+/**
+ * Get workflow conditions
+ *
+ * @return array Conditions data
+ */
+	public function getWorkflowConditions() {
+		if (Current::permission('content_editable')) {
+			$activeConditions = array();
+			$latestConditons = array(
+				$this->alias . '.is_latest' => true,
+			);
+		} elseif (Current::permission('photo_albums_photo_creatable')) {
+			$activeConditions = array(
+				$this->alias . '.is_active' => true,
+				$this->alias . '.created_user !=' => Current::read('User.id'),
+			);
+			// 時限公開条件追加
+			if ($this->hasField('public_type')) {
+				$publicTypeConditions = $this->_getPublicTypeConditions($this);
+				$activeConditions[] = $publicTypeConditions;
+			}
+			$latestConditons = array(
+				$this->alias . '.is_latest' => true,
+				$this->alias . '.created_user' => Current::read('User.id'),
+			);
+		} else {
+			// 時限公開条件追加
+			$activeConditions = array(
+				$this->alias . '.is_active' => true,
+			);
+			if ($this->hasField('public_type')) {
+				$publicTypeConditions = $this->_getPublicTypeConditions($this);
+				$activeConditions[] = $publicTypeConditions;
+			}
+			$latestConditons = array();
+		}
+
+		if ($this->hasField('language_id')) {
+			$langConditions = array(
+				$this->alias . '.language_id' => Current::read('Language.id'),
+			);
+		} else {
+			$langConditions = array();
+		}
+		$conditions = Hash::merge($langConditions, array(
+			'OR' => array($activeConditions, $latestConditons)
+		));
+
+		return $conditions;
+	}
 }
