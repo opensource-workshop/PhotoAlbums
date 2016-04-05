@@ -101,13 +101,21 @@ class PhotoAlbumsHelper extends AppHelper {
 		$output .= $this->NetCommonsForm->create(
 			'PhotoAlbumPhoto',
 			array(
-				'plugin' => 'photo_albums',
-				'controller' => 'photo_album_photos',
-				'action' => 'edit',
+				'url' => array(
+					'plugin' => 'photo_albums',
+					'controller' => 'photo_album_photos',
+					'action' => 'publish',
+					Current::read('Block.id'),
+					$data['PhotoAlbumPhoto']['album_key'],
+					$data['PhotoAlbumPhoto']['key']
+				),
 				'class' => 'label'
 			)
 		);
-		$output .= $this->NetCommonsForm->hidden('PhotoAlbumPhoto.id', array('value' => $data['PhotoAlbumPhoto']['id']));
+		$output .= $this->NetCommonsForm->hidden('PhotoAlbumPhoto.block_id', array('value' => Current::read('Block.id')));
+		$output .= $this->NetCommonsForm->hidden('PhotoAlbumPhoto.album_key', array('value' => $data['PhotoAlbumPhoto']['album_key']));
+		$output .= $this->NetCommonsForm->hidden('PhotoAlbumPhoto.key', array('value' => $data['PhotoAlbumPhoto']['key']));
+		$output .= $this->NetCommonsForm->hidden('PhotoAlbumPhoto.language_id', array('value' => $data['PhotoAlbumPhoto']['language_id']));
 
 		$onClickScript = 'return confirm(\'' .
 			__d('photo_albums', 'Approving the photo. Are you sure to proceed?') .

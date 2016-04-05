@@ -35,7 +35,13 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
  * @var array
  */
 	public $components = array(
-		'Pages.PageLayout',
+		'NetCommons.Permission' => array(
+			'allow' => array(
+				'add,edit,delete' => 'photo_albums_photo_creatable',
+				'publish' => 'content_publishable',
+			),
+		),
+			'Pages.PageLayout',
 		'Paginator',
 		'Security',
 		'Workflow.Workflow',
@@ -175,6 +181,45 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 			$this->NetCommons->handleValidationError($this->PhotoAlbum->validationErrors);
 		} else {
 			$this->request->data = $photo;
+		}
+	}
+
+/**
+ * publish method
+ *
+ * @param string $id id
+ * @throws NotFoundException
+ * @return void
+ */
+	public function publish() {
+		$this->view = 'PhotoAlbums.PhotoAlbumPhotos/add';
+
+		$query = array(
+				'conditions' => $this->PhotoAlbumPhoto->getWorkflowConditions() + array(
+						'PhotoAlbumPhoto.album_key' => $this->params['pass'][1],
+						'PhotoAlbumPhoto.key' => $this->params['pass'][2]
+				),
+				'recursive' => -1,
+		);
+		$photo = $this->PhotoAlbumPhoto->find('first', $query);
+
+		if (!$photo) {
+			throw new NotFoundException(__('Invalid photo album photo'));
+		}
+		if ($this->request->is(array('post', 'put'))) {
+			$photo['PhotoAlbumPhoto']['status'] = $this->Workflow->parseStatus();
+			if ($this->PhotoAlbumPhoto->savePhoto($photo)) {
+				$this->redirect(
+						array(
+								'controller' => 'photo_album_photos',
+								'action' => 'index',
+								Current::read('Block.id'),
+								$this->request->params['pass'][1],
+								'?' => array('frame_id' => Current::read('Frame.id'))
+						)
+				);
+			}
+			$this->NetCommons->handleValidationError($this->PhotoAlbum->validationErrors);
 		}
 	}
 
