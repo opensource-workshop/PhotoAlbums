@@ -1,31 +1,26 @@
-<div class="photoAlbums form">
-<?php echo $this->Form->create('PhotoAlbum'); ?>
-	<fieldset>
-		<legend><?php echo __('Edit Photo Album'); ?></legend>
-	<?php
-		echo $this->Form->input('id');
-		echo $this->Form->input('key');
-		echo $this->Form->input('weight');
-		echo $this->Form->input('block_id');
-		echo $this->Form->input('language_id');
-		echo $this->Form->input('status');
-		echo $this->Form->input('is_active');
-		echo $this->Form->input('is_latest');
-		echo $this->Form->input('name');
-		echo $this->Form->input('description');
-		echo $this->Form->input('created_user');
-		echo $this->Form->input('modified_user');
-	?>
-	</fieldset>
-<?php echo $this->Form->end(__('Submit')); ?>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
+<?php
+/**
+ * Album add template
+ *
+ * @copyright Copyright 2014, NetCommons Project
+ * @author Kohei Teraguchi <kteraguchi@commonsnet.org>
+ * @link http://www.netcommons.org NetCommons Project
+ * @license http://www.netcommons.org/license.txt NetCommons License
+ */
+?>
 
-		<li><?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $this->Form->value('PhotoAlbum.id')), null, __('Are you sure you want to delete # %s?', $this->Form->value('PhotoAlbum.id'))); ?></li>
-		<li><?php echo $this->Html->link(__('List Photo Albums'), array('action' => 'index')); ?></li>
-		<li><?php echo $this->Html->link(__('List Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Trackable Creator'), array('controller' => 'users', 'action' => 'add')); ?> </li>
-	</ul>
-</div>
+<?php echo $this->NetCommonsForm->create('PhotoAlbum', array('type' => 'file')); ?>
+	<?php echo $this->element('PhotoAlbums.album_form'); ?>
+
+	<hr />
+	<?php echo $this->Workflow->inputComment('PhotoAlbum.status'); ?>
+	<?php echo $this->Workflow->buttons('PhotoAlbum.status'); ?>
+<?php echo $this->NetCommonsForm->end(); ?>
+
+<?php if ($this->request->params['action'] === 'edit') : ?>
+	<div class="panel-footer text-right">
+		<?php echo $this->Button->delete('',
+			sprintf(__d('net_commons', 'Deleting the %s. Are you sure to proceed?'), __d('faqs', 'Question'))
+		); ?>
+	</div>
+<?php endif; ?>

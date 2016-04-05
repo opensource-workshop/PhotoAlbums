@@ -1,32 +1,62 @@
-<div class="photoAlbumPhotos form">
-<?php echo $this->Form->create('PhotoAlbumPhoto'); ?>
-	<fieldset>
-		<legend><?php echo __('Edit Photo Album Photo'); ?></legend>
-	<?php
-		echo $this->Form->input('id');
-		echo $this->Form->input('block_id');
-		echo $this->Form->input('album_key');
-		echo $this->Form->input('weight');
-		echo $this->Form->input('key');
-		echo $this->Form->input('language_id');
-		echo $this->Form->input('status');
-		echo $this->Form->input('is_active');
-		echo $this->Form->input('is_latest');
-		echo $this->Form->input('title');
-		echo $this->Form->input('description');
-		echo $this->Form->input('created_user');
-		echo $this->Form->input('modified_user');
-	?>
-	</fieldset>
-<?php echo $this->Form->end(__('Submit')); ?>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
+<?php
+/**
+ * Album add template
+ *
+ * @copyright Copyright 2014, NetCommons Project
+ * @author Kohei Teraguchi <kteraguchi@commonsnet.org>
+ * @link http://www.netcommons.org NetCommons Project
+ * @license http://www.netcommons.org/license.txt NetCommons License
+ */
+?>
 
-		<li><?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $this->Form->value('PhotoAlbumPhoto.id')), null, __('Are you sure you want to delete # %s?', $this->Form->value('PhotoAlbumPhoto.id'))); ?></li>
-		<li><?php echo $this->Html->link(__('List Photo Album Photos'), array('action' => 'index')); ?></li>
-		<li><?php echo $this->Html->link(__('List Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Trackable Creator'), array('controller' => 'users', 'action' => 'add')); ?> </li>
-	</ul>
-</div>
+<?php $this->assign('title_for_modal', __d('photo_albums', 'Add photo')); ?>
+
+<?php echo $this->NetCommonsForm->create('PhotoAlbumPhoto', array('type' => 'file')); ?>
+	<?php if (!empty($this->request->data['PhotoAlbumPhoto']['key'])): ?>
+		<div class="thumbnail">
+			<?php
+				echo $this->Html->image(
+					array(
+						'controller' => 'photo_album_photos',
+						'action' => 'photo',
+						Current::read('Block.id'),
+						$this->request->data['PhotoAlbumPhoto']['album_key'],
+						$this->request->data['PhotoAlbumPhoto']['id']
+					),
+					array(
+						'alt' => __d('photo_albums', 'photo')
+					)
+				);
+			?>
+		</div>
+	<?php endif; ?>
+
+	<?php echo $this->NetCommonsForm->hidden('album_key'); ?>
+	<?php echo $this->NetCommonsForm->hidden('key'); ?>
+	<?php echo $this->NetCommonsForm->hidden('language_id'); ?>
+
+	<?php
+		echo $this->NetCommonsForm->uploadFile(
+			PhotoAlbumPhoto::ATTACHMENT_FIELD_NAME,
+			array(
+				'label' => __d('photo_albums', 'Photo file'),
+				'remove' => false
+			)
+		)
+	?>
+
+	<?php
+		echo $this->NetCommonsForm->input(
+			'description',
+			array(
+				'type' => 'textarea',
+				'label' => __d('photo_albums', 'Photo description'),
+			)
+		);
+	?>
+
+	<hr />
+	<?php echo $this->Workflow->inputComment('PhotoAlbum.status'); ?>
+	<?php echo $this->Workflow->buttons('PhotoAlbumPhoto.status'); ?>
+
+<?php echo $this->NetCommonsForm->end() ?>

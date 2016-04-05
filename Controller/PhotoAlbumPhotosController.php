@@ -117,6 +117,7 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
  */
 	public function add() {
 		$this->layout = 'NetCommons.modal';
+		$this->view = 'edit';
 
 		$photo = $this->PhotoAlbumPhoto->create();
 		if ($this->request->is('post')) {
@@ -146,8 +147,6 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
  * @return void
  */
 	public function edit() {
-		$this->view = 'PhotoAlbums.PhotoAlbumPhotos/add';
-
 		$query = array(
 			'conditions' => $this->PhotoAlbumPhoto->getWorkflowConditions() + array(
 				'PhotoAlbumPhoto.album_key' => $this->params['pass'][1],

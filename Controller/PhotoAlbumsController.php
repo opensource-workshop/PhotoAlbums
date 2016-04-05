@@ -98,11 +98,11 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 		}
 
 		if ($frameSetting['PhotoAlbumFrameSetting']['display_type'] == PhotoAlbumFrameSetting::DISPLAY_TYPE_PHOTOS ) {
-			$this->view = 'PhotoAlbums.PhotoAlbumPhotos/index';
+			$this->view = 'PhotoAlbumPhotos/index';
 		}
 
 		if ($frameSetting['PhotoAlbumFrameSetting']['display_type'] == PhotoAlbumFrameSetting::DISPLAY_TYPE_SLIDE ) {
-			$this->view = 'PhotoAlbums.PhotoAlbumPhotos/slide';
+			$this->view = 'PhotoAlbumPhotos/slide';
 		}
 	}
 
@@ -151,6 +151,8 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
  * @return void
  */
 	public function add() {
+		$this->view = 'edit';
+
 		$album = $this->PhotoAlbum->create();
 		if ($this->request->is('post')) {
 			$this->request->data['PhotoAlbum']['status'] = $this->Workflow->parseStatus();
@@ -180,8 +182,6 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
  * @return void
  */
 	public function edit($id = null) {
-		$this->view = 'PhotoAlbums.PhotoAlbums/add';
-
 		$query = array(
 			'conditions' => $this->PhotoAlbum->getWorkflowConditions() + array(
 				'PhotoAlbum.block_id' => Current::read('Block.id'),
