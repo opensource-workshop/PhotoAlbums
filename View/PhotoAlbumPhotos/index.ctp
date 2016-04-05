@@ -120,32 +120,11 @@
 						);
 					?>
 				</a>
-				<div class="caption">
-					<div style="overflow: hidden;height: 4em;">
-						<?php echo nl2br($photo['PhotoAlbumPhoto']['description']) ?>
-					</div>
-					<p>
-						<?php if ($photo['PhotoAlbumPhoto']['status'] == 1): ?>
-							<span class="label" style="display: inline;"></span>
-						<?php else: ?>
-							<?php echo $this->Workflow->label($photo['PhotoAlbumPhoto']['status']); ?>
-						<?php endif; ?>
-
-						<span class="pull-right">
-							<?php if ($photo['PhotoAlbumPhoto']['status'] == 2 || $photo['PhotoAlbumPhoto']['status'] == 4): ?>
-								<a href="" class="btn btn-warning">
-									<span class="glyphicon glyphicon-ok"></span>
-								</a>
-							<?php endif; ?>
-
-							<?php if (Current::permission('photo_albums_photo_creatable') && $this->Workflow->canEdit('PhotoAlbumPhoto', $photo)): ?>
-								<a href="#" class="btn btn-primary " ng-click="PhotoController.edit('<?php echo $photo['PhotoAlbumPhoto']['id']; ?>')">
-									<span class="glyphicon glyphicon-edit"></span>
-								</a>
-							<?php endif; ?>
-						</span>
-					</p>
+				<div class="caption" style="overflow: hidden;height: 4em;">
+					<?php echo nl2br($photo['PhotoAlbumPhoto']['description']) ?>
 				</div>
+
+				<?php echo $this->PhotoAlbums->photoActionBar($photo); ?>
 			</div>
 		</div>
 	<?php endforeach; ?>

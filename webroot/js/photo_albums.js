@@ -19,26 +19,18 @@ NetCommonsApp
 .controller('PhotoAlbumsPhotoController',
 ['$modal', '$http', 'photoAlbumsValues', function($modal, $http, photoAlbumsValues) {
 
-  this.add = function(albumKey) {
+  this.add = function(url) {
     $http.defaults.headers.common["Accept"] = "text/html";
     $modal.open({
-      templateUrl: photoAlbumsValues.addUrl + albumKey,
+      templateUrl: url,
       controller: 'PhotoAlbumsModalController'
     });
   }
 
-  this.edit = function(photoId) {
+  this.slide = function(url) {
     $http.defaults.headers.common["Accept"] = "text/html";
     $modal.open({
-      templateUrl: photoAlbumsValues.editUrl + photoId,
-      controller: 'PhotoAlbumsModalController'
-    });
-  }
-
-  this.slide = function(albumKey) {
-    $http.defaults.headers.common["Accept"] = "text/html";
-    $modal.open({
-      templateUrl: photoAlbumsValues.slideUrl + albumKey,
+      templateUrl: url,
       size: 'lg'
     });
   }

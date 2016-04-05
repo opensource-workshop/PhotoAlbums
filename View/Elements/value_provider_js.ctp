@@ -16,25 +16,17 @@
 		addUrl: '<?php
 					echo $this->Html->url(
 						array(
+							'plugin' => 'photo_albums',
 							'controller' => 'photo_album_photos',
 							'action' => 'add',
 							Current::read('Block.id')
 						)
 					) . '/';
 				?>',
-		editUrl: '<?php
-					echo $this->Html->url(
-						array(
-							'controller' => 'photo_album_photos',
-							'action' => 'edit',
-							Current::read('Block.id'),
-							$albumKey
-						)
-					) . '/';
-				?>',
 		slideUrl: '<?php
 					echo $this->Html->url(
 						array(
+							'plugin' => 'photo_albums',
 							'controller' => 'photo_album_photos',
 							'action' => 'slide',
 							Current::read('Block.id')

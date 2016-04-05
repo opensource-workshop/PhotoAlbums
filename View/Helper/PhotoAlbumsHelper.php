@@ -25,18 +25,22 @@ class PhotoAlbumsHelper extends AppHelper {
 	public $helpers = array(
 		'Html',
 		'NetCommons.NetCommonsHtml',
+		'NetCommons.NetCommonsForm',
+		'NetCommons.LinkButton',
+		'Workflow.Workflow',
 	);
 
 /**
- * Creates a formatted IMG element for jacket.
+ * Creates a formatted img element for jacket.
  *
- * @param array $data data with UploadFile
+ * @param array $data PhotoAlbum data with UploadFile
  * @return img tag
  */
 	public function jacket($data) {
 		if (isset($data['UploadFile']['jacket']['id'])) {
 			$output = $this->Html->image(
 				array(
+					'plugin' => 'photo_albums',
 					'controller' => 'photo_albums',
 					'action' => 'jacket',
 					Current::read('Block.id'),
@@ -67,5 +71,77 @@ class PhotoAlbumsHelper extends AppHelper {
 		}
 
 		return $output;
+	}
+
+/**
+ * Creates a formatted form element for approve Glyphicon.
+ *
+ * @param string $modelName Model name
+ * @param array $data  PhotoAlbumPhoto data
+ * @return form tag with approve button
+ */
+	public function photoActionBar($data) {
+		$output = '';
+
+		if ($data['PhotoAlbumPhoto']['status'] != WorkflowComponent::STATUS_PUBLISHED) {
+			$output .= $this->Workflow->label($data['PhotoAlbumPhoto']['status']);
+		}
+
+		if (!Current::permission('content_publishable')) {
+			return $this->Html->div('photo-albums-photo-action-bar', $output);
+		}
+		if ($data['PhotoAlbumPhoto']['status'] != WorkflowComponent::STATUS_APPROVED &&
+			$data['PhotoAlbumPhoto']['status'] != WorkflowComponent::STATUS_DISAPPROVED
+		) {
+			return $this->Html->div('photo-albums-photo-action-bar', $output);
+		}
+
+		$output .= '<div class="pull-right text-right">';
+
+		$output .= $this->NetCommonsForm->create(
+			'PhotoAlbumPhoto',
+			array(
+				'plugin' => 'photo_albums',
+				'controller' => 'photo_album_photos',
+				'action' => 'edit',
+				'class' => 'label'
+			)
+		);
+		$output .= $this->NetCommonsForm->hidden('PhotoAlbumPhoto.id', array('value' => $data['PhotoAlbumPhoto']['id']));
+
+		$onClickScript = 'return confirm(\'' .
+			__d('photo_albums', 'Approving the photo. Are you sure to proceed?') .
+			'\')';
+		$output .= $this->Workflow->publishLinkButton(
+			'',
+			array(
+				'iconSize' => 'btn-xs',
+				'onclick' => $onClickScript,
+				'ng-class' => '{disabled: sending}',
+			)
+		);
+
+		$output .= $this->NetCommonsForm->end();
+
+		if (Current::permission('photo_albums_photo_creatable') &&
+			$this->Workflow->canEdit('PhotoAlbumPhoto', $data)
+		) {
+			$output .= $this->LinkButton->edit(
+				'',
+				array(
+					'plugin' => 'photo_albums',
+					'controller' => 'photo_album_photos',
+					'action' => 'edit',
+					$data['PhotoAlbumPhoto']['album_key'],
+					$data['PhotoAlbumPhoto']['key']
+				),
+				array(
+					'iconSize' => 'btn-xs',
+				)
+			);
+		}
+		$output .= '</div>';
+
+		return $this->Html->div('photo-albums-photo-action-bar', $output);
 	}
 }

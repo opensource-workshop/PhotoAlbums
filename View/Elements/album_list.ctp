@@ -116,7 +116,7 @@
 				<td style="vertical-align:middle;">
 					<?php
 						if ($this->Workflow->canEdit('PhotoAlbum', $album)) {
-							echo $this->Button->editLink(
+							echo $this->LinkButton->edit(
 								'',
 								array(
 									'plugin' => 'photo_albums',

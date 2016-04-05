@@ -63,7 +63,7 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 
 		$this->Paginator->settings = array(
 			'PhotoAlbumPhoto' => array(
-				'order' => array('PhotoAlbumPhoto.id' => 'desc'),
+				'order' => array('PhotoAlbumPhoto.created' => 'desc'),
 				'conditions' => $conditions
 			)
 		);
@@ -81,10 +81,10 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 		$conditions['PhotoAlbumPhoto.album_key'] = $this->request->params['pass'][1];
 
 		$this->Paginator->settings = array(
-				'PhotoAlbumPhoto' => array(
-						'order' => array('PhotoAlbumPhoto.id' => 'desc'),
-						'conditions' => $conditions
-				)
+			'PhotoAlbumPhoto' => array(
+				'order' => array('PhotoAlbumPhoto.id' => 'desc'),
+				'conditions' => $conditions
+			)
 		);
 		$this->set('photos', $this->Paginator->paginate('PhotoAlbumPhoto'));
 	}
@@ -140,11 +140,23 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
  * @return void
  */
 	public function edit() {
-		$this->layout = 'NetCommons.modal';
 		$this->view = 'PhotoAlbums.PhotoAlbumPhotos/add';
-		$id = $this->request->params['pass'][2];
 
-		if (!$this->PhotoAlbumPhoto->exists($id)) {
+		$query = array(
+			'conditions' => $this->PhotoAlbumPhoto->getWorkflowConditions() + array(
+				'PhotoAlbumPhoto.album_key' => $this->params['pass'][1],
+				'PhotoAlbumPhoto.key' => $this->params['pass'][2]
+			),
+			'recursive' => -1,
+		);
+		$photo = $this->PhotoAlbumPhoto->find('first', $query);
+
+		if (! $this->PhotoAlbumPhoto->canEditWorkflowContent($photo)) {
+			$this->throwBadRequest();
+			return false;
+		}
+
+		if (!$photo) {
 			throw new NotFoundException(__('Invalid photo album photo'));
 		}
 		if ($this->request->is(array('post', 'put'))) {
@@ -160,9 +172,9 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 					)
 				);
 			}
+			$this->NetCommons->handleValidationError($this->PhotoAlbum->validationErrors);
 		} else {
-			$options = array('conditions' => array('PhotoAlbumPhoto.' . $this->PhotoAlbumPhoto->primaryKey => $id));
-			$this->request->data = $this->PhotoAlbumPhoto->find('first', $options);
+			$this->request->data = $photo;
 		}
 	}
 
