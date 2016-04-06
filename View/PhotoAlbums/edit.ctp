@@ -10,7 +10,49 @@
 ?>
 
 <?php echo $this->NetCommonsForm->create('PhotoAlbum', array('type' => 'file')); ?>
-	<?php echo $this->element('PhotoAlbums.album_form'); ?>
+	<?php echo $this->NetCommonsForm->hidden('PhotoAlbum.block_id'); ?>
+	<?php echo $this->NetCommonsForm->hidden('PhotoAlbum.key'); ?>
+	<?php echo $this->NetCommonsForm->hidden('PhotoAlbum.language_id'); ?>
+
+	<div class = "row">
+		<div class="col-md-4">
+			<div class="thumbnail">
+				<?php echo $this->PhotoAlbums->jacket($this->request->data); ?>
+			</div>
+			<?php
+				echo $this->NetCommonsForm->uploadFile(
+					PhotoAlbum::ATTACHMENT_FIELD_NAME,
+					array(
+						'label' => false
+					)
+				);
+			?>
+		</div>
+
+		<div class="col-md-8">
+			<?php
+				echo $this->NetCommonsForm->input(
+					'PhotoAlbum.name',
+					array(
+						'type' => 'text',
+						'label' => __d('photo_albums', 'Album Name'),
+						'required' => true,
+					)
+				);
+			?>
+		</div>
+	</div>
+
+	<?php
+		echo $this->NetCommonsForm->input(
+			'PhotoAlbum.description',
+			array(
+				'type' => 'textarea',
+				'label' => __d('photo_albums', 'Album description'),
+			)
+		);
+	?>
+
 
 	<hr />
 	<?php echo $this->Workflow->inputComment('PhotoAlbum.status'); ?>
@@ -18,9 +60,24 @@
 <?php echo $this->NetCommonsForm->end(); ?>
 
 <?php if ($this->request->params['action'] === 'edit') : ?>
-	<div class="panel-footer text-right">
-		<?php echo $this->Button->delete('',
-			sprintf(__d('net_commons', 'Deleting the %s. Are you sure to proceed?'), __d('faqs', 'Question'))
-		); ?>
-	</div>
+	<?php echo $this->NetCommonsForm->create('PhotoAlbum', array(
+		'type' => 'delete',
+		'url' => NetCommonsUrl::actionUrl(array(
+			'plugin' => 'photo_albums',
+			'controller' => 'photo_albums',
+			'action' => 'delete',
+			Current::read('Block.id'),
+			$data['PhotoAlbum']['key']
+		))
+	)); ?>
+
+		<?php echo $this->NetCommonsForm->hidden('Block.id'); ?>
+		<?php echo $this->NetCommonsForm->hidden('key'); ?>
+
+		<?php
+			echo $this->Button->delete('',
+				sprintf(__d('net_commons', 'Deleting the %s. Are you sure to proceed?'), __d('photo_albums', 'Album'))
+			);
+		?>
+	<?php echo $this->NetCommonsForm->end();?>
 <?php endif; ?>
