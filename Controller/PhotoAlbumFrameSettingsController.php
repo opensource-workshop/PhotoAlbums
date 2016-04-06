@@ -60,7 +60,7 @@ class PhotoAlbumFrameSettingsController extends PhotoAlbumsAppController {
 		'Blocks.BlockTabs' => array(
 			'mainTabs' => array(
 				'frame_settings',
-				'role_permissions' => array('url' => array('controller' => 'PhotoAlbumSettings')),
+				'role_permissions'
 			)
 		),
 		'NetCommons.DisplayNumber',

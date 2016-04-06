@@ -13,7 +13,7 @@ App::uses('PhotoAlbumsAppController', 'PhotoAlbums.Controller');
 /**
  *
  */
-class PhotoAlbumSettingsController extends PhotoAlbumsAppController {
+class PhotoAlbumBlockRolePermissionsController extends PhotoAlbumsAppController {
 /**
  * layout
  *
@@ -55,7 +55,7 @@ class PhotoAlbumSettingsController extends PhotoAlbumsAppController {
 		'Blocks.BlockTabs' => array(
 			'mainTabs' => array(
 				'frame_settings',
-				'role_permissions' => array('url' => array('controller' => 'PhotoAlbumSettings')),
+				'role_permissions'
 			)
 		),
 		'Blocks.BlockRolePermissionForm',
