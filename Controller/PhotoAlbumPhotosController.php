@@ -223,27 +223,6 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 	}
 
 /**
- * delete method
- *
- * @param string $id id
- * @throws NotFoundException
- * @return void
- */
-	public function delete($id = null) {
-		$this->PhotoAlbumPhoto->id = $id;
-		if (!$this->PhotoAlbumPhoto->exists()) {
-			throw new NotFoundException(__('Invalid photo album photo'));
-		}
-		$this->request->onlyAllow('post', 'delete');
-		if ($this->PhotoAlbumPhoto->delete()) {
-			return $this->flash(__('The photo album photo has been deleted.'), array('action' => 'index'));
-		} else {
-			return $this->flash(__('The photo album photo could not be deleted. Please, try again.'), array('action' => 'index'));
-		}
-	}
-
-
-/**
  * photo method
  *
  * @param string $id id
@@ -256,4 +235,38 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 		return $this->Download->doDownload($this->request->params['pass'][2], ['field' => PhotoAlbumPhoto::ATTACHMENT_FIELD_NAME]);
 	}
 
+/**
+ * delete method
+ *
+ * @param string $id id
+ * @throws NotFoundException
+ * @return void
+ */
+	public function delete() {
+		if (!$this->request->is(array('post', 'delete'))) {
+			$this->throwBadRequest();
+			return;
+		}
+
+		$query = array(
+			'conditions' => $this->PhotoAlbumPhoto->getWorkflowConditions() + array(
+				'PhotoAlbumPhoto.album_key' => $this->params['pass'][1],
+				'PhotoAlbumPhoto.key' => $this->params['pass'][2]
+			),
+			'recursive' => -1,
+		);
+		$photo = $this->PhotoAlbumPhoto->find('first', $query);
+
+		if (!$this->PhotoAlbumPhoto->canDeleteWorkflowContent($photo)) {
+			$this->throwBadRequest();
+			return false;
+		}
+
+		if (! $this->PhotoAlbumPhoto->deletePhoto($photo)) {
+			$this->throwBadRequest();
+			return;
+		}
+
+		$this->redirect(NetCommonsUrl::backToPageUrl());
+	}
 }

@@ -59,7 +59,7 @@
 	<?php echo $this->Workflow->buttons('PhotoAlbum.status'); ?>
 <?php echo $this->NetCommonsForm->end(); ?>
 
-<?php if ($this->request->params['action'] === 'edit') : ?>
+<?php if ($this->request->params['action'] === 'edit' && $this->Workflow->canDelete('PhotoAlbum', $this->request->data)) : ?>
 	<div class="panel-footer text-right">
 		<?php
 			echo $this->NetCommonsForm->create(
@@ -76,10 +76,6 @@
 				)
 			);
 		?>
-
-			<?php echo $this->NetCommonsForm->hidden('Block.id'); ?>
-			<?php echo $this->NetCommonsForm->hidden('key'); ?>
-
 			<?php
 				echo $this->Button->delete('',
 					sprintf(__d('net_commons', 'Deleting the %s. Are you sure to proceed?'), __d('photo_albums', 'Album'))

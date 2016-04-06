@@ -197,9 +197,9 @@ class PhotoAlbum extends PhotoAlbumsAppModel {
 	}
 
 /**
- * Delete FaqQuestion
+ * Delete album
  *
- * @param array $data received post data
+ * @param array $data delete data
  * @return bool True on success
  * @throws InternalErrorException
  */

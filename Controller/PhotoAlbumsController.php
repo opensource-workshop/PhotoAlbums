@@ -256,7 +256,7 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 			return false;
 		}
 
-		if (! $this->PhotoAlbum->deleteAlbum($this->request->data)) {
+		if (! $this->PhotoAlbum->deleteAlbum($album)) {
 			$this->throwBadRequest();
 			return;
 		}

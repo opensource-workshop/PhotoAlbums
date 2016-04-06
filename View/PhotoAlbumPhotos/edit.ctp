@@ -56,7 +56,34 @@
 	?>
 
 	<hr />
-	<?php echo $this->Workflow->inputComment('PhotoAlbum.status'); ?>
+	<?php echo $this->Workflow->inputComment('PhotoAlbumPhoto.status'); ?>
 	<?php echo $this->Workflow->buttons('PhotoAlbumPhoto.status'); ?>
 
 <?php echo $this->NetCommonsForm->end() ?>
+
+<?php if ($this->request->params['action'] === 'edit' && $this->Workflow->canDelete('PhotoAlbumPhoto', $this->request->data)) : ?>
+	<div class="panel-footer text-right">
+		<?php
+			echo $this->NetCommonsForm->create(
+				'PhotoAlbumPhoto',
+				array(
+					'type' => 'delete',
+					'url' => array(
+						'plugin' => 'photo_albums',
+						'controller' => 'photo_album_photos',
+						'action' => 'delete',
+						Current::read('Block.id'),
+						$this->request->data['PhotoAlbumPhoto']['album_key'],
+						$this->request->data['PhotoAlbumPhoto']['key']
+					)
+				)
+			);
+		?>
+			<?php
+				echo $this->Button->delete('',
+					sprintf(__d('net_commons', 'Deleting the %s. Are you sure to proceed?'), __d('photo_albums', 'Photo'))
+				);
+			?>
+		<?php echo $this->NetCommonsForm->end();?>
+	</div>
+<?php endif; ?>

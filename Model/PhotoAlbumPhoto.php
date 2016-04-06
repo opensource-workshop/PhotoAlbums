@@ -72,6 +72,32 @@ class PhotoAlbumPhoto extends PhotoAlbumsAppModel {
 	}
 
 /**
+ * Delete photo
+ *
+ * @param array $data delete data
+ * @return bool True on success
+ * @throws InternalErrorException
+ */
+	public function deletePhoto($data) {
+		$this->begin();
+
+		try {
+			if (!$this->deleteAll(array('PhotoAlbumPhoto.key' => $data['PhotoAlbumPhoto']['key']), false)) {
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+			}
+
+			$this->deleteCommentsByContentKey($data['PhotoAlbumPhoto']['key']);
+
+			$this->commit();
+
+		} catch (Exception $ex) {
+			$this->rollback($ex);
+		}
+
+		return true;
+	}
+
+/**
  * Get workflow conditions
  *
  * @return array Conditions data
