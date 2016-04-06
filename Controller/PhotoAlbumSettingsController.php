@@ -71,6 +71,7 @@ class PhotoAlbumSettingsController extends PhotoAlbumsAppController {
 		$permissions = $this->Workflow->getBlockRolePermissions(
 			array(
 				'content_creatable',
+				'content_publishable',
 				'photo_albums_photo_creatable'
 			)
 		);
