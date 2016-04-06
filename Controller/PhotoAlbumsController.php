@@ -185,13 +185,13 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 		$query = array(
 			'conditions' => $this->PhotoAlbum->getWorkflowConditions() + array(
 				'PhotoAlbum.block_id' => Current::read('Block.id'),
-				'PhotoAlbum.key' =>$this->request->params['pass'][1]
+				'PhotoAlbum.key' => $this->request->params['pass'][1]
 			),
 			'recursive' => -1,
 		);
 		$album = $this->PhotoAlbum->find('first', $query);
 
-		if (! $this->PhotoAlbum->canEditWorkflowContent($album)) {
+		if (!$this->PhotoAlbum->canEditWorkflowContent($album)) {
 			$this->throwBadRequest();
 			return false;
 		}
@@ -236,16 +236,31 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
  * @throws NotFoundException
  * @return void
  */
-	public function delete($id = null) {
-		$this->PhotoAlbum->id = $id;
-		if (!$this->PhotoAlbum->exists()) {
-			throw new NotFoundException(__('Invalid photo album'));
+	public function delete() {
+		if (!$this->request->is(array('post', 'delete'))) {
+			$this->throwBadRequest();
+			return;
 		}
-		$this->request->onlyAllow('post', 'delete');
-		if ($this->PhotoAlbum->delete()) {
-			return $this->flash(__('The photo album has been deleted.'), array('action' => 'index'));
-		} else {
-			return $this->flash(__('The photo album could not be deleted. Please, try again.'), array('action' => 'index'));
+
+		$query = array(
+			'conditions' => $this->PhotoAlbum->getWorkflowConditions() + array(
+				'PhotoAlbum.block_id' => Current::read('Block.id'),
+				'PhotoAlbum.key' => $this->request->params['pass'][1]
+			),
+			'recursive' => -1,
+		);
+		$album = $this->PhotoAlbum->find('first', $query);
+
+		if (!$this->PhotoAlbum->canDeleteWorkflowContent($album)) {
+			$this->throwBadRequest();
+			return false;
 		}
+
+		if (! $this->PhotoAlbum->deleteAlbum($this->request->data)) {
+			$this->throwBadRequest();
+			return;
+		}
+
+		$this->redirect(NetCommonsUrl::backToPageUrl());
 	}
 }

@@ -60,24 +60,31 @@
 <?php echo $this->NetCommonsForm->end(); ?>
 
 <?php if ($this->request->params['action'] === 'edit') : ?>
-	<?php echo $this->NetCommonsForm->create('PhotoAlbum', array(
-		'type' => 'delete',
-		'url' => NetCommonsUrl::actionUrl(array(
-			'plugin' => 'photo_albums',
-			'controller' => 'photo_albums',
-			'action' => 'delete',
-			Current::read('Block.id'),
-			$data['PhotoAlbum']['key']
-		))
-	)); ?>
-
-		<?php echo $this->NetCommonsForm->hidden('Block.id'); ?>
-		<?php echo $this->NetCommonsForm->hidden('key'); ?>
-
+	<div class="panel-footer text-right">
 		<?php
-			echo $this->Button->delete('',
-				sprintf(__d('net_commons', 'Deleting the %s. Are you sure to proceed?'), __d('photo_albums', 'Album'))
+			echo $this->NetCommonsForm->create(
+				'PhotoAlbum',
+				array(
+					'type' => 'delete',
+					'url' => array(
+						'plugin' => 'photo_albums',
+						'controller' => 'photo_albums',
+						'action' => 'delete',
+						Current::read('Block.id'),
+						$this->request->data['PhotoAlbum']['key']
+					)
+				)
 			);
 		?>
-	<?php echo $this->NetCommonsForm->end();?>
+
+			<?php echo $this->NetCommonsForm->hidden('Block.id'); ?>
+			<?php echo $this->NetCommonsForm->hidden('key'); ?>
+
+			<?php
+				echo $this->Button->delete('',
+					sprintf(__d('net_commons', 'Deleting the %s. Are you sure to proceed?'), __d('photo_albums', 'Album'))
+				);
+			?>
+		<?php echo $this->NetCommonsForm->end();?>
+	</div>
 <?php endif; ?>

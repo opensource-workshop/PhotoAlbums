@@ -160,7 +160,7 @@ class PhotoAlbum extends PhotoAlbumsAppModel {
  * Save album
  *
  * @param array $data received post data
- * @return bool True on success, false on validation errors
+ * @return mixed On success Model::$data, false on validation errors
  * @throws InternalErrorException
  */
 	public function saveAlbum($data) {
@@ -194,5 +194,50 @@ class PhotoAlbum extends PhotoAlbumsAppModel {
 		}
 
 		return $album;
+	}
+
+/**
+ * Delete FaqQuestion
+ *
+ * @param array $data received post data
+ * @return bool True on success
+ * @throws InternalErrorException
+ */
+	public function deleteAlbum($data) {
+		$this->begin();
+
+		try {
+			if (!$this->deleteAll(array('PhotoAlbum.key' => $data['PhotoAlbum']['key']), false)) {
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+			}
+
+			$Photo = ClassRegistry::init('PhotoAlbums.PhotoAlbumPhoto');
+			$conditions = array('PhotoAlbumPhoto.album_key' => $data['PhotoAlbum']['key']);
+			$query = array(
+				'fields' => array('PhotoAlbumPhoto.key'),
+				'conditions' => $conditions,
+				'recursive' => -1
+			);
+			$contentKeys = $Photo->find('list', $query);
+			if (!$Photo->deleteAll($conditions, false)) {
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+			}
+
+			$DisplayAlbum = ClassRegistry::init('PhotoAlbums.PhotoAlbumDisplayAlbum');
+			$conditions = array('PhotoAlbumDisplayAlbum.album_key' => $data['PhotoAlbum']['key']);
+			if (!$DisplayAlbum->deleteAll($conditions, false)) {
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+			}
+
+			$contentKeys[] = $data['PhotoAlbum']['key'];
+			$this->deleteCommentsByContentKey($contentKeys);
+
+			$this->commit();
+
+		} catch (Exception $ex) {
+			$this->rollback($ex);
+		}
+
+		return true;
 	}
 }
