@@ -149,8 +149,8 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 	public function edit() {
 		$query = array(
 			'conditions' => $this->PhotoAlbumPhoto->getWorkflowConditions() + array(
-				'PhotoAlbumPhoto.album_key' => $this->params['pass'][1],
-				'PhotoAlbumPhoto.key' => $this->params['pass'][2]
+				'PhotoAlbumPhoto.album_key' => $this->request->params['pass'][1],
+				'PhotoAlbumPhoto.key' => $this->request->params['pass'][2]
 			),
 			'recursive' => -1,
 		);
@@ -191,14 +191,12 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
  * @return void
  */
 	public function publish() {
-		$this->view = 'PhotoAlbums.PhotoAlbumPhotos/add';
-
 		$query = array(
-				'conditions' => $this->PhotoAlbumPhoto->getWorkflowConditions() + array(
-						'PhotoAlbumPhoto.album_key' => $this->params['pass'][1],
-						'PhotoAlbumPhoto.key' => $this->params['pass'][2]
-				),
-				'recursive' => -1,
+			'conditions' => $this->PhotoAlbumPhoto->getWorkflowConditions() + array(
+				'PhotoAlbumPhoto.album_key' => $this->request->params['pass'][1],
+				'PhotoAlbumPhoto.key' => $this->request->params['pass'][2]
+			),
+			'recursive' => -1,
 		);
 		$photo = $this->PhotoAlbumPhoto->find('first', $query);
 
@@ -209,13 +207,13 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 			$photo['PhotoAlbumPhoto']['status'] = $this->Workflow->parseStatus();
 			if ($this->PhotoAlbumPhoto->savePhoto($photo)) {
 				$this->redirect(
-						array(
-								'controller' => 'photo_album_photos',
-								'action' => 'index',
-								Current::read('Block.id'),
-								$this->request->params['pass'][1],
-								'?' => array('frame_id' => Current::read('Frame.id'))
-						)
+					array(
+						'controller' => 'photo_album_photos',
+						'action' => 'index',
+						Current::read('Block.id'),
+						$this->request->params['pass'][1],
+						'?' => array('frame_id' => Current::read('Frame.id'))
+					)
 				);
 			}
 			$this->NetCommons->handleValidationError($this->PhotoAlbum->validationErrors);
@@ -250,8 +248,8 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 
 		$query = array(
 			'conditions' => $this->PhotoAlbumPhoto->getWorkflowConditions() + array(
-				'PhotoAlbumPhoto.album_key' => $this->params['pass'][1],
-				'PhotoAlbumPhoto.key' => $this->params['pass'][2]
+				'PhotoAlbumPhoto.album_key' => $this->request->params['pass'][1],
+				'PhotoAlbumPhoto.key' => $this->request->params['pass'][2]
 			),
 			'recursive' => -1,
 		);
