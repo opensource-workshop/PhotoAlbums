@@ -23,7 +23,16 @@
 				'',
 				'#',
 				array(
-					'ng-click' => 'PhotoController.add(\'' . $album['PhotoAlbum']['key'] . '\')'
+					'ng-click' => 'PhotoController.openAdd(\'' .
+						$this->NetCommonsHtml->url(
+							array(
+								'plugin' => 'photo_albums',
+								'controller' => 'photo_album_photos',
+								'action' => 'add',
+								$album['PhotoAlbum']['key'],
+							)
+						) .
+					'\')'
 				)
 			);
 		?>

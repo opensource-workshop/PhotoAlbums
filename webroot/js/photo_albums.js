@@ -19,7 +19,7 @@ NetCommonsApp
 .controller('PhotoAlbumsPhotoController',
 ['$modal', '$http', 'photoAlbumsValues', function($modal, $http, photoAlbumsValues) {
 
-  this.add = function(url) {
+  this.openAdd = function(url) {
     $http.defaults.headers.common["Accept"] = "text/html";
     $modal.open({
       templateUrl: url,

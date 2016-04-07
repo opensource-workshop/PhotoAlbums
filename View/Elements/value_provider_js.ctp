@@ -13,16 +13,6 @@
 
  <script>
 	NetCommonsApp.value('photoAlbumsValues', {
-		addUrl: '<?php
-					echo $this->Html->url(
-						array(
-							'plugin' => 'photo_albums',
-							'controller' => 'photo_album_photos',
-							'action' => 'add',
-							Current::read('Block.id')
-						)
-					) . '/';
-				?>',
 		slideUrl: '<?php
 					echo $this->Html->url(
 						array(
