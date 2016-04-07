@@ -74,9 +74,8 @@ class PhotoAlbumsHelper extends AppHelper {
 	}
 
 /**
- * Creates a formatted form element for approve Glyphicon.
+ * Creates action bar element for photo.
  *
- * @param string $modelName Model name
  * @param array $data  PhotoAlbumPhoto data
  * @return form tag with approve button
  */
@@ -85,18 +84,56 @@ class PhotoAlbumsHelper extends AppHelper {
 
 		if ($data['PhotoAlbumPhoto']['status'] != WorkflowComponent::STATUS_PUBLISHED) {
 			$output .= $this->Workflow->label($data['PhotoAlbumPhoto']['status']);
+			$output = $this->Html->div('pull-left', $output);
 		}
+
+		$operationOutput = $this->approveButton($data);
+
+		if (Current::permission('photo_albums_photo_creatable') &&
+			$this->Workflow->canEdit('PhotoAlbumPhoto', $data)
+		) {
+			$operationOutput .= $this->LinkButton->edit(
+				'',
+				array(
+					'plugin' => 'photo_albums',
+					'controller' => 'photo_album_photos',
+					'action' => 'edit',
+					$data['PhotoAlbumPhoto']['album_key'],
+					$data['PhotoAlbumPhoto']['key']
+				),
+				array(
+					'iconSize' => 'btn-xs',
+				)
+			);
+		}
+
+		if ($operationOutput) {
+			$operationOutput = $this->Html->div('text-right', $operationOutput);
+		}
+
+		$output .= $operationOutput;
+
+		return $this->Html->div('photo-albums-photo-action-bar', $output);
+	}
+
+/**
+ * Creates a formatted form element for approve Glyphicon.
+ *
+ * @param array $data  PhotoAlbumPhoto data
+ * @return form tag with approve button
+ */
+	public function approveButton($data) {
+		$output = '';
 
 		if (!Current::permission('content_publishable')) {
-			return $this->Html->div('photo-albums-photo-action-bar', $output);
-		}
-		if ($data['PhotoAlbumPhoto']['status'] != WorkflowComponent::STATUS_APPROVED &&
-			$data['PhotoAlbumPhoto']['status'] != WorkflowComponent::STATUS_DISAPPROVED
-		) {
-			return $this->Html->div('photo-albums-photo-action-bar', $output);
+			return $output;
 		}
 
-		$output .= '<div class="pull-right text-right">';
+		if ($data['PhotoAlbumPhoto']['status'] != WorkflowComponent::STATUS_APPROVED &&
+				$data['PhotoAlbumPhoto']['status'] != WorkflowComponent::STATUS_DISAPPROVED
+		) {
+			return $output;
+		}
 
 		$output .= $this->NetCommonsForm->create(
 			'PhotoAlbumPhoto',
@@ -118,8 +155,8 @@ class PhotoAlbumsHelper extends AppHelper {
 		$output .= $this->NetCommonsForm->hidden('PhotoAlbumPhoto.language_id', array('value' => $data['PhotoAlbumPhoto']['language_id']));
 
 		$onClickScript = 'return confirm(\'' .
-			__d('photo_albums', 'Approving the photo. Are you sure to proceed?') .
-			'\')';
+				__d('photo_albums', 'Approving the photo. Are you sure to proceed?') .
+				'\')';
 		$output .= $this->Workflow->publishLinkButton(
 			'',
 			array(
@@ -131,25 +168,6 @@ class PhotoAlbumsHelper extends AppHelper {
 
 		$output .= $this->NetCommonsForm->end();
 
-		if (Current::permission('photo_albums_photo_creatable') &&
-			$this->Workflow->canEdit('PhotoAlbumPhoto', $data)
-		) {
-			$output .= $this->LinkButton->edit(
-				'',
-				array(
-					'plugin' => 'photo_albums',
-					'controller' => 'photo_album_photos',
-					'action' => 'edit',
-					$data['PhotoAlbumPhoto']['album_key'],
-					$data['PhotoAlbumPhoto']['key']
-				),
-				array(
-					'iconSize' => 'btn-xs',
-				)
-			);
-		}
-		$output .= '</div>';
-
-		return $this->Html->div('photo-albums-photo-action-bar', $output);
+		return $output;
 	}
 }
