@@ -78,7 +78,7 @@
 								<?php elseif (Current::permission('photo_albums_photo_creatable')): ?>
 									<?php
 										echo $this->Button->addLink(
-											__d('photo_albums', '写真を追加'),
+											__d('photo_albums', 'Add photo'),
 											'#',
 											array(
 												'ng-click' => 'PhotoController.add(\'' . $album['PhotoAlbum']['key'] . '\')'

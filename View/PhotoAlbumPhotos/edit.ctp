@@ -24,7 +24,7 @@
 						$this->request->data['PhotoAlbumPhoto']['id']
 					),
 					array(
-						'alt' => __d('photo_albums', 'photo')
+						'alt' => __d('photo_albums', 'Photo')
 					)
 				);
 			?>

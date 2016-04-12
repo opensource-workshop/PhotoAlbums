@@ -32,7 +32,7 @@ echo $this->NetCommonsHtml->css('/photo_albums/css/style.css');
 						$photo['PhotoAlbumPhoto']['id']
 					),
 					array(
-						'alt' => __d('photo_albums', 'photo'),
+						'alt' => __d('photo_albums', 'Photo'),
 						'style' => 'display: inline'
 					)
 				);

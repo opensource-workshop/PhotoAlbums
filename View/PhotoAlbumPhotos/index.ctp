@@ -124,7 +124,7 @@
 								$photo['PhotoAlbumPhoto']['id']
 							),
 							array(
-								'alt' => __d('photo_albums', 'photo')
+								'alt' => __d('photo_albums', 'Photo')
 							)
 						);
 					?>
@@ -148,7 +148,7 @@
 <footer>
 	<div class="row">
 		<div class="col-xs-12 text-center">
-			<?php echo $this->BackTo->pageLinkButton(__d("videos", "アルバム一覧へ戻る"), array('icon' => '')); ?>
+			<?php echo $this->BackTo->pageLinkButton(__d("photo_albums", "Back to album list"), array('icon' => '')); ?>
 		</div>
 	</div>
 </footer>

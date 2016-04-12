@@ -13,20 +13,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: View/Elements/album_form.ctp:36
-msgid "Album Name"
-msgstr ""
-
-#: View/Elements/album_form.ctp:49
-msgid "Album description"
-msgstr ""
-
 #: View/Elements/album_list.ctp:76
 msgid "Photo list"
 msgstr ""
 
 #: View/Elements/album_list.ctp:81
-msgid "写真を追加"
+#: View/PhotoAlbumPhotos/edit.ctp:12
+msgid "Add photo"
 msgstr ""
 
 #: View/Elements/album_list.ctp:97
@@ -92,26 +85,50 @@ msgstr ""
 msgid "Photo creatable roles"
 msgstr ""
 
-#: View/Helper/PhotoAlbumsHelper.php:45;63
+#: View/Helper/PhotoAlbumsHelper.php:50;68
 msgid "jacket"
 msgstr ""
 
-#: View/PhotoAlbumPhotos/add.ctp:12
-msgid "Add photo"
+#: View/Helper/PhotoAlbumsHelper.php:157
+msgid "Approving the photo. Are you sure to proceed?"
 msgstr ""
 
-#: View/PhotoAlbumPhotos/add.ctp:27
-#: View/PhotoAlbumPhotos/index.ctp:118
-#: View/PhotoAlbumPhotos/slide.ctp:36
-msgid "photo"
+#: View/Helper/PhotoAlbumsHelper.php:223
+msgid "Approving the photo you are viewing. Are you sure to proceed?"
 msgstr ""
 
-#: View/PhotoAlbumPhotos/add.ctp:42
+#: View/Helper/PhotoAlbumsHelper.php:226
+msgid "Approving the photo you are viewing"
+msgstr ""
+
+#: View/PhotoAlbumPhotos/edit.ctp:27;84
+#: View/PhotoAlbumPhotos/index.ctp:127
+#: View/PhotoAlbumPhotos/slide.ctp:35
+msgid "Photo"
+msgstr ""
+
+#: View/PhotoAlbumPhotos/edit.ctp:42
 msgid "Photo file"
 msgstr ""
 
-#: View/PhotoAlbumPhotos/add.ctp:53
+#: View/PhotoAlbumPhotos/edit.ctp:53
 msgid "Photo description"
+msgstr ""
+
+#: View/PhotoAlbumPhotos/index.ctp:151
+msgid "Back to album list"
+msgstr ""
+
+#: View/PhotoAlbums/edit.ctp:38
+msgid "Album Name"
+msgstr ""
+
+#: View/PhotoAlbums/edit.ctp:51
+msgid "Album description"
+msgstr ""
+
+#: View/PhotoAlbums/edit.ctp:81
+msgid "Album"
 msgstr ""
 
 #: View/PhotoAlbums/index.ctp:18
