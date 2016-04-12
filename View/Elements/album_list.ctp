@@ -9,30 +9,9 @@
  */
  ?>
 
-<?php echo $this->element('PhotoAlbums.value_provider_js'); ?>
+<?php echo $this->NetCommonsHtml->script('/photo_albums/js/photo_albums.js'); ?>
 
 <table class="table table-hover" ng-controller="PhotoAlbumsPhotoController as PhotoController">
-	<!--
-	<thead>
-	<tr>
-		<th>
-			<?php //echo $this->Paginator->sort('PhotoAlbum.title', __d('photo_albums', 'Title')); ?>
-			<?php echo $this->Paginator->sort('PhotoAlbum.status', 'アルバム'); ?>
-		</th>
-		<th>
-			<?php //echo $this->Paginator->sort('PhotoAlbum.title', __d('photo_albums', 'Title')); ?>
-			<?php echo $this->Paginator->sort('PhotoAlbum.status', '写真数'); ?>
-		</th>
-		<th>
-			<?php echo $this->Paginator->sort('PhotoAlbum.modified', __d('net_commons', 'Updated date')); ?>
-		</th>
-
-		<th>
-		</th>
-	</tr>
-	</thead>
-	 -->
-
 	<tbody>
 		<?php foreach ($albums as $album) : ?>
 			<tr>
@@ -69,8 +48,18 @@
 
 							<div>
 								<?php if ($album['PhotoAlbum']['photo_count']): ?>
-									<button type="button" class="btn btn-default" ng-click="PhotoController.slide('<?php echo $album['PhotoAlbum']['key']; ?>')">
-										<span class="glyphicon glyphicon-play" aria-hidden="true"></span> スライドショー
+									<button type="button" class="btn btn-default" ng-click="PhotoController.slide('
+										<?php
+											echo $this->NetCommonsHtml->url(
+												array(
+													'plugin' => 'photo_albums',
+													'controller' => 'photo_album_photos',
+													'action' => 'slide',
+													$album['PhotoAlbum']['key'],
+												)
+											)
+										?>')">
+										<span class="glyphicon glyphicon-play" aria-hidden="true"></span> <?php echo __d('photo_albums', 'Slide show'); ?>
 									</button>
 									<a href="<?php echo $this->NetCommonsHtml->url(array('controller' => 'photo_album_photos', 'action' => 'index', $album['PhotoAlbum']['key'])); ?>" class="btn btn-default">
 										<span class="glyphicon glyphicon-th"></span> <?php echo __d('photo_albums', 'Photo list'); ?>
@@ -81,7 +70,16 @@
 											__d('photo_albums', 'Add photo'),
 											'#',
 											array(
-												'ng-click' => 'PhotoController.add(\'' . $album['PhotoAlbum']['key'] . '\')'
+												'ng-click' => 'PhotoController.openAdd(\'' .
+													$this->NetCommonsHtml->url(
+														array(
+															'plugin' => 'photo_albums',
+															'controller' => 'photo_album_photos',
+															'action' => 'add',
+															$album['PhotoAlbum']['key'],
+														)
+													) .
+												'\')'
 											)
 										);
 									?>

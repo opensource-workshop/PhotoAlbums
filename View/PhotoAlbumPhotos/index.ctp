@@ -9,7 +9,8 @@
  */
 ?>
 
-<?php echo $this->element('PhotoAlbums.value_provider_js'); ?>
+<?php echo $this->NetCommonsHtml->script('/photo_albums/js/photo_albums.js'); ?>
+
 
 <h2><?php echo $album['PhotoAlbum']['name']; ?></h2>
 <p>

@@ -13,11 +13,11 @@ NetCommonsApp.requires.push('ui.bootstrap.modal');
  * PhotoAlbums Controller
  *
  * @param {string} Controller name
- * @param {'$modal', '$http', 'photoAlbumsValues')} Controller constructor function.
+ * @param {'$modal', '$http')} Controller constructor function.
  */
 NetCommonsApp
 .controller('PhotoAlbumsPhotoController',
-['$modal', '$http', 'photoAlbumsValues', function($modal, $http, photoAlbumsValues) {
+['$modal', '$http', function($modal, $http) {
 
   this.openAdd = function(url) {
     $http.defaults.headers.common["Accept"] = "text/html";
