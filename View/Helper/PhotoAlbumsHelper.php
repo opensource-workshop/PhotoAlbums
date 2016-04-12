@@ -143,16 +143,15 @@ class PhotoAlbumsHelper extends AppHelper {
 					'controller' => 'photo_album_photos',
 					'action' => 'publish',
 					Current::read('Block.id'),
-					$data['PhotoAlbumPhoto']['album_key'],
-					$data['PhotoAlbumPhoto']['key']
+					$data['PhotoAlbumPhoto']['album_key']
 				),
 				'class' => 'label'
 			)
 		);
-		$output .= $this->NetCommonsForm->hidden('PhotoAlbumPhoto.block_id', array('value' => Current::read('Block.id')));
-		$output .= $this->NetCommonsForm->hidden('PhotoAlbumPhoto.album_key', array('value' => $data['PhotoAlbumPhoto']['album_key']));
-		$output .= $this->NetCommonsForm->hidden('PhotoAlbumPhoto.key', array('value' => $data['PhotoAlbumPhoto']['key']));
-		$output .= $this->NetCommonsForm->hidden('PhotoAlbumPhoto.language_id', array('value' => $data['PhotoAlbumPhoto']['language_id']));
+		//$output .= $this->NetCommonsForm->hidden('PhotoAlbumPhoto.block_id', array('value' => Current::read('Block.id')));
+		//$output .= $this->NetCommonsForm->hidden('PhotoAlbumPhoto.album_key', array('value' => $data['PhotoAlbumPhoto']['album_key']));
+		$output .= $this->NetCommonsForm->hidden('PhotoAlbumPhoto.0.id', array('value' => $data['PhotoAlbumPhoto']['id']));
+		//$output .= $this->NetCommonsForm->hidden('PhotoAlbumPhoto.language_id', array('value' => $data['PhotoAlbumPhoto']['language_id']));
 
 		$onClickScript = 'return confirm(\'' .
 				__d('photo_albums', 'Approving the photo. Are you sure to proceed?') .
@@ -161,6 +160,71 @@ class PhotoAlbumsHelper extends AppHelper {
 			'',
 			array(
 				'iconSize' => 'btn-xs',
+				'onclick' => $onClickScript,
+				'ng-class' => '{disabled: sending}',
+			)
+		);
+
+		$output .= $this->NetCommonsForm->end();
+
+		return $output;
+	}
+
+
+/**
+ * Creates a formatted form element for approve Glyphicon.
+ *
+ * @param array $data  PhotoAlbumPhoto list data
+ * @return form tag with approve button
+ */
+	public function approveAllButton($data) {
+		$output = '';
+
+		if (empty($data)) {
+			return $output;
+		}
+		if (!Current::permission('content_publishable')) {
+			return $output;
+		}
+
+		$formTag = $this->NetCommonsForm->create(
+			'PhotoAlbumPhoto',
+			array(
+				'url' => array(
+					'plugin' => 'photo_albums',
+					'controller' => 'photo_album_photos',
+					'action' => 'publish',
+					Current::read('Block.id'),
+					$data[0]['PhotoAlbumPhoto']['album_key']
+				),
+				'class' => 'text-right'
+			)
+		);
+
+		$hiddenTags = '';
+		foreach ($data as $index => $photo) {
+			if ($photo['PhotoAlbumPhoto']['status'] != WorkflowComponent::STATUS_APPROVED &&
+				$photo['PhotoAlbumPhoto']['status'] != WorkflowComponent::STATUS_DISAPPROVED
+			) {
+				continue;
+			}
+
+			$fieldName = 'PhotoAlbumPhoto.' . $index . '.id';
+			$hiddenTags .= $this->NetCommonsForm->hidden($fieldName, array('value' => $photo['PhotoAlbumPhoto']['id']));
+		}
+
+		if (!$hiddenTags) {
+			return $output;
+		}
+
+		$output .= $formTag . $hiddenTags;
+
+		$onClickScript = 'return confirm(\'' .
+			__d('photo_albums', 'Approving the photo you are viewing. Are you sure to proceed?') .
+			'\')';
+		$output .= $this->Workflow->publishLinkButton(
+			__d('photo_albums', 'Approving the photo you are viewing'),
+			array(
 				'onclick' => $onClickScript,
 				'ng-class' => '{disabled: sending}',
 			)

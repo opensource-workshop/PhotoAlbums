@@ -125,6 +125,7 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 			if ($this->PhotoAlbumPhoto->savePhoto($this->request->data)) {
 				$this->redirect(
 					array(
+						'plugin' => 'photo_albums',
 						'controller' => 'photo_album_photos',
 						'action' => 'index',
 						Current::read('Block.id'),
@@ -169,6 +170,7 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 			if ($this->PhotoAlbumPhoto->savePhoto($this->request->data)) {
 				$this->redirect(
 					array(
+						'plugin' => 'photo_albums',
 						'controller' => 'photo_album_photos',
 						'action' => 'index',
 						Current::read('Block.id'),
@@ -191,33 +193,37 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
  * @return void
  */
 	public function publish() {
+		if (!$this->request->is(array('post', 'put'))) {
+			$this->throwBadRequest();
+			return;
+		}
+
 		$query = array(
-			'conditions' => $this->PhotoAlbumPhoto->getWorkflowConditions() + array(
+			'conditions' => array(
 				'PhotoAlbumPhoto.album_key' => $this->request->params['pass'][1],
-				'PhotoAlbumPhoto.key' => $this->request->params['pass'][2]
+				'PhotoAlbumPhoto.id' =>  Hash::extract($this->request->data, 'PhotoAlbumPhoto.{n}.id')
 			),
 			'recursive' => -1,
+			//'callbacks' => 'before',
 		);
-		$photo = $this->PhotoAlbumPhoto->find('first', $query);
+		$photos = $this->PhotoAlbumPhoto->find('all', $query);
 
-		if (!$photo) {
-			throw new NotFoundException(__('Invalid photo album photo'));
+		if (!$this->PhotoAlbumPhoto->publish($photos)) {
+			$this->throwBadRequest();
+			return;
 		}
-		if ($this->request->is(array('post', 'put'))) {
-			$photo['PhotoAlbumPhoto']['status'] = $this->Workflow->parseStatus();
-			if ($this->PhotoAlbumPhoto->savePhoto($photo)) {
-				$this->redirect(
-					array(
-						'controller' => 'photo_album_photos',
-						'action' => 'index',
-						Current::read('Block.id'),
-						$this->request->params['pass'][1],
-						'?' => array('frame_id' => Current::read('Frame.id'))
-					)
-				);
-			}
-			$this->NetCommons->handleValidationError($this->PhotoAlbum->validationErrors);
-		}
+
+		$this->redirect(
+			array(
+				'plugin' => 'photo_albums',
+				'controller' => 'photo_album_photos',
+				'action' => 'index',
+				Current::read('Block.id'),
+				$this->request->params['pass'][1],
+				'?' => array('frame_id' => Current::read('Frame.id'))
+			)
+		);
+
 	}
 
 /**
@@ -260,7 +266,7 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 			return false;
 		}
 
-		if (! $this->PhotoAlbumPhoto->deletePhoto($photo)) {
+		if (!$this->PhotoAlbumPhoto->deletePhoto($photo)) {
 			$this->throwBadRequest();
 			return;
 		}

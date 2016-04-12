@@ -41,7 +41,6 @@ class PhotoAlbumPhoto extends PhotoAlbumsAppModel {
 		'Workflow.WorkflowComment',
 	);
 
-
 /**
  * Save photo
  *
@@ -58,7 +57,7 @@ class PhotoAlbumPhoto extends PhotoAlbumsAppModel {
 		}
 
 		try {
-			if (!$album = $this->save(null, false)) {
+			if (!$photo = $this->save(null, false)) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
 
@@ -68,7 +67,40 @@ class PhotoAlbumPhoto extends PhotoAlbumsAppModel {
 			$this->rollback($ex);
 		}
 
-		return $album;
+		return $photo;
+	}
+
+/**
+ * Publish photo
+ *
+ * @param array $data photo data for publish
+ * @return bool True on success, false on validation errors
+ * @throws InternalErrorException
+ */
+	public function publish($data) {
+		$this->begin();
+
+		foreach ($data as $photo) {
+			unset($photo['PhotoAlbumPhoto']['id']);
+			$photo['PhotoAlbumPhoto']['status'] = WorkflowComponent::STATUS_PUBLISHED;
+
+			$this->create($photo);
+			if (!$this->validates()) {
+				return false;
+			}
+
+			try {
+				if (!$this->save(null, false)) {
+					throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+				}
+			} catch (Exception $ex) {
+				$this->rollback($ex);
+			}
+		}
+
+		$this->commit();
+
+		return true;
 	}
 
 /**

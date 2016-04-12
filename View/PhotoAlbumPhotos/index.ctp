@@ -139,11 +139,7 @@
 	<?php endforeach; ?>
 </div>
 
-<div class="text-right">
-	<a href="" class="btn btn-warning">
-		<span class="glyphicon glyphicon-ok"></span> 表示している写真をすべて承認する
-	</a>
-</div>
+<?php echo $this->PhotoAlbums->approveAllButton($photos); ?>
 
 <hr>
 <?php echo $this->element('NetCommons.paginator'); ?>
