@@ -70,13 +70,13 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 
 		$this->Paginator->settings = array(
 			'PhotoAlbum' => array(
-				'order' => array('PhotoAlbum.id' => 'desc'),
+				'sort' => $frameSetting['PhotoAlbumFrameSetting']['albums_sort'],
+				'direction' => $frameSetting['PhotoAlbumFrameSetting']['albums_direction'],
 				'conditions' => $conditions
 			)
 		);
 		$albums = $this->Paginator->paginate('PhotoAlbum');
 		$this->set('albums', $albums);
-		$this->set('albumKey', '');
 		if (empty($albums)) {
 			return;
 		}
@@ -94,7 +94,6 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 				)
 			);
 			$this->set('photos', $this->Paginator->paginate('PhotoAlbumPhoto'));
-			$this->set('albumKey', $albums[0]['PhotoAlbum']['key']);
 		}
 
 		if ($frameSetting['PhotoAlbumFrameSetting']['display_type'] == PhotoAlbumFrameSetting::DISPLAY_TYPE_PHOTOS ) {

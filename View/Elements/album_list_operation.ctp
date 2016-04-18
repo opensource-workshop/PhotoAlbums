@@ -9,31 +9,60 @@
  */
 ?>
 
-<div class="text-right" style="margin: 10px 0px;">
+<div class="text-right photo-albums-album-list-operation">
 	<span class="btn-group text-left">
 		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 			<?php
-				// 現在選択されている表示順処理
-				echo __d('net_commons', 'Title');
+				switch ($frameSetting['PhotoAlbumFrameSetting']['albums_order']) {
+					case 'PhotoAlbum.modified desc':
+						echo __d('net_commons', 'Newest');
+						break;
+					case 'PhotoAlbum.created asc':
+						echo __d('net_commons', 'Oldest');
+						break;
+					default:
+						echo __d('net_commons', 'Title');
+				}
 			?>
 			<span class="caret">
 			</span>
 		</button>
-		<ul class="dropdown-menu" role="menu">
+		<ul class="dropdown-menu">
 			<li>
-				<a href="">
-					<?php echo __d('net_commons', 'Newest'); ?>
-				</a>
+				<?php
+					echo $this->Paginator->sort(
+						'PhotoAlbum.modified',
+						__d('net_commons', 'Newest'),
+						array(
+							'direction' => 'desc',
+							'lock' => true
+						)
+					);
+				?>
 			</li>
 			<li>
-				<a href="">
-					<?php echo __d('net_commons', 'Oldest'); ?>
-				</a>
+				<?php
+					echo $this->Paginator->sort(
+						'PhotoAlbum.created',
+						__d('net_commons', 'Oldest'),
+						array(
+							'direction' => 'asc',
+							'lock' => true
+						)
+					);
+				?>
 			</li>
 			<li>
-				<a href="">
-					<?php echo __d('net_commons', 'Title'); ?>
-				</a>
+				<?php
+					echo $this->Paginator->sort(
+						'PhotoAlbum.name',
+						__d('net_commons', 'Title'),
+						array(
+							'direction' => 'asc',
+							'lock' => true
+						)
+					);
+				?>
 			</li>
 		</ul>
 	</span>

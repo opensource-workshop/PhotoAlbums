@@ -8,6 +8,7 @@
  * @license http://www.netcommons.org/license.txt NetCommons License
  */
 ?>
+<?php echo $this->NetCommonsHtml->css('/photo_albums/css/photo_albums.css'); ?>
 
 <div class='text-right'>
 	<?php

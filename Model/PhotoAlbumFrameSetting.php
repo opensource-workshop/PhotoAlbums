@@ -50,9 +50,37 @@ class PhotoAlbumFrameSetting extends PhotoAlbumsAppModel {
 					'required' => true,
 				),
 			),
+			/*'albums_order' => array(
+				'inList' => array(
+					'rule' => array(
+						'inList',
+						array(
+							'PhotoAlbum.modified desc',
+							'PhotoAlbum.created asc',
+							'PhotoAlbum.name asc',
+						)
+					),
+					'message' => __d('net_commons', 'Invalid request.'),
+					'required' => true,
+				),
+			),*/
 			'albums_per_page' => array(
 				'numeric' => array(
 					'rule' => array('numeric'),
+					'message' => __d('net_commons', 'Invalid request.'),
+					'required' => true,
+				),
+			),
+			'photos_order' => array(
+				'inList' => array(
+					'rule' => array(
+						'inList',
+						array(
+							'PhotoAlbumPhoto.modified desc',
+							'PhotoAlbumPhoto.created asc',
+							'PhotoAlbumPhoto.name asc',
+						)
+					),
 					'message' => __d('net_commons', 'Invalid request.'),
 					'required' => true,
 				),
@@ -109,6 +137,14 @@ class PhotoAlbumFrameSetting extends PhotoAlbumsAppModel {
 		}
 
 		try {
+			$orderValues = explode(' ', $data['PhotoAlbumFrameSetting']['albums_order']);
+			$this->set('albums_sort', $orderValues[0]);
+			$this->set('albums_direction', $orderValues[1]);
+
+			$orderValues = explode(' ', $data['PhotoAlbumFrameSetting']['photos_order']);
+			$this->set('photos_sort', $orderValues[0]);
+			$this->set('photos_direction', $orderValues[1]);
+
 			if (!$photoAlbumSetting = $this->save(null, false)) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}

@@ -59,9 +59,9 @@
 		array(
 			'type' => 'select',
 			'options' => array(
-				'PhotoAlbum.modified DESC' => __d('net_commons', 'Newest'),
-				'PhotoAlbum.created ASC' => __d('net_commons', 'Oldest'),
-				'PhotoAlbum.name ASC' => __d('net_commons', 'Title')
+				'PhotoAlbum.modified desc' => __d('net_commons', 'Newest'),
+				'PhotoAlbum.created asc' => __d('net_commons', 'Oldest'),
+				'PhotoAlbum.name asc' => __d('net_commons', 'Title')
 			),
 			'label' => __d('photo_albums', 'Albums display order')
 		)
@@ -82,9 +82,9 @@
 			array(
 				'type' => 'select',
 				'options' => array(
-					'PhotoAlbum.modified DESC' => __d('net_commons', 'Newest'),
-					'PhotoAlbum.created ASC' => __d('net_commons', 'Oldest'),
-					'PhotoAlbum.name ASC' => __d('net_commons', 'Title')
+					'PhotoAlbumPhoto.modified desc' => __d('net_commons', 'Newest'),
+					'PhotoAlbumPhoto.created asc' => __d('net_commons', 'Oldest'),
+					'PhotoAlbumPhoto.name asc' => __d('net_commons', 'Title')
 				),
 				'label' => __d('photo_albums', 'Photos display order')
 			)
