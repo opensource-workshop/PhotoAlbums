@@ -14,6 +14,7 @@ App::uses('PhotoAlbumsAppController', 'PhotoAlbums.Controller');
  *
  */
 class PhotoAlbumBlockRolePermissionsController extends PhotoAlbumsAppController {
+
 /**
  * layout
  *

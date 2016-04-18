@@ -42,7 +42,7 @@ class PhotoAlbumFrameSetting extends PhotoAlbumsAppModel {
  */
 	public function beforeValidate($options = array()) {
 		$this->validate = Hash::merge($this->validate, array(
-			// TODO frame_keyのチェックいる？
+			// ＴＯＤＯ frame_keyのチェックいる？
 			'frame_key' => array(
 				'notBlank' => array(
 					'rule' => array('notBlank'),
@@ -149,7 +149,7 @@ class PhotoAlbumFrameSetting extends PhotoAlbumsAppModel {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
 
-			// TODO 不正なアルバムキーバリデーション
+			// ＴＯＤＯ 不正なアルバムキーバリデーション
 			$DisplayAlbum = ClassRegistry::init('PhotoAlbums.PhotoAlbumDisplayAlbum', true);
 
 			$conditions = array('frame_key' => $data['PhotoAlbumFrameSetting']['frame_key']);

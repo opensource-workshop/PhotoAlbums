@@ -19,6 +19,7 @@ class PhotoAlbumsComponent extends Component {
 /**
  * Initialize album setting and frame setting
  *
+ * @throws InternalErrorException
  * @return void
  */
 	public function initializeSetting() {
@@ -48,15 +49,4 @@ class PhotoAlbumsComponent extends Component {
 		}
 	}
 
-
-/**
- * Set album data to view
- *
- * @param Controller $controller Controller
- * @param array $query find条件
- * @return void
- */
-	public function setAlbums(Controller $controller, $query = array()) {
-
-	}
 }

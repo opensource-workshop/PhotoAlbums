@@ -22,7 +22,6 @@ class PhotoAlbumDisplayAlbum extends PhotoAlbumsAppModel {
  */
 	public $useDbConfig = 'master';
 
-
 /**
  * Get display album key list
  *

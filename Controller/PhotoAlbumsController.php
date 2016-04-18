@@ -81,7 +81,7 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 			return;
 		}
 
-		if ($frameSetting['PhotoAlbumFrameSetting']['display_type'] != PhotoAlbumFrameSetting::DISPLAY_TYPE_ALBUMS ) {
+		if ($frameSetting['PhotoAlbumFrameSetting']['display_type'] != PhotoAlbumFrameSetting::DISPLAY_TYPE_ALBUMS) {
 			$this->set('album', $albums[0]);
 
 			$conditions = $this->PhotoAlbumPhoto->getWorkflowConditions();
@@ -96,11 +96,11 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 			$this->set('photos', $this->Paginator->paginate('PhotoAlbumPhoto'));
 		}
 
-		if ($frameSetting['PhotoAlbumFrameSetting']['display_type'] == PhotoAlbumFrameSetting::DISPLAY_TYPE_PHOTOS ) {
+		if ($frameSetting['PhotoAlbumFrameSetting']['display_type'] == PhotoAlbumFrameSetting::DISPLAY_TYPE_PHOTOS) {
 			$this->view = 'PhotoAlbumPhotos/index';
 		}
 
-		if ($frameSetting['PhotoAlbumFrameSetting']['display_type'] == PhotoAlbumFrameSetting::DISPLAY_TYPE_SLIDE ) {
+		if ($frameSetting['PhotoAlbumFrameSetting']['display_type'] == PhotoAlbumFrameSetting::DISPLAY_TYPE_SLIDE) {
 			$this->view = 'PhotoAlbumPhotos/slide';
 		}
 	}
@@ -222,11 +222,10 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 /**
  * jacket method
  *
- * @param string $id id
  * @throws NotFoundException
  * @return void
  */
-	public function jacket($options = array()) {
+	public function jacket() {
 		App::uses('PhotoAlbum', 'PhotoAlbums.Model');
 
 		return $this->Download->doDownload($this->request->params['pass'][1], ['field' => PhotoAlbum::ATTACHMENT_FIELD_NAME]);
@@ -235,7 +234,6 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 /**
  * delete method
  *
- * @param string $id id
  * @throws NotFoundException
  * @return void
  */

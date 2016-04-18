@@ -42,8 +42,6 @@ class PhotoAlbum extends PhotoAlbumsAppModel {
 		'Workflow.WorkflowComment',
 	);
 
-
-
 /**
  * Called during validation operations, before validation. Please note that custom
  * validation rules can be defined in $validate.
@@ -110,7 +108,7 @@ class PhotoAlbum extends PhotoAlbumsAppModel {
 				'PhotoAlbumPhoto.status',
 			),
 		);
-		// TODO listでいける？
+		// ＴＯＤＯ listでいける？
 		$photoCount = $Photo->find('all', $query);
 		$photoCount = Hash::combine(
 			$photoCount,

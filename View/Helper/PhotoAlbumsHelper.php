@@ -76,7 +76,7 @@ class PhotoAlbumsHelper extends AppHelper {
 /**
  * Creates action bar element for photo.
  *
- * @param array $data  PhotoAlbumPhoto data
+ * @param array $data PhotoAlbumPhoto data
  * @return form tag with approve button
  */
 	public function photoActionBar($data) {
@@ -119,7 +119,7 @@ class PhotoAlbumsHelper extends AppHelper {
 /**
  * Creates a formatted form element for approve Glyphicon.
  *
- * @param array $data  PhotoAlbumPhoto data
+ * @param array $data PhotoAlbumPhoto data
  * @return form tag with approve button
  */
 	public function approveButton($data) {
@@ -170,11 +170,10 @@ class PhotoAlbumsHelper extends AppHelper {
 		return $output;
 	}
 
-
 /**
  * Creates a formatted form element for approve Glyphicon.
  *
- * @param array $data  PhotoAlbumPhoto list data
+ * @param array $data PhotoAlbumPhoto list data
  * @return form tag with approve button
  */
 	public function approveAllButton($data) {

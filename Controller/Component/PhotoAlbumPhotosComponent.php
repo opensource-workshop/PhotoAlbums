@@ -20,6 +20,7 @@ class PhotoAlbumPhotosComponent extends Component {
  * Called after the Controller::beforeFilter() and before the controller action
  *
  * @param Controller $controller Controller with components to startup
+ * @throws NotFoundException
  * @return void
  * @link http://book.cakephp.org/2.0/en/controllers/components.html#Component::startup
  */
@@ -27,7 +28,7 @@ class PhotoAlbumPhotosComponent extends Component {
 		$query = array(
 			'conditions' => $controller->PhotoAlbum->getWorkflowConditions() + array(
 				'PhotoAlbum.block_id' => Current::read('Block.id'),
-				'PhotoAlbum.key' =>$controller->request->params['pass'][1]
+				'PhotoAlbum.key' => $controller->request->params['pass'][1]
 			),
 			'recursive' => -1,
 		);

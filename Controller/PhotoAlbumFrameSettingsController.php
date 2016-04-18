@@ -17,6 +17,7 @@ App::uses('PhotoAlbumsAppController', 'PhotoAlbums.Controller');
  * @property PhotoAlbum $PhotoAlbum
  */
 class PhotoAlbumFrameSettingsController extends PhotoAlbumsAppController {
+
 /**
  * layout
  *
@@ -39,7 +40,7 @@ class PhotoAlbumFrameSettingsController extends PhotoAlbumsAppController {
  * use components
  *
  * @var array
-*/
+ */
 	public $components = array(
 		'Pages.PageLayout',
 		'NetCommons.Permission' => array(
@@ -55,7 +56,7 @@ class PhotoAlbumFrameSettingsController extends PhotoAlbumsAppController {
  * use helpers
  *
  * @var array
-*/
+ */
 	public $helpers = array(
 		'Blocks.BlockTabs' => array(
 			'mainTabs' => array(
@@ -72,7 +73,7 @@ class PhotoAlbumFrameSettingsController extends PhotoAlbumsAppController {
  * edit method
  *
  * @return void
-*/
+ */
 	public function edit() {
 		$this->PhotoAlbums->initializeSetting();
 
@@ -83,7 +84,7 @@ class PhotoAlbumFrameSettingsController extends PhotoAlbumsAppController {
 			}
 			$this->NetCommons->handleValidationError($this->PhotoAlbumFrameSetting->validationErrors);
 		} else {
-			$this->request->data =  $this->PhotoAlbumFrameSetting->getFrameSetting();
+			$this->request->data = $this->PhotoAlbumFrameSetting->getFrameSetting();
 
 			$query = array(
 				'fields' => array(
@@ -108,6 +109,5 @@ class PhotoAlbumFrameSettingsController extends PhotoAlbumsAppController {
 		);
 		$this->set('albums', $this->Paginator->paginate('PhotoAlbum'));
 		$this->set('displayAlbumKeys', Hash::extract($this->request->data['PhotoAlbumDisplayAlbum'], '{n}.album_key'));
-
 	}
 }

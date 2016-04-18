@@ -152,7 +152,6 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 /**
  * edit method
  *
- * @param string $id id
  * @throws NotFoundException
  * @return void
  */
@@ -201,7 +200,6 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 /**
  * publish method
  *
- * @param string $id id
  * @throws NotFoundException
  * @return void
  */
@@ -214,7 +212,7 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 		$query = array(
 			'conditions' => array(
 				'PhotoAlbumPhoto.album_key' => $this->request->params['pass'][1],
-				'PhotoAlbumPhoto.id' =>  Hash::extract($this->request->data, 'PhotoAlbumPhoto.{n}.id')
+				'PhotoAlbumPhoto.id' => Hash::extract($this->request->data, 'PhotoAlbumPhoto.{n}.id')
 			),
 			'recursive' => -1,
 			//'callbacks' => 'before',
@@ -236,17 +234,15 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 				'?' => array('frame_id' => Current::read('Frame.id'))
 			)
 		);
-
 	}
 
 /**
  * photo method
  *
- * @param string $id id
  * @throws NotFoundException
  * @return void
  */
-	public function photo($options = array()) {
+	public function photo() {
 		App::uses('PhotoAlbumPhoto', 'PhotoAlbums.Model');
 
 		return $this->Download->doDownload($this->request->params['pass'][2], ['field' => PhotoAlbumPhoto::ATTACHMENT_FIELD_NAME]);
@@ -255,7 +251,6 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 /**
  * delete method
  *
- * @param string $id id
  * @throws NotFoundException
  * @return void
  */
