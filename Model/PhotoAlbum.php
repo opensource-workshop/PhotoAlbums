@@ -78,6 +78,7 @@ class PhotoAlbum extends PhotoAlbumsAppModel {
  * @param bool $primary Whether this model is being queried directly (vs. being queried as an association)
  * @return mixed Result of the find operation
  * @link http://book.cakephp.org/2.0/en/models/callback-methods.html#afterfind
+ * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
 	public function afterFind($results, $primary = false) {
 		if ($this->recursive == -1) {
@@ -120,35 +121,35 @@ class PhotoAlbum extends PhotoAlbumsAppModel {
 		foreach ($results as $index => $result) {
 			$albumKey = $result[$this->alias]['key'];
 
-			$publishedPhotoCount = Hash::get(
+			$publishedCount = Hash::get(
 				$photoCount,
 				[$albumKey, WorkflowComponent::STATUS_PUBLISHED],
 				0
 			);
-			$pendingPhotoCount = Hash::get(
+			$pendingCount = Hash::get(
 				$photoCount,
 				[$albumKey, WorkflowComponent::STATUS_APPROVED],
 				0
 			);
-			$draftPhotoCount = Hash::get(
+			$draftCount = Hash::get(
 				$photoCount,
 				[$albumKey, WorkflowComponent::STATUS_IN_DRAFT],
 				0
 			);
-			$disapprovedPhotoCount = Hash::get(
+			$disapprovedCount = Hash::get(
 				$photoCount,
 				[$albumKey, WorkflowComponent::STATUS_DISAPPROVED],
 				0
 			);
 			$results[$index][$this->alias] += array(
-				'published_photo_count' => $publishedPhotoCount,
-				'pending_photo_count' => $pendingPhotoCount,
-				'draft_photo_count' => $draftPhotoCount,
-				'disapproved_photo_count' => $disapprovedPhotoCount,
-				'photo_count' => $publishedPhotoCount +
-					$pendingPhotoCount +
-					$draftPhotoCount +
-					$disapprovedPhotoCount,
+				'published_photo_count' => $publishedCount,
+				'pending_photo_count' => $pendingCount,
+				'draft_photo_count' => $draftCount,
+				'disapproved_photo_count' => $disapprovedCount,
+				'photo_count' => $publishedCount +
+					$pendingCount +
+					$draftCount +
+					$disapprovedCount,
 			);
 		}
 
