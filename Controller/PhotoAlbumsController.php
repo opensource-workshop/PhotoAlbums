@@ -199,8 +199,9 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 			throw new NotFoundException(__('Invalid photo album'));
 		}
 		if ($this->request->is(array('post', 'put'))) {
-			$this->request->data['PhotoAlbum']['status'] = $this->Workflow->parseStatus();
-			if ($this->PhotoAlbum->saveAlbum($this->request->data)) {
+			$data = $this->request->data;
+			$data['PhotoAlbum']['status'] = $this->Workflow->parseStatus();
+			if ($this->PhotoAlbum->saveAlbum($data)) {
 				$this->redirect(
 					array(
 						'action' => 'index',
@@ -213,6 +214,9 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 		} else {
 			$this->request->data = $album;
 		}
+
+		$comments = $this->PhotoAlbumPhoto->getCommentsByContentKey($this->request->data['PhotoAlbum']['key']);
+		$this->set('comments', $comments);
 	}
 
 /**

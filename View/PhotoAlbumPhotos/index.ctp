@@ -9,6 +9,7 @@
  */
 ?>
 
+<?php echo $this->NetCommonsHtml->css('/photo_albums/css/photo_albums.css'); ?>
 <?php echo $this->NetCommonsHtml->script('/photo_albums/js/photo_albums.js'); ?>
 
 
@@ -40,71 +41,131 @@
 	<?php endif; ?>
 </div>
 
-<div style="margin: 10px 0px;">
-	<div class="pull-left form-group questionnaire-list-select">
+<div class="photo-albums-photo-list-operation">
+	<div class="pull-left">
 		<span class="btn-group">
 			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-				全て表示
+				<?php
+					switch (Hash::get($this->request->params, ['named', 'status'])) {
+						case WorkflowComponent::STATUS_APPROVED:
+							echo __d('photo_albums', 'Pending approved');
+							break;
+						case WorkflowComponent::STATUS_DISAPPROVED:
+							echo __d('photo_albums', 'Disapproved');
+							break;
+						case WorkflowComponent::STATUS_IN_DRAFT:
+							echo __d('photo_albums', 'In draft');
+							break;
+						default:
+							echo __d('net_commons', 'Display all');
+					}
+				?>
 				<span class="caret">
 				</span>
 			</button>
 			<ul class="dropdown-menu" role="menu">
 				<li>
-					<a href="/questionnaires/questionnaires/index/12/answer_status:viewall?frame_id=11">未承認のみ</a>
+					<?php
+						echo $this->Paginator->link(
+							__d('net_commons', 'Display all'),
+							array(
+								'plugin' => 'photo_albums',
+								'controller' => 'photo_album_photos',
+								'action' => 'index',
+								$this->request->params['pass'][1],
+							)
+						);
+					?>
 				</li>
 				<li>
-					<a href="/questionnaires/questionnaires/index/12/answer_status:unanswered?frame_id=11">差し戻しのみ</a>
+					<?php
+						echo $this->Paginator->link(
+							__d('photo_albums', 'Pending approved'),
+							array(
+								'plugin' => 'photo_albums',
+								'controller' => 'photo_album_photos',
+								'action' => 'index',
+								$this->request->params['pass'][1],
+								'status' => WorkflowComponent::STATUS_APPROVED
+							)
+						);
+					?>
 				</li>
 				<li>
-					<a href="/questionnaires/questionnaires/index/12/answer_status:answered?frame_id=11">一時保存のみ</a>
+					<?php
+						echo $this->Paginator->link(
+							__d('photo_albums', 'Disapproved'),
+							array(
+								'plugin' => 'photo_albums',
+								'controller' => 'photo_album_photos',
+								'action' => 'index',
+								$this->request->params['pass'][1],
+								'status' => WorkflowComponent::STATUS_DISAPPROVED
+							)
+						);
+					?>
+				</li>
+				<li>
+					<?php
+						echo $this->Paginator->link(
+							__d('photo_albums', 'In draft'),
+							array(
+								'plugin' => 'photo_albums',
+								'controller' => 'photo_album_photos',
+								'action' => 'index',
+								$this->request->params['pass'][1],
+								'status' => WorkflowComponent::STATUS_IN_DRAFT
+							)
+						);
+					?>
 				</li>
 			</ul>
 		</span>
 	</div>
 
 	<div class="text-right">
-		<span class="btn-group text-left">
-			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-				新着順
-				<span class="caret">
-				</span>
-			</button>
-			<ul class="dropdown-menu" role="menu">
-				<li>
-					<a href="">登録順</a>
-				</li>
-				<li>
-					<a href="">タイトル順</a>
-				</li>
-			</ul>
-		</span>
 		<span class="btn-group">
 			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-				5件
+				<?php
+					switch ($this->Paginator->sortKey() . ' ' . $this->Paginator->sortDir()) {
+						case 'PhotoAlbumPhoto.modified desc':
+							echo __d('net_commons', 'Newest');
+							break;
+						default:
+							echo __d('net_commons', 'Oldest');
+					}
+				?>
 				<span class="caret">
 				</span>
 			</button>
-			<ul class="dropdown-menu" role="menu">
+			<ul class="dropdown-menu">
 				<li>
-					<a href="">1件</a>
-				</li>
-				<li class="active">
-					<a href="">5件</a>
-				</li>
-				<li>
-					<a href="">10件</a>
-				</li>
-				<li>
-					<a href="">20件</a>
-				</li>
-				<li>
-					<a href="">50件</a>
+					<?php
+						echo $this->Paginator->sort(
+							'PhotoAlbumPhoto.modified',
+							__d('net_commons', 'Newest'),
+							array(
+								'direction' => 'desc',
+								'lock' => true
+							)
+						);
+					?>
 				</li>
 				<li>
-					<a href="">100件</a>
+					<?php
+						echo $this->Paginator->sort(
+							'PhotoAlbumPhoto.created',
+							__d('net_commons', 'Oldest'),
+							array(
+								'direction' => 'asc',
+								'lock' => true
+							)
+						);
+					?>
 				</li>
 			</ul>
 		</span>
+		<?php echo $this->DisplayNumber->dropDownToggle(); ?>
 	</div>
 </div>
 

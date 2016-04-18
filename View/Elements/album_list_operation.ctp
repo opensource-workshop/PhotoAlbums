@@ -10,10 +10,10 @@
 ?>
 
 <div class="text-right photo-albums-album-list-operation">
-	<span class="btn-group text-left">
+	<span class="btn-group">
 		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 			<?php
-				switch ($frameSetting['PhotoAlbumFrameSetting']['albums_order']) {
+				switch ($this->Paginator->sortKey() . ' ' . $this->Paginator->sortDir()) {
 					case 'PhotoAlbum.modified desc':
 						echo __d('net_commons', 'Newest');
 						break;

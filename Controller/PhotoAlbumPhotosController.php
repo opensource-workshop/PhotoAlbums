@@ -27,6 +27,7 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 	public $uses = array(
 		'PhotoAlbums.PhotoAlbum',
 		'PhotoAlbums.PhotoAlbumPhoto',
+		'PhotoAlbums.PhotoAlbumFrameSetting',
 	);
 
 /**
@@ -56,6 +57,7 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
  */
 	public $helpers = array(
 		'Workflow.Workflow',
+		'NetCommons.DisplayNumber',
 	);
 
 /**
@@ -64,17 +66,24 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
  * @return void
  */
 	public function index() {
+		$frameSetting = $this->PhotoAlbumFrameSetting->getFrameSetting();
+		$this->set('frameSetting', $frameSetting);
+
 		$conditions = $this->PhotoAlbumPhoto->getWorkflowConditions();
 		$conditions['PhotoAlbumPhoto.album_key'] = $this->request->params['pass'][1];
+		$status = Hash::get($this->request->params, ['named', 'status']);
+		if ($status) {
+			$conditions['PhotoAlbumPhoto.status'] = $status;
+		}
 
 		$this->Paginator->settings = array(
 			'PhotoAlbumPhoto' => array(
-				'order' => array('PhotoAlbumPhoto.created' => 'desc'),
+				'sort' => $frameSetting['PhotoAlbumFrameSetting']['photos_sort'],
+				'direction' => $frameSetting['PhotoAlbumFrameSetting']['photos_direction'],
 				'conditions' => $conditions
 			)
 		);
 		$this->set('photos', $this->Paginator->paginate('PhotoAlbumPhoto'));
-		$this->set('albumKey', $this->request->params['pass'][1]);
 	}
 
 /**
@@ -166,8 +175,9 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 			throw new NotFoundException(__('Invalid photo album photo'));
 		}
 		if ($this->request->is(array('post', 'put'))) {
-			$this->request->data['PhotoAlbumPhoto']['status'] = $this->Workflow->parseStatus();
-			if ($this->PhotoAlbumPhoto->savePhoto($this->request->data)) {
+			$data = $this->request->data;
+			$data['PhotoAlbumPhoto']['status'] = $this->Workflow->parseStatus();
+			if ($this->PhotoAlbumPhoto->savePhoto($data)) {
 				$this->redirect(
 					array(
 						'plugin' => 'photo_albums',
@@ -183,6 +193,9 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 		} else {
 			$this->request->data = $photo;
 		}
+
+		$comments = $this->PhotoAlbumPhoto->getCommentsByContentKey($this->request->data['PhotoAlbumPhoto']['key']);
+		$this->set('comments', $comments);
 	}
 
 /**

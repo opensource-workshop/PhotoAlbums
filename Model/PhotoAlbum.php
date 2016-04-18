@@ -110,6 +110,7 @@ class PhotoAlbum extends PhotoAlbumsAppModel {
 				'PhotoAlbumPhoto.status',
 			),
 		);
+		// TODO listでいける？
 		$photoCount = $Photo->find('all', $query);
 		$photoCount = Hash::combine(
 			$photoCount,
@@ -126,7 +127,7 @@ class PhotoAlbum extends PhotoAlbumsAppModel {
 				[$albumKey, WorkflowComponent::STATUS_PUBLISHED],
 				0
 			);
-			$approvalWaitingPhotoCount = Hash::get(
+			$pendingPhotoCount = Hash::get(
 				$photoCount,
 				[$albumKey, WorkflowComponent::STATUS_APPROVED],
 				0
@@ -143,11 +144,11 @@ class PhotoAlbum extends PhotoAlbumsAppModel {
 			);
 			$results[$index][$this->alias] += array(
 				'published_photo_count' => $publishedPhotoCount,
-				'approval_waiting_photo_count' => $approvalWaitingPhotoCount,
+				'pending_photo_count' => $pendingPhotoCount,
 				'draft_photo_count' => $draftPhotoCount,
 				'disapproved_photo_count' => $disapprovedPhotoCount,
 				'photo_count' => $publishedPhotoCount +
-					$approvalWaitingPhotoCount +
+					$pendingPhotoCount +
 					$draftPhotoCount +
 					$disapprovedPhotoCount,
 			);

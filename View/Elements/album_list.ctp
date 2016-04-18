@@ -95,7 +95,7 @@
 						echo __d('photo_albums', '%s photos', $album['PhotoAlbum']['photo_count']);
 						if (Current::permission('content_publishable')) {
 							echo '<br><span class="label label-warning">' .
-									__d('photo_albums', '%s waiting approval', $album['PhotoAlbum']['approval_waiting_photo_count']) .
+									__d('photo_albums', '%s pending approval', $album['PhotoAlbum']['pending_photo_count']) .
 									'</span>';
 						}
 						if (Current::permission('photo_albums_photo_creatable')) {

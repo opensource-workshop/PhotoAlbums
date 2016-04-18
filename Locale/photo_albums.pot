@@ -29,7 +29,7 @@ msgstr ""
 
 #: View/Elements/album_list.ctp:100
 #: View/Elements/album_setting_list.ctp:79
-msgid "%s waiting approval"
+msgid "%s pending approval"
 msgstr ""
 
 #: View/Elements/album_list.ctp:105

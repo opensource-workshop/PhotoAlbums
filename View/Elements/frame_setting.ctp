@@ -83,8 +83,7 @@
 				'type' => 'select',
 				'options' => array(
 					'PhotoAlbumPhoto.modified desc' => __d('net_commons', 'Newest'),
-					'PhotoAlbumPhoto.created asc' => __d('net_commons', 'Oldest'),
-					'PhotoAlbumPhoto.name asc' => __d('net_commons', 'Title')
+					'PhotoAlbumPhoto.created asc' => __d('net_commons', 'Oldest')
 				),
 				'label' => __d('photo_albums', 'Photos display order')
 			)

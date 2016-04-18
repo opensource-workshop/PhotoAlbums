@@ -13,6 +13,7 @@
 	<?php echo $this->NetCommonsForm->hidden('PhotoAlbum.block_id'); ?>
 	<?php echo $this->NetCommonsForm->hidden('PhotoAlbum.key'); ?>
 	<?php echo $this->NetCommonsForm->hidden('PhotoAlbum.language_id'); ?>
+	<?php echo $this->NetCommonsForm->hidden('PhotoAlbum.status'); ?>
 
 	<div class = "row">
 		<div class="col-md-4">
@@ -84,3 +85,6 @@
 		<?php echo $this->NetCommonsForm->end();?>
 	</div>
 <?php endif; ?>
+
+<hr>
+<?php echo $this->Workflow->comments(); ?>

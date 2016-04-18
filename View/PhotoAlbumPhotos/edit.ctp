@@ -31,9 +31,11 @@
 		</div>
 	<?php endif; ?>
 
+	<?php echo $this->NetCommonsForm->hidden('id'); ?>
 	<?php echo $this->NetCommonsForm->hidden('album_key'); ?>
 	<?php echo $this->NetCommonsForm->hidden('key'); ?>
 	<?php echo $this->NetCommonsForm->hidden('language_id'); ?>
+	<?php echo $this->NetCommonsForm->hidden('status'); ?>
 
 	<?php
 		echo $this->NetCommonsForm->uploadFile(
@@ -87,3 +89,7 @@
 		<?php echo $this->NetCommonsForm->end();?>
 	</div>
 <?php endif; ?>
+
+<hr>
+
+<?php echo $this->Workflow->comments(); ?>
