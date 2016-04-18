@@ -13,31 +13,36 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: View/Elements/album_list.ctp:76
+#: View/Elements/album_list.ctp:62
+#: View/Elements/frame_setting.ctp:27
+msgid "Slide show"
+msgstr ""
+
+#: View/Elements/album_list.ctp:65
 msgid "Photo list"
 msgstr ""
 
-#: View/Elements/album_list.ctp:81
+#: View/Elements/album_list.ctp:70
 #: View/PhotoAlbumPhotos/edit.ctp:12
 msgid "Add photo"
 msgstr ""
 
-#: View/Elements/album_list.ctp:97
+#: View/Elements/album_list.ctp:95
 #: View/Elements/album_setting_list.ctp:76
 msgid "%s photos"
 msgstr ""
 
-#: View/Elements/album_list.ctp:100
+#: View/Elements/album_list.ctp:98
 #: View/Elements/album_setting_list.ctp:79
 msgid "%s pending approval"
 msgstr ""
 
-#: View/Elements/album_list.ctp:105
+#: View/Elements/album_list.ctp:103
 #: View/Elements/album_setting_list.ctp:84
 msgid "%s denied"
 msgstr ""
 
-#: View/Elements/album_list.ctp:128
+#: View/Elements/album_list.ctp:126
 msgid "Edit album"
 msgstr ""
 
@@ -51,10 +56,6 @@ msgstr ""
 
 #: View/Elements/frame_setting.ctp:26
 msgid "List of photo"
-msgstr ""
-
-#: View/Elements/frame_setting.ctp:27
-msgid "Slide show"
 msgstr ""
 
 #: View/Elements/frame_setting.ctp:45
@@ -73,11 +74,11 @@ msgstr ""
 msgid "Show albums per page"
 msgstr ""
 
-#: View/Elements/frame_setting.ctp:89
+#: View/Elements/frame_setting.ctp:88
 msgid "Photos display order"
 msgstr ""
 
-#: View/Elements/frame_setting.ctp:96
+#: View/Elements/frame_setting.ctp:95
 msgid "Show photos per page"
 msgstr ""
 
@@ -101,41 +102,53 @@ msgstr ""
 msgid "Approving the photo you are viewing"
 msgstr ""
 
-#: View/PhotoAlbumPhotos/edit.ctp:27;84
-#: View/PhotoAlbumPhotos/index.ctp:127
+#: View/PhotoAlbumPhotos/edit.ctp:27;86
+#: View/PhotoAlbumPhotos/index.ctp:189
 #: View/PhotoAlbumPhotos/slide.ctp:35
 msgid "Photo"
 msgstr ""
 
-#: View/PhotoAlbumPhotos/edit.ctp:42
+#: View/PhotoAlbumPhotos/edit.ctp:44
 msgid "Photo file"
 msgstr ""
 
-#: View/PhotoAlbumPhotos/edit.ctp:53
+#: View/PhotoAlbumPhotos/edit.ctp:55
 msgid "Photo description"
 msgstr ""
 
-#: View/PhotoAlbumPhotos/index.ctp:151
+#: View/PhotoAlbumPhotos/index.ctp:51;83
+msgid "Pending approved"
+msgstr ""
+
+#: View/PhotoAlbumPhotos/index.ctp:54;97
+msgid "Disapproved"
+msgstr ""
+
+#: View/PhotoAlbumPhotos/index.ctp:57;111
+msgid "In draft"
+msgstr ""
+
+#: View/PhotoAlbumPhotos/index.ctp:213
 msgid "Back to album list"
 msgstr ""
 
-#: View/PhotoAlbums/edit.ctp:38
+#: View/PhotoAlbums/edit.ctp:39
 msgid "Album Name"
 msgstr ""
 
-#: View/PhotoAlbums/edit.ctp:51
+#: View/PhotoAlbums/edit.ctp:52
 msgid "Album description"
 msgstr ""
 
-#: View/PhotoAlbums/edit.ctp:81
+#: View/PhotoAlbums/edit.ctp:82
 msgid "Album"
 msgstr ""
 
-#: View/PhotoAlbums/index.ctp:18
+#: View/PhotoAlbums/index.ctp:19
 msgid "Create albums"
 msgstr ""
 
-#: View/PhotoAlbums/index.ctp:26
+#: View/PhotoAlbums/index.ctp:27
 msgid "Album data not found"
 msgstr ""
 
