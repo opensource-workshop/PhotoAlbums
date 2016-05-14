@@ -1,5 +1,5 @@
 {
-    "name": "netcommons/photo_albums",
+    "name": "netcommons/photo-albums",
     "description": "PhotoAlbums for NetCommons Plugin",
     "type": "cakephp-plugin",
     "require": {
