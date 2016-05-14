@@ -16,7 +16,7 @@
         "satooshi/php-coveralls": "dev-master",
         "phpmd/phpmd" : "@stable",
         "sebastian/phpcpd" : "@stable",
-        "cakephp/cakephp-codesniffer": "~1.0",
+        "cakephp/cakephp-codesniffer": "~1.0"
     },
     "license": "NetCommons License",
     "authors": [
@@ -25,5 +25,5 @@
             "email": "kteraguchi@commonsnet.org"
         }
     ]
-    "keywords":    ["cakephp", "netcommons", "PhotoAlbums"],
+    "keywords":    ["cakephp", "netcommons", "PhotoAlbums"]
 }
