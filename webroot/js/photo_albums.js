@@ -17,7 +17,7 @@ NetCommonsApp.requires.push('ui.bootstrap.modal');
  */
 NetCommonsApp
 .controller('PhotoAlbumsPhotoController',
-['$modal', '$http', function($modal, $http) {
+['$uibModal', '$http', function($modal, $http) {
 
   this.openAdd = function(url) {
     $http.defaults.headers.common["Accept"] = "text/html";
@@ -43,7 +43,7 @@ NetCommonsApp
  * @param {string} Controller name
  * @param {$scope, $modalInstance)} Controller constructor function.
  */
-.controller('PhotoAlbumsModalController',['$scope', '$modalInstance', function($scope, $modalInstance) {
+.controller('PhotoAlbumsModalController',['$scope', '$uibModalInstance', function($scope, $modalInstance) {
 
   $scope.cancel = function() {
     $modalInstance.dismiss('cancel');
