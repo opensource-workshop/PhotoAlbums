@@ -9,6 +9,8 @@
  */
 
 App::uses('PhotoAlbumsAppModel', 'PhotoAlbums.Model');
+App::uses('UnZip', 'Files.Utility');
+App::uses('File', 'Utility');
 
 /**
  * Summary for PhotoAlbumPhoto Model
@@ -51,20 +53,24 @@ class PhotoAlbumPhoto extends PhotoAlbumsAppModel {
 	public function savePhoto($data) {
 		$this->begin();
 
-		$this->set($data);
-		if (!$this->validates()) {
-			return false;
-		}
+		$regenerateData = $this->__regenerateDataForZip($data);
 
-		try {
-			if (!$photo = $this->save(null, false)) {
-				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+		foreach ($regenerateData as $data) {
+			$this->set($data);
+			if (!$this->validates()) {
+				return false;
 			}
 
-			$this->commit();
+			try {
+				if (!$photo[] = $this->save(null, false)) {
+					throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+				}
 
-		} catch (Exception $ex) {
-			$this->rollback($ex);
+				$this->commit();
+
+			} catch (Exception $ex) {
+				$this->rollback($ex);
+			}
 		}
 
 		return $photo;
@@ -179,4 +185,42 @@ class PhotoAlbumPhoto extends PhotoAlbumsAppModel {
 
 		return $conditions;
 	}
+
+/**
+ * Regenerate data for zip
+ *
+ * @param array $data received post data
+ * @return array
+ * @throws InternalErrorException
+ */
+	private function __regenerateDataForZip($data) {
+		$files  = array();
+		if ($data['PhotoAlbumPhoto']['photo']['type'] == 'application/x-zip-compressed') {
+			$zip = new UnZip($data['PhotoAlbumPhoto']['photo']['tmp_name']);
+			$unzipedFolder = $zip->extract();
+			$dir = new Folder($unzipedFolder->path);
+			$files = $dir->findRecursive('.*\.(jpg|jpeg)');
+		}
+
+		if (!$files) {
+			return array($data);
+		}
+
+		foreach ($files as $file) {
+			$file = new File($file);
+			$data['PhotoAlbumPhoto']['photo'] = array_merge(
+				$data['PhotoAlbumPhoto']['photo'],
+				array(
+					'name' => $file->name,
+					'type' => $file->mime(),
+					'tmp_name' => $file->path,
+					'size' => $file->size()
+				)
+			);
+			$regenerateData[] = $data;
+		}
+
+		return $regenerateData;
+	}
+
 }
