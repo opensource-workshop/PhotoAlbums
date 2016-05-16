@@ -18,10 +18,10 @@ echo $this->NetCommonsHtml->css('/photo_albums/css/style.css');
 <?php echo $album['PhotoAlbum']['description']; ?>
 </p>
 
-<carousel interval="5000">
+<uib-carousel active="0" interval="5000">
 	<!-- Wrapper for slides -->
 	<?php foreach ($photos as $index => $photo) : ?>
-		<slide>
+		<uib-slide index="<?php echo $index ?>">
 			<?php
 				echo $this->Html->image(
 					array(
@@ -40,6 +40,6 @@ echo $this->NetCommonsHtml->css('/photo_albums/css/style.css');
 			<div class="carousel-caption">
 				<?php echo $photo['PhotoAlbumPhoto']['description'] ?>
 			</div>
-		</slide>
+		</uib-slide>
 	<?php endforeach; ?>
-</carousel>
+</uib-carousel>
