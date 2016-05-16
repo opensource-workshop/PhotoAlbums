@@ -31,7 +31,8 @@ NetCommonsApp
     $http.defaults.headers.common["Accept"] = "text/html";
     $modal.open({
       templateUrl: url,
-      size: 'lg'
+      controller: 'PhotoAlbumsModalController',
+      windowClass: 'photo-albums-photo-slide'
     });
   }
 

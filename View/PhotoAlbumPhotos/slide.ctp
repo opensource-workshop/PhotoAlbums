@@ -13,10 +13,15 @@
 echo $this->NetCommonsHtml->css('/photo_albums/css/style.css');
 ?>
 
-<h2><?php echo $album['PhotoAlbum']['name']; ?></h2>
-<p>
-<?php echo $album['PhotoAlbum']['description']; ?>
-</p>
+<div class="modal-header">
+	<button class="close" type="button"
+			tooltip="<?php echo __d('net_commons', 'Close'); ?>"
+			ng-click="cancel()">
+		<span class="glyphicon glyphicon-remove small"></span>
+	</button>
+
+	<h4 class="modal-title"><?php echo $album['PhotoAlbum']['name']; ?></h4>
+</div>
 
 <uib-carousel active="0" interval="5000">
 	<!-- Wrapper for slides -->

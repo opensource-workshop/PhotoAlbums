@@ -20,3 +20,7 @@
 
 .photo-albums-photo-action-bar {
 }
+
+.photo-albums-photo-slide .modal-dialog {
+	width: 80%;
+}
