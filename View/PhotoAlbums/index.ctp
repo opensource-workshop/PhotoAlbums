@@ -10,18 +10,6 @@
 ?>
 <?php echo $this->NetCommonsHtml->css('/photo_albums/css/photo_albums.css'); ?>
 
-<div class='text-right'>
-	<?php
-		echo $this->Workflow->addLinkButton(
-			'',
-			null,
-			array(
-				'tooltip' => __d('photo_albums', 'Create albums')
-			)
-		);
-	?>
-</div>
-
 <?php
 	if (empty($albums)) {
 		echo h(__d('photo_albums', 'Album data not found'));

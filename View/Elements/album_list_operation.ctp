@@ -9,63 +9,77 @@
  */
 ?>
 
-<div class="text-right photo-albums-album-list-operation">
-	<span class="btn-group">
-		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-			<?php
-				switch ($this->Paginator->sortKey() . ' ' . $this->Paginator->sortDir()) {
-					case 'PhotoAlbum.modified desc':
-						echo __d('net_commons', 'Newest');
-						break;
-					case 'PhotoAlbum.created asc':
-						echo __d('net_commons', 'Oldest');
-						break;
-					default:
-						echo __d('net_commons', 'Title');
-				}
-			?>
-			<span class="caret">
-			</span>
-		</button>
-		<ul class="dropdown-menu">
-			<li>
+<div class="clearfix photo-albums-album-list-operation">
+	<div class='pull-right'>
+		<?php
+			echo $this->Workflow->addLinkButton(
+				'',
+				null,
+				array(
+					'tooltip' => __d('photo_albums', 'Create albums')
+				)
+			);
+		?>
+	</div>
+
+	<div class="pull-left">
+		<span class="btn-group">
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 				<?php
-					echo $this->Paginator->sort(
-						'PhotoAlbum.modified',
-						__d('net_commons', 'Newest'),
-						array(
-							'direction' => 'desc',
-							'lock' => true
-						)
-					);
+					switch ($this->Paginator->sortKey() . ' ' . $this->Paginator->sortDir()) {
+						case 'PhotoAlbum.modified desc':
+							echo __d('net_commons', 'Newest');
+							break;
+						case 'PhotoAlbum.created asc':
+							echo __d('net_commons', 'Oldest');
+							break;
+						default:
+							echo __d('net_commons', 'Title');
+					}
 				?>
-			</li>
-			<li>
-				<?php
-					echo $this->Paginator->sort(
-						'PhotoAlbum.created',
-						__d('net_commons', 'Oldest'),
-						array(
-							'direction' => 'asc',
-							'lock' => true
-						)
-					);
-				?>
-			</li>
-			<li>
-				<?php
-					echo $this->Paginator->sort(
-						'PhotoAlbum.name',
-						__d('net_commons', 'Title'),
-						array(
-							'direction' => 'asc',
-							'lock' => true
-						)
-					);
-				?>
-			</li>
-		</ul>
-	</span>
-	<?php echo $this->DisplayNumber->dropDownToggle(); ?>
+				<span class="caret">
+				</span>
+			</button>
+			<ul class="dropdown-menu">
+				<li>
+					<?php
+						echo $this->Paginator->sort(
+							'PhotoAlbum.modified',
+							__d('net_commons', 'Newest'),
+							array(
+								'direction' => 'desc',
+								'lock' => true
+							)
+						);
+					?>
+				</li>
+				<li>
+					<?php
+						echo $this->Paginator->sort(
+							'PhotoAlbum.created',
+							__d('net_commons', 'Oldest'),
+							array(
+								'direction' => 'asc',
+								'lock' => true
+							)
+						);
+					?>
+				</li>
+				<li>
+					<?php
+						echo $this->Paginator->sort(
+							'PhotoAlbum.name',
+							__d('net_commons', 'Title'),
+							array(
+								'direction' => 'asc',
+								'lock' => true
+							)
+						);
+					?>
+				</li>
+			</ul>
+		</span>
+		<?php echo $this->DisplayNumber->dropDownToggle(); ?>
+	</div>
 </div>
 
