@@ -11,6 +11,60 @@
 
 <?php echo $this->NetCommonsHtml->script('/photo_albums/js/photo_albums.js'); ?>
 
+<div class="row" ng-controller="PhotoAlbumsPhotoController as PhotoController">
+	<?php foreach ($albums as $album) : ?>
+		<div class="col-md-6">
+			<div class="photo-albums-jacket" style="background-image:url(
+				<?php
+					echo $this->Html->url(
+						array(
+							'plugin' => 'photo_albums',
+							'controller' => 'photo_albums',
+							'action' => 'jacket',
+							Current::read('Block.id'),
+							$album['PhotoAlbum']['id']
+						)
+					);
+				?>);">
+			</div>
+			<?php //echo $this->PhotoAlbums->jacket($album); //imgタグ ?>
+
+			<div class="carousel-caption photo-albums-caption">
+				<h4><?php echo $album['PhotoAlbum']['name']; ?></h4>
+				<?php echo $this->Workflow->label($album['PhotoAlbum']['status']); ?>
+				<p class="photo-albums-description">
+					<?php echo $album['PhotoAlbum']['description']; ?>
+				</p>
+
+				<div class="clearfix">
+					<div class='pull-left'>
+						<div class="label label-info"><?php echo __d('photo_albums', '%s photos', $album['PhotoAlbum']['photo_count']); ?></div>
+						<?php
+							if (Current::permission('content_publishable')) {
+								echo '<div class="label label-warning">' .
+										__d('photo_albums', '%s pending approval', $album['PhotoAlbum']['pending_photo_count']) .
+										'</div>';
+							}
+							// 改行分の隙間空ける
+						?>
+						<?php
+							if (Current::permission('photo_albums_photo_creatable')) {
+								echo '<div class="label label-warning">' .
+										__d('photo_albums', '%s denied', $album['PhotoAlbum']['disapproved_photo_count']) .
+										'</div>';
+							}
+						?>
+					</div>
+					<div class='pull-right'>
+						<div class="label"><?php echo $this->DisplayUser->handleLink($album); ?></div>
+						<div class="label"><?php echo $this->Date->dateFormat($album['PhotoAlbum']['modified']); ?></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	<?php endforeach; ?>
+</div>
+
 <table class="table table-hover" ng-controller="PhotoAlbumsPhotoController as PhotoController">
 	<tbody>
 		<?php foreach ($albums as $album) : ?>

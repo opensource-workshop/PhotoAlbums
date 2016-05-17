@@ -47,7 +47,8 @@ class PhotoAlbumsHelper extends AppHelper {
 					$data['PhotoAlbum']['id']
 				),
 				array(
-					'alt' => __d('photo_albums', 'jacket')
+					'alt' => __d('photo_albums', 'jacket'),
+					'class' => 'img-responsive photo-albums-jacket'
 				)
 			);
 			/* https://github.com/NetCommons3/NetCommons3/issues/161
@@ -65,7 +66,8 @@ class PhotoAlbumsHelper extends AppHelper {
 			$output = $this->Html->image(
 				'PhotoAlbums.noimage.gif',
 				array(
-					'alt' => __d('photo_albums', 'jacket')
+					'alt' => __d('photo_albums', 'jacket'),
+					'class' => 'img-responsive photo-albums-jacket'
 				)
 			);
 		}

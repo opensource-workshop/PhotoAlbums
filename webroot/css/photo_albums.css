@@ -4,18 +4,45 @@
 }
 
 .photo-albums-frame-setting-album-list {
-	max-height:600px;
+	max-height:640px;
 	overflow: auto;
 	border-top: 1px solid #ddd;
 }
 
 .photo-albums-album-list-operation,
 .photo-albums-photo-list-operation {
-	margin: 10px 0px;
+	margin: 8px 0px;
 }
 
- {
-
+.photo-albums-jacket {
+	min-height: 480px;
+	margin: 0 0 4px 0px;
+	background-repeat: no-repeat;
+	background-position: center center;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+.photo-albums-jacket1 {
+	min-height: 200px;
+	max-height: 400px;
+	margin: 0 0 4px 0px;
+}
+.photo-albums-caption {
+	left: 5%;
+	right: 5%;
+	background-color: rgba(0, 0, 0, 0.2);
+	padding: 0;
+	text-align: left
+}
+.photo-albums-caption .photo-albums-description {
+	height: 3em;
+	overflow: hidden;
+}
+.photo-albums-caption .label {
+	display: inline;
+	margin: 0 1px;
 }
 
 .photo-albums-photo-action-bar {
