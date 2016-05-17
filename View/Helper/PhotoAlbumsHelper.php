@@ -76,6 +76,39 @@ class PhotoAlbumsHelper extends AppHelper {
 	}
 
 /**
+ * Creates a formatted div element for jacket by use background-image.
+ *
+ * @param array $data PhotoAlbum data with UploadFile
+ * @return img tag
+ */
+	public function jacketByBackground($data) {
+		if (isset($data['UploadFile']['jacket']['id'])) {
+			$imageUrl = $this->Html->url(
+				array(
+					'plugin' => 'photo_albums',
+					'controller' => 'photo_albums',
+					'action' => 'jacket',
+					Current::read('Block.id'),
+					$data['PhotoAlbum']['id']
+				)
+			);
+		} else {
+			$imageUrl = $this->assetUrl(
+				'PhotoAlbums.noimage.jpg',
+				['pathPrefix' => Configure::read('App.imageBaseUrl')]
+			);
+		}
+
+		$output = $this->Html->div(
+			'photo-albums-jacket',
+			'',
+			['style' => 'background-image:url(' . $imageUrl . ');']
+		);
+
+		return $output;
+	}
+
+/**
  * Creates action bar element for photo.
  *
  * @param array $data PhotoAlbumPhoto data

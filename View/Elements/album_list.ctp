@@ -23,19 +23,7 @@
 					);
 				?>
 			">
-				<div class="photo-albums-jacket" style="background-image:url(
-					<?php
-						echo $this->Html->url(
-							array(
-								'plugin' => 'photo_albums',
-								'controller' => 'photo_albums',
-								'action' => 'jacket',
-								Current::read('Block.id'),
-								$album['PhotoAlbum']['id']
-							)
-						);
-					?>);">
-				</div>
+				<?php echo $this->PhotoAlbums->jacketByBackground($album); ?>
 				<?php //echo $this->PhotoAlbums->jacket($album); //imgタグ ?>
 			</a>
 
