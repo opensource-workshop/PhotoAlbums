@@ -11,10 +11,11 @@
 <?php echo $this->NetCommonsHtml->css('/photo_albums/css/photo_albums.css'); ?>
 
 <?php
+	echo $this->element('PhotoAlbums.album_list_operation');
+
 	if (empty($albums)) {
 		echo h(__d('photo_albums', 'Album data not found'));
 	} else {
-		echo $this->element('PhotoAlbums.album_list_operation');
 		echo $this->element('PhotoAlbums.album_list');
 	}
 ?>
