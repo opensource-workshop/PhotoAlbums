@@ -14,20 +14,22 @@
 <div class="row" ng-controller="PhotoAlbumsPhotoController as PhotoController">
 	<?php foreach ($albums as $album) : ?>
 		<div class="col-md-6">
-			<div class="photo-albums-jacket" style="background-image:url(
-				<?php
-					echo $this->Html->url(
-						array(
-							'plugin' => 'photo_albums',
-							'controller' => 'photo_albums',
-							'action' => 'jacket',
-							Current::read('Block.id'),
-							$album['PhotoAlbum']['id']
-						)
-					);
-				?>);">
-			</div>
-			<?php //echo $this->PhotoAlbums->jacket($album); //imgタグ ?>
+			<a href="<?php echo $this->NetCommonsHtml->url(array('controller' => 'photo_album_photos', 'action' => 'index', $album['PhotoAlbum']['key'])); ?>">
+				<div class="photo-albums-jacket" style="background-image:url(
+					<?php
+						echo $this->Html->url(
+							array(
+								'plugin' => 'photo_albums',
+								'controller' => 'photo_albums',
+								'action' => 'jacket',
+								Current::read('Block.id'),
+								$album['PhotoAlbum']['id']
+							)
+						);
+					?>);">
+				</div>
+				<?php //echo $this->PhotoAlbums->jacket($album); //imgタグ ?>
+			</a>
 
 			<div class="carousel-caption photo-albums-caption">
 				<h4><?php echo $album['PhotoAlbum']['name']; ?></h4>
@@ -40,7 +42,9 @@
 					<div class='pull-left'>
 						<div class="label label-info"><?php echo __d('photo_albums', '%s photos', $album['PhotoAlbum']['photo_count']); ?></div>
 						<?php
-							if (Current::permission('content_publishable')) {
+							if (Current::permission('content_publishable') &&
+								$album['PhotoAlbum']['pending_photo_count']
+							) {
 								echo '<div class="label label-warning">' .
 										__d('photo_albums', '%s pending approval', $album['PhotoAlbum']['pending_photo_count']) .
 										'</div>';
@@ -48,7 +52,9 @@
 							// 改行分の隙間空ける
 						?>
 						<?php
-							if (Current::permission('photo_albums_photo_creatable')) {
+							if (Current::permission('photo_albums_photo_creatable') &&
+								$album['PhotoAlbum']['disapproved_photo_count']
+							) {
 								echo '<div class="label label-warning">' .
 										__d('photo_albums', '%s denied', $album['PhotoAlbum']['disapproved_photo_count']) .
 										'</div>';
@@ -166,22 +172,6 @@
 				</td>
 
 				<td style="vertical-align:middle;">
-					<?php
-						if ($this->Workflow->canEdit('PhotoAlbum', $album)) {
-							echo $this->LinkButton->edit(
-								'',
-								array(
-									'plugin' => 'photo_albums',
-									'controller' => 'photo_albums',
-									'action' => 'edit',
-									'key' =>  $album['PhotoAlbum']['key']
-								),
-								array(
-									'tooltip' => __d('photo_albums', 'Edit album')
-								)
-							);
-						}
-					?>
 				</td>
 			</tr>
 		<?php endforeach; ?>
