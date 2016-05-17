@@ -172,6 +172,35 @@ class PhotoAlbum extends PhotoAlbumsAppModel {
 		}
 
 		try {
+			if (!$album = $this->save(null, false)) {
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+			}
+
+			$this->commit();
+
+		} catch (Exception $ex) {
+			$this->rollback($ex);
+		}
+
+		return $album;
+	}
+
+/**
+ * Save album with display data
+ *
+ * @param array $data received post data
+ * @return mixed On success Model::$data, false on validation errors
+ * @throws InternalErrorException
+ */
+	public function saveAlbumWithDisplay($data) {
+		$this->begin();
+
+		$this->set($data);
+		if (!$this->validates()) {
+			return false;
+		}
+
+		try {
 			$doSaveDisplay = !$this->exists();
 			if (!$album = $this->save(null, false)) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));

@@ -155,7 +155,7 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 		$album = $this->PhotoAlbum->create();
 		if ($this->request->is('post')) {
 			$this->request->data['PhotoAlbum']['status'] = $this->Workflow->parseStatus();
-			$album = $this->PhotoAlbum->saveAlbum($this->request->data);
+			$album = $this->PhotoAlbum->saveAlbumWithDisplay($this->request->data);
 			if ($album) {
 				$this->redirect(
 					array(
