@@ -102,9 +102,10 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 			)
 		);
 		$this->set('photos', $this->Paginator->paginate('PhotoAlbumPhoto'));
+		$this->set('active', Hash::get($this->request->params['pass'], 2));
 	}
 
-/**
+/**2
  * view method
  *
  * @param string $id id

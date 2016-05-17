@@ -23,7 +23,7 @@ echo $this->NetCommonsHtml->css('/photo_albums/css/style.css');
 	<h4 class="modal-title"><?php echo $album['PhotoAlbum']['name']; ?></h4>
 </div>
 
-<uib-carousel active="0" interval="5000">
+<uib-carousel active="<?php echo $active; ?>" interval="5000">
 	<!-- Wrapper for slides -->
 	<?php foreach ($photos as $index => $photo) : ?>
 		<uib-slide index="<?php echo $index ?>">

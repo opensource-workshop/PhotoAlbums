@@ -53,27 +53,37 @@
 <div class="row" ng-controller="PhotoAlbumsPhotoController as PhotoController">
 	<?php foreach ($photos as $index => $photo) : ?>
 		<div class="col-sm-6 col-md-4">
-			<div class="thumbnail">
-				<a href="/photo_albums/photo_album_photos/slide?frame_id=37">
+			<a href="#" ng-click="PhotoController.slide('
+				<?php
+					echo $this->NetCommonsHtml->url(
+						array(
+							'plugin' => 'photo_albums',
+							'controller' => 'photo_album_photos',
+							'action' => 'slide',
+							$album['PhotoAlbum']['key'],
+							$index
+						)
+					)
+				?>
+			')">
+
+				<div class="photo-albums-photo" style="background-image:url(
 					<?php
-						echo $this->Html->image(
+						echo $this->Html->url(
 							array(
 								'controller' => 'photo_album_photos',
 								'action' => 'photo',
 								Current::read('Block.id'),
 								$photo['PhotoAlbumPhoto']['album_key'],
 								$photo['PhotoAlbumPhoto']['id']
-							),
-							array(
-								'alt' => __d('photo_albums', 'Photo')
 							)
 						);
 					?>
-				</a>
-				<div class="caption" style="overflow: hidden;height: 4em;">
-					<?php echo nl2br($photo['PhotoAlbumPhoto']['description']) ?>
-				</div>
+				);"></div>
+			</a>
 
+			<div class="carousel-caption photo-albums-caption">
+				<?php echo nl2br($photo['PhotoAlbumPhoto']['description']) ?>
 				<?php echo $this->PhotoAlbums->photoActionBar($photo); ?>
 			</div>
 		</div>

@@ -54,6 +54,16 @@
 	top: 2em;
 }
 
+.photo-albums-photo {
+	min-height: 240px;
+	margin: 0 0 4px 0;
+	background-repeat: no-repeat;
+	background-position: center center;
+	-webkit-background-size: contain;
+	-moz-background-size: contain;
+	-o-background-size: contain;
+	background-size: contain;
+}
 .photo-albums-photo-action-bar {
 }
 
