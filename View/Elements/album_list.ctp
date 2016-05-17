@@ -9,12 +9,20 @@
  */
 ?>
 
-<?php echo $this->NetCommonsHtml->script('/photo_albums/js/photo_albums.js'); ?>
-
-<div class="row" ng-controller="PhotoAlbumsPhotoController as PhotoController">
+<div class="row">
 	<?php foreach ($albums as $album) : ?>
 		<div class="col-md-6">
-			<a href="<?php echo $this->NetCommonsHtml->url(array('controller' => 'photo_album_photos', 'action' => 'index', $album['PhotoAlbum']['key'])); ?>">
+			<a href="
+				<?php
+					echo $this->NetCommonsHtml->url(
+						array(
+							'controller' => 'photo_album_photos',
+							'action' => 'index',
+							$album['PhotoAlbum']['key']
+						)
+					);
+				?>
+			">
 				<div class="photo-albums-jacket" style="background-image:url(
 					<?php
 						echo $this->Html->url(
@@ -172,6 +180,22 @@
 				</td>
 
 				<td style="vertical-align:middle;">
+					<?php
+						if ($this->Workflow->canEdit('PhotoAlbum', $album)) {
+							echo $this->LinkButton->edit(
+								'',
+								array(
+									'plugin' => 'photo_albums',
+									'controller' => 'photo_albums',
+									'action' => 'edit',
+									'key' =>  $album['PhotoAlbum']['key']
+								),
+								array(
+									'tooltip' => __d('photo_albums', 'Edit album')
+								)
+							);
+						}
+					?>
 				</td>
 			</tr>
 		<?php endforeach; ?>

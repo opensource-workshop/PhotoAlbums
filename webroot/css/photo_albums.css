@@ -9,14 +9,16 @@
 	border-top: 1px solid #ddd;
 }
 
-.photo-albums-album-list-operation,
+.photo-albums-album-list-operation {
+	margin: 8px 0;
+}
 .photo-albums-photo-list-operation {
-	margin: 8px 0px;
+	margin: 48px 0 8px;
 }
 
 .photo-albums-jacket {
 	min-height: 480px;
-	margin: 0 0 4px 0px;
+	margin: 0 0 4px 0;
 	background-repeat: no-repeat;
 	background-position: center center;
 	-webkit-background-size: cover;
@@ -27,7 +29,7 @@
 .photo-albums-jacket1 {
 	min-height: 200px;
 	max-height: 400px;
-	margin: 0 0 4px 0px;
+	margin: 0 0 4px 0;
 }
 .photo-albums-caption {
 	left: 5%;
@@ -43,6 +45,12 @@
 .photo-albums-caption .label {
 	display: inline;
 	margin: 0 1px;
+}
+
+/* ‰º‘µ‚¦‚Ì‚½‚ß */
+.photo-albums-album-edit-link {
+	position: relative;
+	top: 2em;
 }
 
 .photo-albums-photo-action-bar {

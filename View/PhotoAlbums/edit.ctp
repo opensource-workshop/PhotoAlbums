@@ -54,10 +54,9 @@
 		);
 	?>
 
-
 	<hr />
 	<?php echo $this->Workflow->inputComment('PhotoAlbum.status'); ?>
-	<?php echo $this->Workflow->buttons('PhotoAlbum.status'); ?>
+	<?php echo $this->Workflow->buttons('PhotoAlbum.status', $this->request->referer()); ?>
 <?php echo $this->NetCommonsForm->end(); ?>
 
 <?php if ($this->request->params['action'] === 'edit' && $this->Workflow->canDelete('PhotoAlbum', $this->request->data)) : ?>
