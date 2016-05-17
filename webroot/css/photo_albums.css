@@ -9,11 +9,9 @@
 	border-top: 1px solid #ddd;
 }
 
-.photo-albums-album-list-operation {
-	margin: 8px 0;
-}
+.photo-albums-album-list-operation,
 .photo-albums-photo-list-operation {
-	margin: 48px 0 8px;
+	margin: 8px 0;
 }
 
 .photo-albums-jacket {
@@ -47,6 +45,9 @@
 	margin: 0 1px;
 }
 
+.photo-albums-album-information {
+	margin: 0 0 48px;
+}
 /* ‰º‘µ‚¦‚Ì‚½‚ß */
 .photo-albums-album-edit-link {
 	position: relative;

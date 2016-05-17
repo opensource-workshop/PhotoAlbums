@@ -12,164 +12,43 @@
 <?php echo $this->NetCommonsHtml->css('/photo_albums/css/photo_albums.css'); ?>
 <?php echo $this->NetCommonsHtml->script('/photo_albums/js/photo_albums.js'); ?>
 
+<?php
+	if ($frameSetting['PhotoAlbumFrameSetting']['display_type'] == PhotoAlbumFrameSetting::DISPLAY_TYPE_ALBUMS) {
+		echo $this->BackTo->pageLinkButton(__d("photo_albums", "Back to album list"), array('icon' => 'list'));
+	}
+?>
 
-<h2><?php echo $album['PhotoAlbum']['name']; ?></h2>
-<p>
-<?php echo $album['PhotoAlbum']['description']; ?>
-</p>
+<div class="photo-albums-album-information">
+	<div class="clearfix">
+		<h1 class="pull-left" >
+			<?php echo $album['PhotoAlbum']['name']; ?>
+		</h1>
 
-<div class="text-right" ng-controller="PhotoAlbumsPhotoController as PhotoController">
-	<?php if (Current::permission('photo_albums_photo_creatable')): ?>
-		<?php
-			echo $this->Button->addLink(
-				'',
-				'#',
-				array(
-					'ng-click' => 'PhotoController.openAdd(\'' .
-						$this->NetCommonsHtml->url(
-							array(
-								'plugin' => 'photo_albums',
-								'controller' => 'photo_album_photos',
-								'action' => 'add',
-								$album['PhotoAlbum']['key'],
-							)
-						) .
-					'\')'
-				)
-			);
-		?>
-	<?php endif; ?>
+		<div class="pull-right photo-albums-album-edit-link">
+			<?php
+				if ($this->Workflow->canEdit('PhotoAlbum', $album)) {
+					echo $this->LinkButton->edit(
+						'',
+						array(
+							'plugin' => 'photo_albums',
+							'controller' => 'photo_albums',
+							'action' => 'edit',
+							'key' =>  $album['PhotoAlbum']['key']
+						),
+						array(
+							'tooltip' => __d('photo_albums', 'Edit album'),
+						)
+					);
+				}
+			?>
+		</div>
+	</div>
+	<p>
+	<?php echo $album['PhotoAlbum']['description']; ?>
+	</p>
 </div>
 
-<div class="photo-albums-photo-list-operation">
-	<div class="pull-left">
-		<span class="btn-group">
-			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-				<?php
-					switch (Hash::get($this->request->params, ['named', 'status'])) {
-						case WorkflowComponent::STATUS_APPROVED:
-							echo __d('photo_albums', 'Pending approved');
-							break;
-						case WorkflowComponent::STATUS_DISAPPROVED:
-							echo __d('photo_albums', 'Disapproved');
-							break;
-						case WorkflowComponent::STATUS_IN_DRAFT:
-							echo __d('photo_albums', 'In draft');
-							break;
-						default:
-							echo __d('net_commons', 'Display all');
-					}
-				?>
-				<span class="caret">
-				</span>
-			</button>
-			<ul class="dropdown-menu" role="menu">
-				<li>
-					<?php
-						echo $this->Paginator->link(
-							__d('net_commons', 'Display all'),
-							array(
-								'plugin' => 'photo_albums',
-								'controller' => 'photo_album_photos',
-								'action' => 'index',
-								$this->request->params['pass'][1],
-							)
-						);
-					?>
-				</li>
-				<li>
-					<?php
-						echo $this->Paginator->link(
-							__d('photo_albums', 'Pending approved'),
-							array(
-								'plugin' => 'photo_albums',
-								'controller' => 'photo_album_photos',
-								'action' => 'index',
-								$this->request->params['pass'][1],
-								'status' => WorkflowComponent::STATUS_APPROVED
-							)
-						);
-					?>
-				</li>
-				<li>
-					<?php
-						echo $this->Paginator->link(
-							__d('photo_albums', 'Disapproved'),
-							array(
-								'plugin' => 'photo_albums',
-								'controller' => 'photo_album_photos',
-								'action' => 'index',
-								$this->request->params['pass'][1],
-								'status' => WorkflowComponent::STATUS_DISAPPROVED
-							)
-						);
-					?>
-				</li>
-				<li>
-					<?php
-						echo $this->Paginator->link(
-							__d('photo_albums', 'In draft'),
-							array(
-								'plugin' => 'photo_albums',
-								'controller' => 'photo_album_photos',
-								'action' => 'index',
-								$this->request->params['pass'][1],
-								'status' => WorkflowComponent::STATUS_IN_DRAFT
-							)
-						);
-					?>
-				</li>
-			</ul>
-		</span>
-	</div>
-
-	<div class="text-right">
-		<span class="btn-group">
-			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-				<?php
-					switch ($this->Paginator->sortKey() . ' ' . $this->Paginator->sortDir()) {
-						case 'PhotoAlbumPhoto.modified desc':
-							echo __d('net_commons', 'Newest');
-							break;
-						default:
-							echo __d('net_commons', 'Oldest');
-					}
-				?>
-				<span class="caret">
-				</span>
-			</button>
-			<ul class="dropdown-menu">
-				<li>
-					<?php
-						echo $this->Paginator->sort(
-							'PhotoAlbumPhoto.modified',
-							__d('net_commons', 'Newest'),
-							array(
-								'direction' => 'desc',
-								'lock' => true
-							)
-						);
-					?>
-				</li>
-				<li>
-					<?php
-						echo $this->Paginator->sort(
-							'PhotoAlbumPhoto.created',
-							__d('net_commons', 'Oldest'),
-							array(
-								'direction' => 'asc',
-								'lock' => true
-							)
-						);
-					?>
-				</li>
-			</ul>
-		</span>
-		<?php echo $this->DisplayNumber->dropDownToggle(); ?>
-	</div>
-</div>
-
-<hr>
+<?php echo $this->element('PhotoAlbums.photo_list_operation'); ?>
 
 <div class="row" ng-controller="PhotoAlbumsPhotoController as PhotoController">
 	<?php foreach ($photos as $index => $photo) : ?>
@@ -203,14 +82,4 @@
 
 <?php echo $this->PhotoAlbums->approveAllButton($photos); ?>
 
-<hr>
 <?php echo $this->element('NetCommons.paginator'); ?>
-<hr>
-
-<footer>
-	<div class="row">
-		<div class="col-xs-12 text-center">
-			<?php echo $this->BackTo->pageLinkButton(__d("photo_albums", "Back to album list"), array('icon' => '')); ?>
-		</div>
-	</div>
-</footer>
