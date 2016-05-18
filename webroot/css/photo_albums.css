@@ -69,4 +69,13 @@
 
 .photo-albums-photo-slide .modal-dialog {
 	width: 80%;
+	height: 90%;
+}
+.photo-albums-photo-slide .modal-content,
+.photo-albums-photo-slide .carousel,
+.photo-albums-photo-slide .carousel-inner {
+	height: 100%;
+}
+.photo-albums-photo-slide-close {
+
 }

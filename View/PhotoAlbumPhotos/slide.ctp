@@ -10,18 +10,16 @@
 ?>
 
 <?php
-echo $this->NetCommonsHtml->css('/photo_albums/css/style.css');
+echo $this->NetCommonsHtml->css('/photo_albums/css/photo_albums.css');
 ?>
 
-<div class="modal-header">
-	<button class="close" type="button"
+<?php if ($frameSetting['PhotoAlbumFrameSetting']['display_type'] == PhotoAlbumFrameSetting::DISPLAY_TYPE_ALBUMS): ?>
+	<button class="close photo-albums-photo-slide-close .carousel-inner" type="button"
 			tooltip="<?php echo __d('net_commons', 'Close'); ?>"
 			ng-click="cancel()">
 		<span class="glyphicon glyphicon-remove small"></span>
 	</button>
-
-	<h4 class="modal-title"><?php echo $album['PhotoAlbum']['name']; ?></h4>
-</div>
+<?php endif; ?>
 
 <uib-carousel active="<?php echo $active; ?>" interval="5000">
 	<!-- Wrapper for slides -->
@@ -38,7 +36,8 @@ echo $this->NetCommonsHtml->css('/photo_albums/css/style.css');
 					),
 					array(
 						'alt' => __d('photo_albums', 'Photo'),
-						'style' => 'display: inline'
+						//'style' => 'display: inline',
+						'class' => 'img-responsive center-block'
 					)
 				);
 			?>

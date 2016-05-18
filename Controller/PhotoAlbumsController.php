@@ -95,6 +95,9 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 			);
 			$this->set('photos', $this->Paginator->paginate('PhotoAlbumPhoto'));
 		}
+		if ($frameSetting['PhotoAlbumFrameSetting']['display_type'] == PhotoAlbumFrameSetting::DISPLAY_TYPE_SLIDE) {
+			$this->set('active', 0);
+		}
 
 		if ($frameSetting['PhotoAlbumFrameSetting']['display_type'] == PhotoAlbumFrameSetting::DISPLAY_TYPE_PHOTOS) {
 			$this->view = 'PhotoAlbumPhotos/index';
