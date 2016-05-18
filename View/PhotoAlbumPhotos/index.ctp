@@ -61,7 +61,7 @@
 							'controller' => 'photo_album_photos',
 							'action' => 'slide',
 							$album['PhotoAlbum']['key'],
-							$index,
+							(($this->Paginator->current() - 1) * $this->Paginator->param('limit')) + $index,
 							'sort' => $this->Paginator->sortKey(),
 							'direction' => $this->Paginator->sortDir(),
 						)
