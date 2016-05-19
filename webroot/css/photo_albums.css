@@ -32,7 +32,7 @@
 .photo-albums-caption {
 	left: 5%;
 	right: 5%;
-	background-color: rgba(0, 0, 0, 0.2);
+	background-color: rgba(0, 0, 0, .2);
 	padding: 0 4px;
 	text-align: left
 }
@@ -63,6 +63,7 @@
 	-moz-background-size: contain;
 	-o-background-size: contain;
 	background-size: contain;
+	height: 100%;
 }
 .photo-albums-photo-action-bar {
 }
@@ -71,11 +72,21 @@
 	width: 80%;
 	height: 90%;
 }
+.photo-albums-photo-slide .modal-content {
+	background-color: rgba(0, 0, 0, .8);
+}
 .photo-albums-photo-slide .modal-content,
 .photo-albums-photo-slide .carousel,
-.photo-albums-photo-slide .carousel-inner {
+.photo-albums-photo-slide .carousel-inner,
+.photo-albums-photo-slide .carousel-inner>.item {
 	height: 100%;
 }
 .photo-albums-photo-slide-close {
-
+	position: absolute;
+	right: 0;
+	top: 0;
+	margin: 8px 8px 0 0;
+	font-size: 1.5em;
+	color: #fff;
+	opacity: .7;
 }
