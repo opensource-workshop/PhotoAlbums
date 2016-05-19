@@ -72,6 +72,7 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 			'PhotoAlbum' => array(
 				'sort' => $frameSetting['PhotoAlbumFrameSetting']['albums_sort'],
 				'direction' => $frameSetting['PhotoAlbumFrameSetting']['albums_direction'],
+				'limit' => $frameSetting['PhotoAlbumFrameSetting']['albums_per_page'],
 				'conditions' => $conditions
 			)
 		);

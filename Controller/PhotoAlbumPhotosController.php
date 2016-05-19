@@ -80,6 +80,7 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 			'PhotoAlbumPhoto' => array(
 				'sort' => $frameSetting['PhotoAlbumFrameSetting']['photos_sort'],
 				'direction' => $frameSetting['PhotoAlbumFrameSetting']['photos_direction'],
+				'limit' => $frameSetting['PhotoAlbumFrameSetting']['photos_per_page'],
 				'conditions' => $conditions
 			)
 		);
@@ -102,6 +103,7 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 			'PhotoAlbumPhoto' => array(
 				'sort' => $frameSetting['PhotoAlbumFrameSetting']['photos_sort'],
 				'direction' => $frameSetting['PhotoAlbumFrameSetting']['photos_direction'],
+				'limit' => $this->Paginator->settings['maxLimit'],
 				'conditions' => $conditions
 			)
 		);
