@@ -49,7 +49,7 @@ echo $this->NetCommonsHtml->css('/photo_albums/css/photo_albums.css');
 				?>
 			);"></div>
 			<div class="carousel-caption">
-				<?php echo $photo['PhotoAlbumPhoto']['description'] ?>
+				<?php echo nl2br(h($photo['PhotoAlbumPhoto']['description'])); ?>
 			</div>
 		</uib-slide>
 	<?php endforeach; ?>

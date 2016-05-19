@@ -28,10 +28,10 @@
 			</a>
 
 			<div class="carousel-caption photo-albums-caption">
-				<h4><?php echo $album['PhotoAlbum']['name']; ?></h4>
+				<h4><?php echo h($album['PhotoAlbum']['name']); ?></h4>
 				<?php echo $this->Workflow->label($album['PhotoAlbum']['status']); ?>
 				<p class="photo-albums-description">
-					<?php echo $album['PhotoAlbum']['description']; ?>
+					<?php echo h($album['PhotoAlbum']['description']); ?>
 				</p>
 
 				<div class="clearfix">

@@ -21,7 +21,7 @@
 <div class="photo-albums-album-information">
 	<div class="clearfix">
 		<h1 class="pull-left" >
-			<?php echo $album['PhotoAlbum']['name']; ?>
+			<?php echo h($album['PhotoAlbum']['name']); ?>
 		</h1>
 
 		<div class="pull-right photo-albums-album-edit-link">
@@ -44,7 +44,7 @@
 		</div>
 	</div>
 	<p>
-	<?php echo $album['PhotoAlbum']['description']; ?>
+	<?php echo nl2br(h($album['PhotoAlbum']['description'])); ?>
 	</p>
 </div>
 
@@ -85,7 +85,9 @@
 			</a>
 
 			<div class="carousel-caption photo-albums-caption">
-				<?php echo nl2br($photo['PhotoAlbumPhoto']['description']) ?>
+				<p class="photo-albums-description">
+					<?php echo h($photo['PhotoAlbumPhoto']['description']); ?>
+				</p>
 				<?php echo $this->PhotoAlbums->photoActionBar($photo); ?>
 			</div>
 		</div>
