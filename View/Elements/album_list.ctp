@@ -42,8 +42,8 @@
 								$album['PhotoAlbum']['pending_photo_count']
 							) {
 								echo '<div class="label label-warning">' .
-										__d('photo_albums', '%s pending approval', $album['PhotoAlbum']['pending_photo_count']) .
-										'</div>';
+									__d('photo_albums', '%s pending approval', $album['PhotoAlbum']['pending_photo_count']) .
+									'</div>';
 							}
 							// 改行分の隙間空ける
 						?>
@@ -52,8 +52,8 @@
 								$album['PhotoAlbum']['disapproved_photo_count']
 							) {
 								echo '<div class="label label-warning">' .
-										__d('photo_albums', '%s denied', $album['PhotoAlbum']['disapproved_photo_count']) .
-										'</div>';
+									__d('photo_albums', '%s denied', $album['PhotoAlbum']['disapproved_photo_count']) .
+									'</div>';
 							}
 						?>
 					</div>
