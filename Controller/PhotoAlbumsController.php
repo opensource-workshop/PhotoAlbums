@@ -89,7 +89,8 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 
 			$this->Paginator->settings = array(
 				'PhotoAlbumPhoto' => array(
-					'order' => array('PhotoAlbumPhoto.id' => 'desc'),
+					'sort' => $frameSetting['PhotoAlbumFrameSetting']['photos_sort'],
+					'direction' => $frameSetting['PhotoAlbumFrameSetting']['photos_direction'],
 					'conditions' => $conditions
 				)
 			);

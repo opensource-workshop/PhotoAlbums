@@ -117,7 +117,7 @@
 			<span class="btn-group">
 				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 					<?php
-						switch ($this->Paginator->sortKey() . ' ' . $this->Paginator->sortDir()) {
+						switch ($this->Paginator->sortKey('PhotoAlbumPhoto') . ' ' . $this->Paginator->sortDir('PhotoAlbumPhoto')) {
 							case 'PhotoAlbumPhoto.modified desc':
 								echo __d('net_commons', 'Newest');
 								break;

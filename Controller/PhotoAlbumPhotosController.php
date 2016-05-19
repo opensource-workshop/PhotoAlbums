@@ -92,12 +92,16 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
  * @return void
  */
 	public function slide() {
+		$frameSetting = $this->PhotoAlbumFrameSetting->getFrameSetting();
+		$this->set('frameSetting', $frameSetting);
+
 		$conditions = $this->PhotoAlbumPhoto->getWorkflowConditions();
 		$conditions['PhotoAlbumPhoto.album_key'] = $this->request->params['pass'][1];
 
 		$this->Paginator->settings = array(
 			'PhotoAlbumPhoto' => array(
-				'order' => array('PhotoAlbumPhoto.id' => 'desc'),
+				'sort' => $frameSetting['PhotoAlbumFrameSetting']['photos_sort'],
+				'direction' => $frameSetting['PhotoAlbumFrameSetting']['photos_direction'],
 				'conditions' => $conditions
 			)
 		);
@@ -105,7 +109,7 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 		$this->set('active', Hash::get($this->request->params['pass'], 2));
 	}
 
-/**2
+/**
  * view method
  *
  * @param string $id id
