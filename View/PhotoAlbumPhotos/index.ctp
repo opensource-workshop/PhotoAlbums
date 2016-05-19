@@ -50,9 +50,9 @@
 
 <?php echo $this->element('PhotoAlbums.photo_list_operation'); ?>
 
-<div class="row" ng-controller="PhotoAlbumsPhotoController as PhotoController">
+<div class="row photo-albums-photo-list" ng-controller="PhotoAlbumsPhotoController as PhotoController">
 	<?php foreach ($photos as $index => $photo) : ?>
-		<div class="col-sm-6 col-md-4">
+		<div class="col-sm-6 col-md-4 photo-albums-photo-thumbnail">
 			<a href="#" ng-click="PhotoController.slide('
 				<?php
 					echo $this->NetCommonsHtml->url(
@@ -84,7 +84,7 @@
 				);"></div>
 			</a>
 
-			<div class="carousel-caption photo-albums-caption">
+			<div class="carousel-caption photo-albums-photo-caption">
 				<p class="photo-albums-description">
 					<?php echo h($photo['PhotoAlbumPhoto']['description']); ?>
 				</p>

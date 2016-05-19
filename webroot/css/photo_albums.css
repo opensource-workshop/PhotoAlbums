@@ -29,14 +29,18 @@
 	max-height: 400px;
 	margin: 0 0 4px 0;
 }
-.photo-albums-caption {
+.photo-albums-caption,
+.photo-albums-photo-caption {
 	left: 5%;
 	right: 5%;
-	background-color: rgba(0, 0, 0, .2);
 	padding: 0 4px;
 	text-align: left
 }
-.photo-albums-caption .photo-albums-description {
+.photo-albums-caption {
+	background-color: rgba(0, 0, 0, .2);
+}
+.photo-albums-caption .photo-albums-description,
+.photo-albums-photo-caption .photo-albums-description {
 	height: 3em;
 	overflow: hidden;
 }
@@ -54,6 +58,9 @@
 	top: 2em;
 }
 
+.photo-albums-photo-list {
+	margin: 0 0 16px 0;
+}
 .photo-albums-photo {
 	min-height: 240px;
 	margin: 0 0 4px 0;
@@ -64,9 +71,13 @@
 	-o-background-size: contain;
 	background-size: contain;
 	height: 100%;
+	background-color: rgba(0, 0, 0, .8);
 }
-.photo-albums-photo-action-bar {
+.photo-albums-photo-list .photo-albums-photo {
+	background-position: center top;
 }
+.photo-albums-photo-action-bar {}
+.photo-albums-photo-thumbnail {}
 
 .photo-albums-photo-slide .modal-dialog {
 	width: 80%;
