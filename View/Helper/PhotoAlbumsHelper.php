@@ -143,7 +143,7 @@ class PhotoAlbumsHelper extends AppHelper {
 		}
 
 		if ($operationOutput) {
-			$operationOutput = $this->Html->div('text-right', $operationOutput);
+			$operationOutput = $this->Html->div('pull-right', $operationOutput);
 		}
 
 		$output .= $operationOutput;
