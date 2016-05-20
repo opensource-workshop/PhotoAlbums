@@ -48,7 +48,10 @@
 	display: inline;
 	margin: 0 1px;
 }
-
+.photo-albums-album-list-caption {
+	display: inline;
+	margin: 0 8px 0 0;
+}
 .photo-albums-album-information {
 	margin: 0 0 48px;
 }
