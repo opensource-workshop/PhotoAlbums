@@ -59,7 +59,10 @@
 
 	<hr />
 	<?php echo $this->Workflow->inputComment('PhotoAlbumPhoto.status'); ?>
-	<?php echo $this->Workflow->buttons('PhotoAlbumPhoto.status'); ?>
+	<?php
+		// ＴＯＤＯ 追加の場合modal閉じない。リンク先のURLが同じためと思われる。
+		echo $this->Workflow->buttons('PhotoAlbumPhoto.status', $this->request->referer() . '&' . rand());
+	?>
 
 <?php echo $this->NetCommonsForm->end() ?>
 
@@ -89,7 +92,5 @@
 		<?php echo $this->NetCommonsForm->end();?>
 	</div>
 <?php endif; ?>
-
-<hr>
 
 <?php echo $this->Workflow->comments(); ?>

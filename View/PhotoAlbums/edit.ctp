@@ -85,5 +85,4 @@
 	</div>
 <?php endif; ?>
 
-<hr>
 <?php echo $this->Workflow->comments(); ?>
