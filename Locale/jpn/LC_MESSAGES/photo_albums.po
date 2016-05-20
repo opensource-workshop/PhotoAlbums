@@ -151,3 +151,6 @@ msgstr "アルバムを作成"
 #: View/PhotoAlbums/index.ctp:27
 msgid "Album data not found"
 msgstr "アルバムがありません。"
+
+msgid "Add album"
+msgstr "アルバムを追加"

@@ -13,7 +13,7 @@
 	<div class='pull-right'>
 		<?php
 			echo $this->Workflow->addLinkButton(
-				'',
+				__d('photo_albums', 'Add album'),
 				null,
 				array(
 					'tooltip' => __d('photo_albums', 'Create albums')
