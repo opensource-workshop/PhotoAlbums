@@ -69,6 +69,14 @@
 .photo-albums-album-setting-list .photo-albums-jacket {
 	min-height: 240px;
 }
+.photo-albums-album-setting-list input[type=checkbox],
+.photo-albums-album-setting-list input[type=radio] {
+	-webkit-transform: scale(1.6);
+	-ms-transform: scale(1.6);
+	-o-transform: scale(1.6);
+	transform: scale(1.6);
+	margin: 4px 4px 0 0;
+}
 
 .photo-albums-photo-list {
 	margin: 0 0 16px 0;
