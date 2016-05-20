@@ -10,92 +10,53 @@
  ?>
 
 
-<div style="height:600px;overflow-y:scroll;border-top: 1px solid #ddd;">
-	<table class="table table-hover">
+<div class="photo-albums-album-setting-list">
+	<div class="row table table-hover">
+		<?php foreach ($albums as $album) : ?>
+			<div class="col-sm-6">
+				<?php echo $this->PhotoAlbums->jacketByBackground($album); ?>
 
-		<tbody>
-			<?php foreach ($albums as $album) : ?>
-				<tr>
-					<td style="vertical-align:middle;">
-						<?php
-							echo $this->Form->input(
-								'PhotoAlbumDisplayAlbum..album_key',
-								array(
-									'type' => 'checkbox',
-									'value' =>$album['PhotoAlbum']['key'],
-									'checked' => in_array($album['PhotoAlbum']['key'], $displayAlbumKeys),
-									'label' => false,
-									'div' => false,
-									'class' => false,
-									'hiddenField' => false,
-									//'ng-model' => 'FrameSettingController.checkModel[' . $index . ']',
-									'ng-disabled' => 'FrameSettingController.displayType != ' . PhotoAlbumFrameSetting::DISPLAY_TYPE_ALBUMS,
-									'ng-hide' => 'FrameSettingController.displayType != ' . PhotoAlbumFrameSetting::DISPLAY_TYPE_ALBUMS
-								)
-							);
+				<div class="carousel-caption photo-albums-caption">
+					<?php
+						echo $this->Form->input(
+							'PhotoAlbumDisplayAlbum..album_key',
+							array(
+								'type' => 'checkbox',
+								'value' =>$album['PhotoAlbum']['key'],
+								'checked' => in_array($album['PhotoAlbum']['key'], $displayAlbumKeys),
+								'label' => false,
+								'div' => false,
+								'class' => false,
+								'hiddenField' => false,
+								//'ng-model' => 'FrameSettingController.checkModel[' . $index . ']',
+								'ng-disabled' => 'FrameSettingController.displayType != ' . PhotoAlbumFrameSetting::DISPLAY_TYPE_ALBUMS,
+								'ng-hide' => 'FrameSettingController.displayType != ' . PhotoAlbumFrameSetting::DISPLAY_TYPE_ALBUMS
+							)
+						);
 
-							echo $this->Form->input(
-								'PhotoAlbumDisplayAlbum..album_key',
-								array(
-									'type' => 'radio',
-									'options' => array($album['PhotoAlbum']['key'] => null),
-									'value' =>$album['PhotoAlbum']['key'],
-									'checked' => in_array($album['PhotoAlbum']['key'], $displayAlbumKeys),
-									'label' => false,
-									'div' => false,
-									'class' => false,
-									'hiddenField' => false,
-									//'ng-model' => 'FrameSettingController.checkModel[' . $index . ']',
-									'ng-disabled' => 'FrameSettingController.displayType == ' . PhotoAlbumFrameSetting::DISPLAY_TYPE_ALBUMS,
-									'ng-hide' => 'FrameSettingController.displayType == ' . PhotoAlbumFrameSetting::DISPLAY_TYPE_ALBUMS
-								)
-							);
-						?>
-					</td>
+						echo $this->Form->input(
+							'PhotoAlbumDisplayAlbum..album_key',
+							array(
+								'type' => 'radio',
+								'options' => array($album['PhotoAlbum']['key'] => null),
+								'value' =>$album['PhotoAlbum']['key'],
+								'checked' => in_array($album['PhotoAlbum']['key'], $displayAlbumKeys),
+								'label' => false,
+								'div' => false,
+								'class' => false,
+								'hiddenField' => false,
+								//'ng-model' => 'FrameSettingController.checkModel[' . $index . ']',
+								'ng-disabled' => 'FrameSettingController.displayType == ' . PhotoAlbumFrameSetting::DISPLAY_TYPE_ALBUMS,
+								'ng-hide' => 'FrameSettingController.displayType == ' . PhotoAlbumFrameSetting::DISPLAY_TYPE_ALBUMS
+							)
+						);
+					?>
 
-					<td>
-						<div class="pull-left">
-							<div class="thumbnail" style="width: 150px;height:150px;">
-								<?php echo $this->PhotoAlbums->jacket($album); ?>
-							</div>
-						</div>
-
-						<div class="" style='margin:0 10px 10px 180px;'>
-							<?php
-								echo '<h2 style="display: inline-block;margin:15px 10px; 0">' . $album['PhotoAlbum']['name'] . '</h2>';
-								echo $this->Workflow->label($album['PhotoAlbum']['status']);
-							?>
-							<p style="margin: 0 0 5px 20px;height: 6em;overflow: hidden;">
-								<?php echo $album['PhotoAlbum']['description']; ?>
-							</p>
-						</div>
-					</td>
-
-					<td style="padding:40px 20px 0 0;">
-						<?php
-							echo __d('photo_albums', '%s photos', $album['PhotoAlbum']['photo_count']);
-							if (Current::permission('content_publishable')) {
-								echo '<br><span class="label label-warning">' .
-										__d('photo_albums', '%s pending approval', $album['PhotoAlbum']['pending_photo_count']) .
-										'</span>';
-							}
-							if (Current::permission('photo_albums_photo_creatable')) {
-								echo '<br><span class="label label-warning">' .
-										__d('photo_albums', '%s denied', $album['PhotoAlbum']['disapproved_photo_count']) .
-										'</span>';
-							}
-						?>
-						<br>
-						<br>
-						<?php echo $this->DisplayUser->handleLink($album); ?>
-						<br>
-						<?php echo $this->Date->dateFormat($album['PhotoAlbum']['modified']); ?>
-					</td>
-
-				</tr>
-			<?php endforeach; ?>
-		</tbody>
-	</table>
+					<?php echo $this->element('PhotoAlbums.album_caption', ['album' => $album]); ?>
+				</div>
+			</div>
+		<?php endforeach; ?>
+	</div>
 </div>
 <?php
 // TODO 改ページ
