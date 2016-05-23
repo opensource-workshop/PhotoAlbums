@@ -3,20 +3,16 @@
     "description": "PhotoAlbums for NetCommons Plugin",
     "type": "cakephp-plugin",
     "require": {
-        "cakephp/cakephp": "~2.6",
-        "netcommons/net-commons": "dev-master",
-        "netcommons/files": "dev-master",
-        "netcommons/workflow": "dev-master"
-    },
-    "require-dev": {
         "cakedc/migrations": "~2.2",
-        "cakephp/debug_kit": "~2.2",
-        "phpunit/phpunit": "~3.7.38",
-        "mustangostang/spyc": "dev-master",
-        "satooshi/php-coveralls": "dev-master",
-        "phpmd/phpmd" : "@stable",
-        "sebastian/phpcpd" : "@stable",
-        "cakephp/cakephp-codesniffer": "~1.0"
+        "netcommons/blocks": "dev-master",
+        "netcommons/mails": "dev-master",
+        "netcommons/files": "dev-master",
+        "netcommons/net-commons": "dev-master",
+        "netcommons/pages": "dev-master",
+        "netcommons/plugin-manager": "dev-master",
+        "netcommons/topics": "dev-master",
+        "netcommons/users": "dev-master",
+        "netcommons/workflow": "dev-master"
     },
     "license": "NetCommons License",
     "authors": [
