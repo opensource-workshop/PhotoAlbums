@@ -21,6 +21,7 @@ class PhotoAlbumTest extends CakeTestCase {
  * @var array
  */
 	public $fixtures = array(
+		/*
 		'app.photo_album',
 		'app.user',
 		'app.role',
@@ -36,6 +37,7 @@ class PhotoAlbumTest extends CakeTestCase {
 		'app.roles_rooms_user',
 		'app.user_role_setting',
 		'app.users_language'
+		*/
 	);
 
 /**
@@ -59,4 +61,12 @@ class PhotoAlbumTest extends CakeTestCase {
 		parent::tearDown();
 	}
 
+/**
+ * Dummy test
+ *
+ * @return void
+ */
+	public function test() {
+		$this->assertTrue(true);
+	}
 }

@@ -8,12 +8,13 @@
  * @license http://www.netcommons.org/license.txt NetCommons License
  */
 
-App::uses('PhotoAlbumDisplayAlbum', 'Model');
+App::uses('NetCommonsModelTestCase', 'NetCommons.TestSuite');
+App::uses('PhotoAlbumDisplayAlbum', 'PhotoAlbums.Model');
 
 /**
  * Summary for PhotoAlbumDisplayAlbum Test Case
  */
-class PhotoAlbumDisplayAlbumTest extends CakeTestCase {
+class PhotoAlbumDisplayAlbumTest extends NetCommonsModelTestCase {
 
 /**
  * Fixtures
@@ -21,21 +22,7 @@ class PhotoAlbumDisplayAlbumTest extends CakeTestCase {
  * @var array
  */
 	public $fixtures = array(
-		'app.photo_album_display_album',
-		'app.user',
-		'app.role',
-		'app.language',
-		'app.plugin',
-		'app.plugins_role',
-		'app.room',
-		'app.space',
-		'app.rooms_language',
-		'app.roles_room',
-		'app.block_role_permission',
-		'app.room_role_permission',
-		'app.roles_rooms_user',
-		'app.user_role_setting',
-		'app.users_language'
+		'plugin.photo_albums.photo_album_display_album',
 	);
 
 /**
@@ -45,7 +32,7 @@ class PhotoAlbumDisplayAlbumTest extends CakeTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$this->PhotoAlbumDisplayAlbum = ClassRegistry::init('PhotoAlbumDisplayAlbum');
+		$this->PhotoAlbumDisplayAlbum = ClassRegistry::init('PhotoAlbums.PhotoAlbumDisplayAlbum');
 	}
 
 /**
@@ -57,6 +44,17 @@ class PhotoAlbumDisplayAlbumTest extends CakeTestCase {
 		unset($this->PhotoAlbumDisplayAlbum);
 
 		parent::tearDown();
+	}
+
+/**
+ * getDisplayList method test
+ *
+ * @return void
+ */
+	public function testGetDisplayList() {
+		$page = $this->PhotoAlbumDisplayAlbum->getDisplayList();
+
+		$this->assertTrue(true);
 	}
 
 }

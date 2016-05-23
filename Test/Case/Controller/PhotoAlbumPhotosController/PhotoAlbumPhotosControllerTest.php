@@ -21,6 +21,7 @@ class PhotoAlbumPhotosControllerTest extends ControllerTestCase {
  * @var array
  */
 	public $fixtures = array(
+		/*
 		'plugin.photo_albums.photo_album_photo',
 		'plugin.photo_albums.user',
 		'plugin.photo_albums.role',
@@ -37,6 +38,7 @@ class PhotoAlbumPhotosControllerTest extends ControllerTestCase {
 		'plugin.photo_albums.user_role_setting',
 		'plugin.photo_albums.users_language',
 		'plugin.photo_albums.site_setting'
+		*/
 	);
 
 /**

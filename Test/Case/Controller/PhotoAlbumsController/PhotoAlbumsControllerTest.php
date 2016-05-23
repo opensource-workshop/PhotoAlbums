@@ -21,6 +21,7 @@ class PhotoAlbumsControllerTest extends ControllerTestCase {
  * @var array
  */
 	public $fixtures = array(
+		/*
 		'app.photo_album',
 		'app.user',
 		'app.role',
@@ -37,6 +38,7 @@ class PhotoAlbumsControllerTest extends ControllerTestCase {
 		'app.user_role_setting',
 		'app.users_language',
 		'app.site_setting'
+		*/
 	);
 
 /**
