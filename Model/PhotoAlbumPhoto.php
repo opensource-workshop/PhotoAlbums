@@ -194,7 +194,7 @@ class PhotoAlbumPhoto extends PhotoAlbumsAppModel {
  * @throws InternalErrorException
  */
 	private function __regenerateDataForZip($data) {
-		$files  = array();
+		$files = array();
 		if ($data['PhotoAlbumPhoto']['photo']['type'] == 'application/x-zip-compressed') {
 			$zip = new UnZip($data['PhotoAlbumPhoto']['photo']['tmp_name']);
 			$unzipedFolder = $zip->extract();
