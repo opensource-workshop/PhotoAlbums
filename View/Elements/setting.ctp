@@ -7,7 +7,7 @@
  * @link http://www.netcommons.org NetCommons Project
  * @license http://www.netcommons.org/license.txt NetCommons License
  */
- ?>
+?>
 
 <?php echo $this->element('Blocks.form_hidden'); ?>
 <?php echo $this->NetCommonsForm->hidden('PhotoAlbumSetting.id'); ?>

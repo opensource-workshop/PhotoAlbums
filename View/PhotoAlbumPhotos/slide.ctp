@@ -61,4 +61,4 @@ echo $this->NetCommonsHtml->css('/photo_albums/css/photo_albums.css');
 			ng-click="cancel()">
 		<span class="glyphicon glyphicon-remove"></span>
 	</button>
-<?php endif; ?>
+<?php endif;

@@ -7,7 +7,7 @@
  * @link http://www.netcommons.org NetCommons Project
  * @license http://www.netcommons.org/license.txt NetCommons License
  */
- ?>
+?>
 
 
 <div class="photo-albums-album-setting-list">
@@ -22,7 +22,7 @@
 							'PhotoAlbumDisplayAlbum..album_key',
 							array(
 								'type' => 'checkbox',
-								'value' =>$album['PhotoAlbum']['key'],
+								'value' => $album['PhotoAlbum']['key'],
 								'checked' => in_array($album['PhotoAlbum']['key'], $displayAlbumKeys),
 								'label' => false,
 								'div' => false,
@@ -39,7 +39,7 @@
 							array(
 								'type' => 'radio',
 								'options' => array($album['PhotoAlbum']['key'] => null),
-								'value' =>$album['PhotoAlbum']['key'],
+								'value' => $album['PhotoAlbum']['key'],
 								'checked' => in_array($album['PhotoAlbum']['key'], $displayAlbumKeys),
 								'label' => false,
 								'div' => false,
@@ -59,6 +59,5 @@
 	</div>
 </div>
 <?php
-// TODO 改ページ
+// ＴＯＤＯ 改ページ
 //echo $this->element('NetCommons.paginator');
-?>

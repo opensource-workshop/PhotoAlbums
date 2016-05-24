@@ -93,4 +93,4 @@
 	</div>
 <?php endif; ?>
 
-<?php echo $this->Workflow->comments(); ?>
+<?php echo $this->Workflow->comments();

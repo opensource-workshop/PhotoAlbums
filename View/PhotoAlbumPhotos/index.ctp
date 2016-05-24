@@ -33,7 +33,7 @@
 							'plugin' => 'photo_albums',
 							'controller' => 'photo_albums',
 							'action' => 'edit',
-							'key' =>  $album['PhotoAlbum']['key']
+							'key' => $album['PhotoAlbum']['key']
 						),
 						array(
 							'tooltip' => __d('photo_albums', 'Edit album'),
@@ -96,4 +96,4 @@
 
 <?php echo $this->PhotoAlbums->approveAllButton($photos); ?>
 
-<?php echo $this->element('NetCommons.paginator'); ?>
+<?php echo $this->element('NetCommons.paginator');

@@ -30,8 +30,8 @@
 					)
 				);
 			?>
-		<?php endif; ?>
-	</div>
+		</div>
+	<?php endif; ?>
 
 	<?php if (!empty($photos)): ?>
 		<div class="pull-left">

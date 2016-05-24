@@ -7,7 +7,7 @@
  * @link http://www.netcommons.org NetCommons Project
  * @license http://www.netcommons.org/license.txt NetCommons License
  */
- ?>
+?>
 
 
 <h4 class="photo-albums-album-list-caption"><?php echo h($album['PhotoAlbum']['name']); ?></h4>

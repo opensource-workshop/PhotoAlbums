@@ -34,4 +34,4 @@
 	<?php endforeach; ?>
 </div>
 
-<?php echo $this->element('NetCommons.paginator'); ?>
+<?php echo $this->element('NetCommons.paginator');

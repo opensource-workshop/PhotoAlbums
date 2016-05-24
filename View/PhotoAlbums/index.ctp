@@ -18,4 +18,3 @@
 	} else {
 		echo $this->element('PhotoAlbums.album_list');
 	}
-?>
