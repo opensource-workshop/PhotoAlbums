@@ -1,6 +1,6 @@
 <?php
 /**
- * PhotoAlbumFrameSetting Test Case
+ * PhotoAlbumFrameSettingGetFrameSetting Test Case
  *
  * @copyright Copyright 2014, NetCommons Project
  * @author Kohei Teraguchi <kteraguchi@commonsnet.org>
@@ -12,7 +12,7 @@ App::uses('PhotoAlbumFrameSetting', 'PhotoAlbums.Model');
 App::uses('PhotoAlbumTestCurrentUtil', 'PhotoAlbums.Test/Case/Model');
 
 /**
- * Summary for PhotoAlbumFrameSetting Test Case
+ * Summary for PhotoAlbumFrameSettingGetFrameSetting Test Case
  */
 class PhotoAlbumFrameSettingGetFrameSettingTest extends CakeTestCase {
 
