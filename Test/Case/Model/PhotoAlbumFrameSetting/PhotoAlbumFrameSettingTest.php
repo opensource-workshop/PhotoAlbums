@@ -8,7 +8,8 @@
  * @license http://www.netcommons.org/license.txt NetCommons License
  */
 
-App::uses('PhotoAlbumFrameSetting', 'Model');
+App::uses('PhotoAlbumFrameSetting', 'PhotoAlbums.Model');
+App::uses('PhotoAlbumTestCurrentUtil', 'PhotoAlbums.Test/Case/Model');
 
 /**
  * Summary for PhotoAlbumFrameSetting Test Case
@@ -21,23 +22,7 @@ class PhotoAlbumFrameSettingTest extends CakeTestCase {
  * @var array
  */
 	public $fixtures = array(
-		/*
-		'app.photo_album_frame_setting',
-		'app.user',
-		'app.role',
-		'app.language',
-		'app.plugin',
-		'app.plugins_role',
-		'app.room',
-		'app.space',
-		'app.rooms_language',
-		'app.roles_room',
-		'app.block_role_permission',
-		'app.room_role_permission',
-		'app.roles_rooms_user',
-		'app.user_role_setting',
-		'app.users_language'
-		*/
+		'plugin.photo_albums.photo_album_frame_setting',
 	);
 
 /**
@@ -47,7 +32,7 @@ class PhotoAlbumFrameSettingTest extends CakeTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$this->PhotoAlbumFrameSetting = ClassRegistry::init('PhotoAlbumFrameSetting');
+		$this->PhotoAlbumFrameSetting = ClassRegistry::init('PhotoAlbums.PhotoAlbumFrameSetting');
 	}
 
 /**
@@ -62,11 +47,29 @@ class PhotoAlbumFrameSettingTest extends CakeTestCase {
 	}
 
 /**
- * Dummy test
+ * getFrameSetting test
  *
  * @return void
  */
-	public function test() {
-		$this->assertTrue(true);
+	public function testGetFrameSetting() {
+		$currentValue['Frame']['key'] = 'Lorem ipsum dolor sit amet';
+		PhotoAlbumTestCurrentUtil::setValue($currentValue);
+
+		$actual = $this->PhotoAlbumFrameSetting->getFrameSetting();
+		$this->assertEquals(1, $actual['PhotoAlbumFrameSetting']['id']);
+
+		PhotoAlbumTestCurrentUtil::setOriginValue();
+	}
+
+/**
+ * getFrameSettingNotFound test
+ *
+ * @return void
+ */
+	public function testGetFrameSettingNotFound() {
+		$actual = $this->PhotoAlbumFrameSetting->getFrameSetting();
+
+		$this->assertArrayHasKey('PhotoAlbumFrameSetting', $actual);
+		$this->assertArrayNotHasKey('id', $actual['PhotoAlbumFrameSetting']);
 	}
 }

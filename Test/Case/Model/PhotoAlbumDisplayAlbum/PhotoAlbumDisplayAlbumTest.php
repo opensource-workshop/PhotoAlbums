@@ -10,13 +10,12 @@
 
 App::uses('NetCommonsModelTestCase', 'NetCommons.TestSuite');
 App::uses('PhotoAlbumDisplayAlbum', 'PhotoAlbums.Model');
-
+App::uses('PhotoAlbumTestCurrentUtil', 'PhotoAlbums.Test/Case/Model');
 
 /**
  * Summary for PhotoAlbumDisplayAlbum Test Case
  */
 class PhotoAlbumDisplayAlbumTest extends NetCommonsModelTestCase {
-//class PhotoAlbumDisplayAlbumTest extends CakeTestCase {
 
 /**
  * Fixtures
@@ -28,20 +27,6 @@ class PhotoAlbumDisplayAlbumTest extends NetCommonsModelTestCase {
 	);
 
 /**
- * Current reflection object
- *
- * @var array
- */
-	private $__currentProperty = null;
-
-/**
- * Current object value
- *
- * @var array
- */
-	private $__currentValue = array();
-
-/**
  * setUp method
  *
  * @return void
@@ -49,13 +34,6 @@ class PhotoAlbumDisplayAlbumTest extends NetCommonsModelTestCase {
 	public function setUp() {
 		parent::setUp();
 		$this->PhotoAlbumDisplayAlbum = ClassRegistry::init('PhotoAlbums.PhotoAlbumDisplayAlbum');
-
-		$this->__currentProperty = new ReflectionProperty('Current', 'current');
-		$this->__currentProperty->setAccessible(true);
-		$this->__currentValue = $this->__currentProperty->getValue();
-
-		$currentValue['Frame']['key'] = 'Lorem ipsum dolor sit amet';
-		$this->__currentProperty->setValue($currentValue);
 	}
 
 /**
@@ -65,7 +43,6 @@ class PhotoAlbumDisplayAlbumTest extends NetCommonsModelTestCase {
  */
 	public function tearDown() {
 		unset($this->PhotoAlbumDisplayAlbum);
-		$this->__currentProperty->setValue($this->__currentValue);
 
 		parent::tearDown();
 	}
@@ -76,9 +53,13 @@ class PhotoAlbumDisplayAlbumTest extends NetCommonsModelTestCase {
  * @return void
  */
 	public function testGetDisplayList() {
-		$expected = $this->PhotoAlbumDisplayAlbum->getDisplayList();
-		$actual[1] = 'Lorem ipsum dolor sit amet';
+		$currentValue['Frame']['key'] = 'Lorem ipsum dolor sit amet';
+		PhotoAlbumTestCurrentUtil::setValue($currentValue);
+
+		$expected[1] = 'Lorem ipsum dolor sit amet';
+		$actual = $this->PhotoAlbumDisplayAlbum->getDisplayList();
 
 		$this->assertEquals($expected, $actual);
+		PhotoAlbumTestCurrentUtil::setOriginValue();
 	}
 }
