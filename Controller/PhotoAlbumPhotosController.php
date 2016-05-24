@@ -13,9 +13,16 @@ App::uses('PhotoAlbumsAppController', 'PhotoAlbums.Controller');
 /**
  * PhotoAlbumPhotos Controller
  *
+ * @property PhotoAlbum $PhotoAlbum
  * @property PhotoAlbumPhoto $PhotoAlbumPhoto
+ * @property PhotoAlbumFrameSetting $PhotoAlbumFrameSetting
  * @property PaginatorComponent $Paginator
- * @property FlashComponent $Flash
+ * @property PageLayoutComponent $PageLayout
+ * @property PermissionComponent $Permission
+ * @property SecurityComponent $Security
+ * @property WorkflowComponent $Workflow
+ * @property PhotoAlbumPhotosComponent $PhotoAlbumPhotos
+ * @property DownloadComponent $Download
  */
 class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 
@@ -42,7 +49,7 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 				'publish' => 'content_publishable',
 			),
 		),
-			'Pages.PageLayout',
+		'Pages.PageLayout',
 		'Paginator',
 		'Security',
 		'Workflow.Workflow',

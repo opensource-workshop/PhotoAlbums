@@ -11,7 +11,13 @@
 App::uses('PhotoAlbumsAppController', 'PhotoAlbums.Controller');
 
 /**
+ * PhotoAlbumBlockRolePermissions Controller
  *
+ * @property PhotoAlbumSetting PhotoAlbumSetting
+ * @property Block $Block
+ * @property PageLayoutComponent $PageLayout
+ * @property PermissionComponent $Permission
+ * @property WorkflowComponent $Workflow
  */
 class PhotoAlbumBlockRolePermissionsController extends PhotoAlbumsAppController {
 

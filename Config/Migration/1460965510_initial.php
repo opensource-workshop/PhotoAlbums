@@ -1,4 +1,13 @@
 <?php
+/**
+ * AddRecord Class
+ *
+ */
+
+/**
+ * Initial Class
+ *
+ */
 class Initial extends CakeMigration {
 
 /**

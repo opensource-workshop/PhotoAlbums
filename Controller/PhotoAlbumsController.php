@@ -13,6 +13,15 @@ App::uses('PhotoAlbumsAppController', 'PhotoAlbums.Controller');
 /**
  * PhotoAlbums Controller
  *
+ * @property PhotoAlbum $PhotoAlbum
+ * @property PhotoAlbumPhoto $PhotoAlbumPhoto
+ * @property PhotoAlbumFrameSetting $PhotoAlbumFrameSetting
+ * @property PhotoAlbumDisplayAlbum $PhotoAlbumDisplayAlbum
+ * @property PaginatorComponent $Paginator
+ * @property PageLayoutComponent $PageLayout
+ * @property SecurityComponent $Security
+ * @property WorkflowComponent $Workflow
+ * @property DownloadComponent $Download
  */
 class PhotoAlbumsController extends PhotoAlbumsAppController {
 

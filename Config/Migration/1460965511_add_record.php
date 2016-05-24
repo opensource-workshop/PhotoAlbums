@@ -1,7 +1,15 @@
 <?php
+/**
+ * AddRecord Class
+ *
+ */
 App::uses('NetCommonsMigration', 'NetCommons.Config/Migration');
 
-class AddRecord extends NetCommonsMigration {
+/**
+ * AddRecord Class
+ *
+ */
+ class AddRecord extends NetCommonsMigration {
 
 /**
  * Migration description

@@ -15,6 +15,11 @@ App::uses('PhotoAlbumsAppController', 'PhotoAlbums.Controller');
  *
  * @property PhotoAlbumFrameSetting $PhotoAlbumFrameSetting
  * @property PhotoAlbum $PhotoAlbum
+ * @property PhotoAlbumDisplayAlbum $PhotoAlbumDisplayAlbum
+ * @property PaginatorComponent $Paginator
+ * @property PageLayoutComponent $PageLayout
+ * @property PermissionComponent $Permission
+ * @property PhotoAlbumsComponent $PhotoAlbums
  */
 class PhotoAlbumFrameSettingsController extends PhotoAlbumsAppController {
 
