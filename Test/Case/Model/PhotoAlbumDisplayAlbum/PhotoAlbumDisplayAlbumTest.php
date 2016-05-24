@@ -80,6 +80,5 @@ class PhotoAlbumDisplayAlbumTest extends CakeTestCase {
 		$actual[1] = 'Lorem ipsum dolor sit amet';
 
 		$this->assertEquals($expected, $actual);
-		unset($reflectionCurrent);
 	}
 }
