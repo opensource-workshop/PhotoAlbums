@@ -12,11 +12,14 @@
  * @param {string} Controller name
  */
 NetCommonsApp
-.controller('PhotoAlbumsFrameSettingController',['photoAlbumsValues', function(photoAlbumsValues) {
+.controller('PhotoAlbumsFrameSettingController',
+['photoAlbumsValues', function(photoAlbumsValues) {
+
   this.displayType = photoAlbumsValues.displayType;
   this.checkModel = photoAlbumsValues.checkModel;
 
   this.changeDisplayType = function() {
     console.log(this.displayType);
-  }
+  };
+
 }]);
