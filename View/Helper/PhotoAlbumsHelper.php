@@ -183,10 +183,8 @@ class PhotoAlbumsHelper extends AppHelper {
 				'class' => 'label'
 			)
 		);
-		//$output .= $this->NetCommonsForm->hidden('PhotoAlbumPhoto.block_id', array('value' => Current::read('Block.id')));
-		//$output .= $this->NetCommonsForm->hidden('PhotoAlbumPhoto.album_key', array('value' => $data['PhotoAlbumPhoto']['album_key']));
-		$output .= $this->NetCommonsForm->hidden('PhotoAlbumPhoto.0.id', array('value' => $data['PhotoAlbumPhoto']['id']));
-		//$output .= $this->NetCommonsForm->hidden('PhotoAlbumPhoto.language_id', array('value' => $data['PhotoAlbumPhoto']['language_id']));
+		$options = array('value' => $data['PhotoAlbumPhoto']['id']);
+		$output .= $this->NetCommonsForm->hidden('PhotoAlbumPhoto.0.id', $options);
 
 		$onClickScript = 'return confirm(\'' .
 				__d('photo_albums', 'Approving the photo. Are you sure to proceed?') .
@@ -244,7 +242,8 @@ class PhotoAlbumsHelper extends AppHelper {
 			}
 
 			$fieldName = 'PhotoAlbumPhoto.' . $index . '.id';
-			$hiddenTags .= $this->NetCommonsForm->hidden($fieldName, array('value' => $photo['PhotoAlbumPhoto']['id']));
+			$options = array('value' => $photo['PhotoAlbumPhoto']['id']);
+			$hiddenTags .= $this->NetCommonsForm->hidden($fieldName, $options);
 		}
 
 		if (!$hiddenTags) {

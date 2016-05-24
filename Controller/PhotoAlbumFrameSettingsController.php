@@ -96,7 +96,8 @@ class PhotoAlbumFrameSettingsController extends PhotoAlbumsAppController {
 				'recursive' => -1
 			);
 			$displayAlbum = $this->PhotoAlbumDisplayAlbum->find('all', $query);
-			$this->request->data['PhotoAlbumDisplayAlbum'] = Hash::extract($displayAlbum, '{n}.PhotoAlbumDisplayAlbum');
+			$extractData = Hash::extract($displayAlbum, '{n}.PhotoAlbumDisplayAlbum');
+			$this->request->data['PhotoAlbumDisplayAlbum'] = $extractData;
 		}
 
 		$conditions = $this->PhotoAlbum->getWorkflowConditions();
@@ -108,6 +109,7 @@ class PhotoAlbumFrameSettingsController extends PhotoAlbumsAppController {
 			)
 		);
 		$this->set('albums', $this->Paginator->paginate('PhotoAlbum'));
-		$this->set('displayAlbumKeys', Hash::extract($this->request->data['PhotoAlbumDisplayAlbum'], '{n}.album_key'));
+		$extractData = Hash::extract($this->request->data['PhotoAlbumDisplayAlbum'], '{n}.album_key');
+		$this->set('displayAlbumKeys', $extractData);
 	}
 }

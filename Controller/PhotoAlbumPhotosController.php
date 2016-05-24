@@ -122,7 +122,9 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 		if (!$this->PhotoAlbumPhoto->exists($id)) {
 			throw new NotFoundException(__('Invalid photo album photo'));
 		}
-		$options = array('conditions' => array('PhotoAlbumPhoto.' . $this->PhotoAlbumPhoto->primaryKey => $id));
+		$options = array('conditions' => array(
+			'PhotoAlbumPhoto.' . $this->PhotoAlbumPhoto->primaryKey => $id)
+		);
 		$this->set('photoAlbumPhoto', $this->PhotoAlbumPhoto->find('first', $options));
 	}
 
@@ -200,7 +202,8 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 			$this->request->data = $photo;
 		}
 
-		$comments = $this->PhotoAlbumPhoto->getCommentsByContentKey($this->request->data['PhotoAlbumPhoto']['key']);
+		$photoKey = $this->request->data['PhotoAlbumPhoto']['key'];
+		$comments = $this->PhotoAlbumPhoto->getCommentsByContentKey($photoKey);
 		$this->set('comments', $comments);
 	}
 
@@ -252,7 +255,9 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 	public function photo() {
 		App::uses('PhotoAlbumPhoto', 'PhotoAlbums.Model');
 
-		return $this->Download->doDownload($this->request->params['pass'][2], ['field' => PhotoAlbumPhoto::ATTACHMENT_FIELD_NAME]);
+		$contentId = $this->request->params['pass'][2];
+		$options = array('field' => PhotoAlbumPhoto::ATTACHMENT_FIELD_NAME);
+		return $this->Download->doDownload($contentId, $options);
 	}
 
 /**

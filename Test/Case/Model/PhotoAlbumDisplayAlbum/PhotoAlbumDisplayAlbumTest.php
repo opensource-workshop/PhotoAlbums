@@ -52,7 +52,7 @@ class PhotoAlbumDisplayAlbumTest extends CakeTestCase {
 
 		$this->__currentProperty = new ReflectionProperty('Current', 'current');
 		$this->__currentProperty->setAccessible(true);
-		$this->__currentValue =$this->__currentProperty->getValue();
+		$this->__currentValue = $this->__currentProperty->getValue();
 
 		$currentValue['Frame']['key'] = 'Lorem ipsum dolor sit amet';
 		$this->__currentProperty->setValue($currentValue);

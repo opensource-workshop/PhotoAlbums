@@ -82,7 +82,8 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 			return;
 		}
 
-		if ($frameSetting['PhotoAlbumFrameSetting']['display_type'] != PhotoAlbumFrameSetting::DISPLAY_TYPE_ALBUMS) {
+		$displayType = $frameSetting['PhotoAlbumFrameSetting']['display_type'];
+		if ($displayType != PhotoAlbumFrameSetting::DISPLAY_TYPE_ALBUMS) {
 			$this->set('album', $albums[0]);
 
 			$conditions = $this->PhotoAlbumPhoto->getWorkflowConditions();
@@ -97,15 +98,15 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 			);
 			$this->set('photos', $this->Paginator->paginate('PhotoAlbumPhoto'));
 		}
-		if ($frameSetting['PhotoAlbumFrameSetting']['display_type'] == PhotoAlbumFrameSetting::DISPLAY_TYPE_SLIDE) {
+		if ($displayType == PhotoAlbumFrameSetting::DISPLAY_TYPE_SLIDE) {
 			$this->set('active', 0);
 		}
 
-		if ($frameSetting['PhotoAlbumFrameSetting']['display_type'] == PhotoAlbumFrameSetting::DISPLAY_TYPE_PHOTOS) {
+		if ($displayType == PhotoAlbumFrameSetting::DISPLAY_TYPE_PHOTOS) {
 			$this->view = 'PhotoAlbumPhotos/index';
 		}
 
-		if ($frameSetting['PhotoAlbumFrameSetting']['display_type'] == PhotoAlbumFrameSetting::DISPLAY_TYPE_SLIDE) {
+		if ($displayType == PhotoAlbumFrameSetting::DISPLAY_TYPE_SLIDE) {
 			$this->view = 'PhotoAlbumPhotos/slide';
 		}
 	}
@@ -220,7 +221,8 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 			$this->request->data = $album;
 		}
 
-		$comments = $this->PhotoAlbumPhoto->getCommentsByContentKey($this->request->data['PhotoAlbum']['key']);
+		$albumKey = $this->request->data['PhotoAlbum']['key'];
+		$comments = $this->PhotoAlbumPhoto->getCommentsByContentKey($albumKey);
 		$this->set('comments', $comments);
 	}
 
@@ -232,8 +234,10 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
  */
 	public function jacket() {
 		App::uses('PhotoAlbum', 'PhotoAlbums.Model');
+		$contentId = $this->request->params['pass'][1];
+		$options = array('field' => PhotoAlbum::ATTACHMENT_FIELD_NAME);
 
-		return $this->Download->doDownload($this->request->params['pass'][1], ['field' => PhotoAlbum::ATTACHMENT_FIELD_NAME]);
+		return $this->Download->doDownload($contentId, $options);
 	}
 
 /**
