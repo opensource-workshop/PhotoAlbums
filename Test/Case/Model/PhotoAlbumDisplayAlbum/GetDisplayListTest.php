@@ -15,7 +15,7 @@ App::uses('PhotoAlbumTestCurrentUtil', 'PhotoAlbums.Test/Case/Model');
 /**
  * Summary for PhotoAlbumDisplayAlbum Test Case
  */
-class PhotoAlbumDisplayAlbumTest extends NetCommonsModelTestCase {
+class PhotoAlbumGetDisplayListTest extends NetCommonsModelTestCase {
 
 /**
  * Fixtures

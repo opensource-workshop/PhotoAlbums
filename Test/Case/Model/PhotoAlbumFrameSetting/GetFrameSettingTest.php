@@ -14,7 +14,7 @@ App::uses('PhotoAlbumTestCurrentUtil', 'PhotoAlbums.Test/Case/Model');
 /**
  * Summary for PhotoAlbumFrameSetting Test Case
  */
-class PhotoAlbumFrameSettingTest extends CakeTestCase {
+class PhotoAlbumFrameSettingGetFrameSettingTest extends CakeTestCase {
 
 /**
  * Fixtures
