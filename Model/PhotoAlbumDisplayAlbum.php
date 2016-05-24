@@ -9,6 +9,7 @@
  */
 
 App::uses('PhotoAlbumsAppModel', 'PhotoAlbums.Model');
+App::uses('Current', 'NetCommons.Utility');
 
 /**
  * Summary for PhotoAlbumDisplayAlbum Model
