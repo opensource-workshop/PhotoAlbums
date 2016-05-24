@@ -9,34 +9,34 @@
 // Add dependency module
 NetCommonsApp.requires.push('ui.bootstrap.modal');
 
+
 /**
  * PhotoAlbums Controller
  *
  * @param {string} Controller name
  * @param {'$modal', '$http')} Controller constructor function.
  */
-NetCommonsApp
-.controller('PhotoAlbumsPhotoController',
-['$uibModal', '$http', function($modal, $http) {
+NetCommonsApp.controller('PhotoAlbumsPhotoController', ['$uibModal', '$http',
+  function($modal, $http) {
+    this.openAdd = function(url) {
+      $http.defaults.headers.common['Accept'] = 'text/html';
+      $modal.open({
+        templateUrl: url,
+        controller: 'PhotoAlbumsModalController'
+      });
+    };
 
-  this.openAdd = function(url) {
-    $http.defaults.headers.common['Accept'] = 'text/html';
-    $modal.open({
-      templateUrl: url,
-      controller: 'PhotoAlbumsModalController'
-    });
-  };
+    this.slide = function(url) {
+      $http.defaults.headers.common['Accept'] = 'text/html';
+      $modal.open({
+        templateUrl: url,
+        controller: 'PhotoAlbumsModalController',
+        windowClass: 'photo-albums-photo-slide'
+      });
+    };
+  }
+]);
 
-  this.slide = function(url) {
-    $http.defaults.headers.common['Accept'] = 'text/html';
-    $modal.open({
-      templateUrl: url,
-      controller: 'PhotoAlbumsModalController',
-      windowClass: 'photo-albums-photo-slide'
-    });
-  };
-
-}])
 
 /**
  * PhotoAlbums modal Controller
@@ -44,11 +44,10 @@ NetCommonsApp
  * @param {string} Controller name
  * @param {$scope, $modalInstance)} Controller constructor function.
  */
-.controller('PhotoAlbumsModalController',
-['$scope', '$uibModalInstance', function($scope, $modalInstance) {
-
-  $scope.cancel = function() {
-    $modalInstance.dismiss('cancel');
-  };
-
-}]);
+NetCommonsApp.controller('PhotoAlbumsModalController', ['$scope', '$uibModalInstance',
+  function($scope, $modalInstance) {
+    $scope.cancel = function() {
+      $modalInstance.dismiss('cancel');
+    };
+  }
+]);

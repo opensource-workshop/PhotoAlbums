@@ -6,20 +6,19 @@
  * @license http://www.netcommons.org/license.txt NetCommons License
  */
 
+
 /**
  * PhotoAlbumFrameSettings Controller
  *
  * @param {string} Controller name
  */
-NetCommonsApp
-.controller('PhotoAlbumsFrameSettingController',
-['photoAlbumsValues', function(photoAlbumsValues) {
+NetCommonsApp.controller('PhotoAlbumsFrameSettingController', ['photoAlbumsValues',
+  function(photoAlbumsValues) {
+    this.displayType = photoAlbumsValues.displayType;
+    this.checkModel = photoAlbumsValues.checkModel;
 
-  this.displayType = photoAlbumsValues.displayType;
-  this.checkModel = photoAlbumsValues.checkModel;
-
-  this.changeDisplayType = function() {
-    console.log(this.displayType);
-  };
-
-}]);
+    this.changeDisplayType = function() {
+      console.log(this.displayType);
+    };
+  }
+]);
