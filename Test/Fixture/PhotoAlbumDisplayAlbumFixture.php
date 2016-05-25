@@ -43,9 +43,9 @@ class PhotoAlbumDisplayAlbumFixture extends CakeTestFixture {
 			'frame_key' => 'Lorem ipsum dolor sit amet',
 			'album_key' => 'Lorem ipsum dolor sit amet',
 			'created_user' => 1,
-			'created' => '2016-03-10 06:07:21',
+			'created' => '2016-05-25 01:33:08',
 			'modified_user' => 1,
-			'modified' => '2016-03-10 06:07:21'
+			'modified' => '2016-05-25 01:33:08'
 		),
 	);
 
