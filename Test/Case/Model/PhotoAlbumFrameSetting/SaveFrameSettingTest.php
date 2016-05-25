@@ -41,7 +41,6 @@ class PhotoAlbumFrameSettingSaveFrameSettingTest extends NetCommonsSaveTest {
  */
 	protected $_methodName = 'savePhotoAlbumFrameSetting';
 
-
 /**
  * setUp method
  *
