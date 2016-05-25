@@ -52,7 +52,7 @@ class PhotoAlbumSaveAlbumWithDisplayTest extends WorkflowSaveTest {
 		parent::setUp();
 		ClassRegistry::removeObject('PhotoAlbum');
 		$this->PhotoAlbum = ClassRegistry::init('PhotoAlbums.PhotoAlbum');
-
+var_dump(11, Current::$current);
 		$currentValue['Frame']['key'] = 'Lorem ipsum dolor sit amet';
 		PhotoAlbumTestCurrentUtil::setValue($currentValue);
 	}
@@ -65,7 +65,7 @@ class PhotoAlbumSaveAlbumWithDisplayTest extends WorkflowSaveTest {
 	public function tearDown() {
 		unset($this->PhotoAlbum);
 		PhotoAlbumTestCurrentUtil::setOriginValue();
-
+var_dump(22, Current::$current);
 		parent::tearDown();
 	}
 
