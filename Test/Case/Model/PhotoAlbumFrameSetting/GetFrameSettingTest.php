@@ -55,9 +55,7 @@ class PhotoAlbumFrameSettingGetFrameSettingTest extends CakeTestCase {
 		$currentValue['Frame']['key'] = 'Lorem ipsum dolor sit amet';
 		PhotoAlbumTestCurrentUtil::setValue($currentValue);
 
-		$fixture = new PhotoAlbumFrameSettingFixture();
-		$expected = $fixture->records[0];
-
+		$expected = (new PhotoAlbumFrameSettingFixture())->records[0];
 		$actual = $this->PhotoAlbumFrameSetting->getFrameSetting();
 		$this->assertEquals($expected, $actual['PhotoAlbumFrameSetting']);
 
