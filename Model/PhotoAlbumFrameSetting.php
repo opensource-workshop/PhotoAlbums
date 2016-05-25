@@ -51,7 +51,7 @@ class PhotoAlbumFrameSetting extends PhotoAlbumsAppModel {
 					'required' => true,
 				),
 			),
-			/*'albums_order' => array(
+			'albums_order' => array(
 				'inList' => array(
 					'rule' => array(
 						'inList',
@@ -64,7 +64,7 @@ class PhotoAlbumFrameSetting extends PhotoAlbumsAppModel {
 					'message' => __d('net_commons', 'Invalid request.'),
 					'required' => true,
 				),
-			),*/
+			),
 			'albums_per_page' => array(
 				'numeric' => array(
 					'rule' => array('numeric'),
