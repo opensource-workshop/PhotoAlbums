@@ -1,10 +1,7 @@
 language: php
 
 php:
-  - 5.4
   - 5.5
-  - 5.6
-  - 7.0
 
 sudo: required
 
@@ -20,7 +17,9 @@ before_script:
   - . tools/build/plugins/cakephp/travis/environment.sh
 
 script:
-  - . tools/build/plugins/cakephp/travis/main.sh
+  - export PATH=$PATH:./vendors/bin:$NETCOMMONS_BUILD_DIR/vendors/bin
+  - cd $NETCOMMONS_BUILD_DIR
+  - app/Console/cake test $PLUGIN_NAME All$PLUGIN_NAME --stderr || exit $?
 
 after_script:
   - . tools/build/plugins/cakephp/travis/post.sh
