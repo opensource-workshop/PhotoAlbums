@@ -40,7 +40,7 @@ class PhotoAlbumTestCurrentUtil {
 			self::$__originValue = self::$__currentProperty->getValue();
 		}
 
-		self::$__currentProperty->setValue($value);
+		self::$__currentProperty->setValue(array_merge(self::$__originValue, $value));
 	}
 
 /**
