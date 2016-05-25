@@ -3,7 +3,7 @@ language: php
 php:
   - 5.5
 
-sudo: required
+sudo: false
 
 env:
   - NETCOMMONS_VERSION=master DB=mysql
@@ -13,13 +13,21 @@ before_script:
   - git clone git://github.com/NetCommons3/NetCommons3 $NETCOMMONS_BUILD_DIR
   - cd $NETCOMMONS_BUILD_DIR
   - git checkout $NETCOMMONS_VERSION
-  - travis_wait . tools/build/plugins/cakephp/travis/pre.sh
-  - . tools/build/plugins/cakephp/travis/environment.sh
+  - if [ $DB = 'mysql' ]; then mysql -e 'CREATE DATABASE cakephp_test;'; fi
+  - if [ $DB = 'pgsql' ]; then psql -c 'CREATE DATABASE cakephp_test;' -U postgres; fi
+  - export PLUGIN_NAME=`basename $TRAVIS_BUILD_DIR`
+  - cd $NETCOMMONS_BUILD_DIR
+  - rm composer.lock
+  - composer remove --no-update netcommons/install
+  - composer config minimum-stability dev
+  - composer config prefer-stable true
+  - composer install
+  - composer requirecakedc/migrations:~2.2 netcommons/blocks:dev-master netcommons/mails:dev-master netcommons/files:dev-master netcommons/net-commons:dev-master netcommons/pages:dev-master netcommons/plugin-manager:dev-master netcommons/topics:dev-master netcommons/users:dev-master netcommons/workflow:dev-master
+  - cp -rf $TRAVIS_BUILD_DIR $NETCOMMONS_BUILD_DIR/app/Plugin/
+  - cp app/Config/database.php.travis app/Config/database.php
+  - cp app/Plugin/$PLUGIN_NAME/phpunit.xml.dist .
 
 script:
   - export PATH=$PATH:./vendors/bin:$NETCOMMONS_BUILD_DIR/vendors/bin
   - cd $NETCOMMONS_BUILD_DIR
   - app/Console/cake test $PLUGIN_NAME All$PLUGIN_NAME --stderr || exit $?
-
-after_script:
-  - . tools/build/plugins/cakephp/travis/post.sh
