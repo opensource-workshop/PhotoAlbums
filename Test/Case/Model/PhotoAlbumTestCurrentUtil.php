@@ -37,9 +37,9 @@ class PhotoAlbumTestCurrentUtil {
 		if (!isset(self::$__currentProperty)) {
 			self::$__currentProperty = new ReflectionProperty('Current', 'current');
 			self::$__currentProperty->setAccessible(true);
-			self::$__originValue = self::$__currentProperty->getValue();
 		}
 
+		self::$__originValue = self::$__currentProperty->getValue();
 		self::$__currentProperty->setValue(array_merge(self::$__originValue, $value));
 	}
 
