@@ -27,6 +27,7 @@ class PhotoAlbumSaveAlbumWithDisplayTest extends WorkflowSaveTest {
 		'plugin.photo_albums.photo_album',
 		'plugin.photo_albums.photo_album_photo',
 		'plugin.photo_albums.photo_album_display_album',
+		'plugin.site_manager.site_setting',	// For Files plugin
 	);
 
 /**
