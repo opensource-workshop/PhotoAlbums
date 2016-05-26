@@ -9,7 +9,7 @@
  */
 
 App::uses('PhotoAlbumSetting', 'PhotoAlbums.Model');
-App::uses('PhotoAlbumTestCurrentUtil', 'PhotoAlbums.Test/Case/Model');
+App::uses('PhotoAlbumTestCurrentUtility', 'PhotoAlbums.Test/Case/Model');
 
 /**
  * Summary for PhotoAlbumSettingGetSetting Test Case
@@ -53,13 +53,13 @@ class PhotoAlbumSettingGetSettingTest extends CakeTestCase {
  */
 	public function testGetSetting() {
 		$currentValue['Block']['key'] = 'Lorem ipsum dolor sit amet';
-		PhotoAlbumTestCurrentUtil::setValue($currentValue);
+		PhotoAlbumTestCurrentUtility::setValue($currentValue);
 
 		$expected = (new PhotoAlbumSettingFixture())->records[0];
 		$actual = $this->PhotoAlbumSetting->getSetting();
 		$this->assertEquals($expected, $actual['PhotoAlbumSetting']);
 
-		PhotoAlbumTestCurrentUtil::setOriginValue();
+		PhotoAlbumTestCurrentUtility::setOriginValue();
 	}
 
 /**

@@ -11,7 +11,7 @@
 App::uses('PhotoAlbum', 'PhotoAlbums.Model');
 App::uses('WorkflowSaveTest', 'Workflow.TestSuite');
 App::uses('PhotoAlbumFixture', 'PhotoAlbums.Test/Fixture');
-App::uses('PhotoAlbumTestCurrentUtil', 'PhotoAlbums.Test/Case/Model');
+App::uses('PhotoAlbumTestCurrentUtility', 'PhotoAlbums.Test/Case/Model');
 
 /**
  * Summary for PhotoAlbumSaveAlbumWithDisplayTest Test Case
@@ -55,7 +55,7 @@ class PhotoAlbumSaveAlbumWithDisplayTest extends WorkflowSaveTest {
 		$this->PhotoAlbum = ClassRegistry::init('PhotoAlbums.PhotoAlbum');
 
 		$currentValue['Frame']['key'] = 'Lorem ipsum dolor sit amet';
-		PhotoAlbumTestCurrentUtil::setValue($currentValue);
+		PhotoAlbumTestCurrentUtility::setValue($currentValue);
 	}
 
 /**
@@ -65,7 +65,7 @@ class PhotoAlbumSaveAlbumWithDisplayTest extends WorkflowSaveTest {
  */
 	public function tearDown() {
 		unset($this->PhotoAlbum);
-		PhotoAlbumTestCurrentUtil::setOriginValue();
+		PhotoAlbumTestCurrentUtility::setOriginValue();
 
 		parent::tearDown();
 	}

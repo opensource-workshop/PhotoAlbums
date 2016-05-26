@@ -10,7 +10,7 @@
 
 App::uses('NetCommonsModelTestCase', 'NetCommons.TestSuite');
 App::uses('PhotoAlbumDisplayAlbum', 'PhotoAlbums.Model');
-App::uses('PhotoAlbumTestCurrentUtil', 'PhotoAlbums.Test/Case/Model');
+App::uses('PhotoAlbumTestCurrentUtility', 'PhotoAlbums.Test/Case/Model');
 
 /**
  * Summary for PhotoAlbumGetDisplayList Test Case
@@ -54,12 +54,12 @@ class PhotoAlbumGetDisplayListTest extends NetCommonsModelTestCase {
  */
 	public function testGetDisplayList() {
 		$currentValue['Frame']['key'] = 'Lorem ipsum dolor sit amet';
-		PhotoAlbumTestCurrentUtil::setValue($currentValue);
+		PhotoAlbumTestCurrentUtility::setValue($currentValue);
 
 		$expected[1] = 'Lorem ipsum dolor sit amet';
 		$actual = $this->PhotoAlbumDisplayAlbum->getDisplayList();
 
 		$this->assertEquals($expected, $actual);
-		PhotoAlbumTestCurrentUtil::setOriginValue();
+		PhotoAlbumTestCurrentUtility::setOriginValue();
 	}
 }

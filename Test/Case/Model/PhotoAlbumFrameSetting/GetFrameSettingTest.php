@@ -9,7 +9,7 @@
  */
 
 App::uses('PhotoAlbumFrameSetting', 'PhotoAlbums.Model');
-App::uses('PhotoAlbumTestCurrentUtil', 'PhotoAlbums.Test/Case/Model');
+App::uses('PhotoAlbumTestCurrentUtility', 'PhotoAlbums.Test/Case/Model');
 
 /**
  * Summary for PhotoAlbumFrameSettingGetFrameSetting Test Case
@@ -53,13 +53,13 @@ class PhotoAlbumFrameSettingGetFrameSettingTest extends CakeTestCase {
  */
 	public function testGetFrameSetting() {
 		$currentValue['Frame']['key'] = 'Lorem ipsum dolor sit amet';
-		PhotoAlbumTestCurrentUtil::setValue($currentValue);
+		PhotoAlbumTestCurrentUtility::setValue($currentValue);
 
 		$expected = (new PhotoAlbumFrameSettingFixture())->records[0];
 		$actual = $this->PhotoAlbumFrameSetting->getFrameSetting();
 		$this->assertEquals($expected, $actual['PhotoAlbumFrameSetting']);
 
-		PhotoAlbumTestCurrentUtil::setOriginValue();
+		PhotoAlbumTestCurrentUtility::setOriginValue();
 	}
 
 /**
