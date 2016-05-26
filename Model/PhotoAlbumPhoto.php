@@ -12,6 +12,7 @@ App::uses('PhotoAlbumsAppModel', 'PhotoAlbums.Model');
 App::uses('Current', 'NetCommons.Utility');
 App::uses('UnZip', 'Files.Utility');
 App::uses('File', 'Utility');
+App::uses('SiteSettingUtil', 'SiteManager.Utility');
 
 /**
  * Summary for PhotoAlbumPhoto Model
@@ -153,10 +154,11 @@ class PhotoAlbumPhoto extends PhotoAlbumsAppModel {
 				$this->alias . '.created_user !=' => Current::read('User.id'),
 			);
 			// 時限公開条件追加
+			/* 現状なし
 			if ($this->hasField('public_type')) {
 				$publicTypeConditions = $this->_getPublicTypeConditions($this);
 				$activeConditions[] = $publicTypeConditions;
-			}
+			}*/
 			$latestConditons = array(
 				$this->alias . '.is_latest' => true,
 				$this->alias . '.created_user' => Current::read('User.id'),
@@ -166,20 +168,18 @@ class PhotoAlbumPhoto extends PhotoAlbumsAppModel {
 			$activeConditions = array(
 				$this->alias . '.is_active' => true,
 			);
+			/* 現状なし
 			if ($this->hasField('public_type')) {
 				$publicTypeConditions = $this->_getPublicTypeConditions($this);
 				$activeConditions[] = $publicTypeConditions;
-			}
+			}*/
 			$latestConditons = array();
 		}
 
-		if ($this->hasField('language_id')) {
-			$langConditions = array(
-				$this->alias . '.language_id' => Current::read('Language.id'),
-			);
-		} else {
-			$langConditions = array();
-		}
+		$langConditions = array(
+			$this->alias . '.language_id' => Current::read('Language.id'),
+		);
+
 		$conditions = Hash::merge($langConditions, array(
 			'OR' => array($activeConditions, $latestConditons)
 		));
