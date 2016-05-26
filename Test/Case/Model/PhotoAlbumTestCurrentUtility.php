@@ -1,6 +1,6 @@
 <?php
 /**
- * PhotoAlbumTestCurrentUtil Class
+ * PhotoAlbumTestCurrentUtility Class
  *
  * @copyright Copyright 2014, NetCommons Project
  * @author Kohei Teraguchi <kteraguchi@commonsnet.org>
@@ -9,9 +9,9 @@
  */
 
 /**
- * Summary for PhotoAlbumTestCurrentUtil
+ * Summary for PhotoAlbumTestCurrentUtility
  */
-class PhotoAlbumTestCurrentUtil {
+class PhotoAlbumTestCurrentUtility {
 
 /**
  * Current reflection object
