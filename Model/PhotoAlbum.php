@@ -53,8 +53,29 @@ class PhotoAlbum extends PhotoAlbumsAppModel {
  * @see Model::save()
  */
 	public function beforeValidate($options = array()) {
+		$field = PhotoAlbum::ATTACHMENT_FIELD_NAME;
+		$validate = array();
+
+		if (strlen($this->data['PhotoAlbum'][$field]['name'])) {
+			$validate['photoExtension'] = array(
+				'rule' => array(
+					'extension',
+					array('gif', 'jpeg', 'png', 'jpg')
+				),
+				'message' => array(__d('files', 'It is upload disabled file format'))
+			);
+
+			$validate['mimeType'] = array(
+				'rule' => array('mimeType', '#image/.+#'),
+				'message' => array(__d('files', 'It is upload disabled file format'))
+			);
+		}
+
 		$this->validate = Hash::merge(
 			$this->validate,
+			array(
+				$field => $validate
+			),
 			array(
 				'name' => array(
 					'notBlank' => array(

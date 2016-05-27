@@ -55,17 +55,36 @@ class PhotoAlbumPhoto extends PhotoAlbumsAppModel {
  * @see Model::save()
  */
 	public function beforeValidate($options = array()) {
+		$field = PhotoAlbumPhoto::ATTACHMENT_FIELD_NAME;
+		$validate = array();
+		if (empty($this->data['PhotoAlbumPhoto']['id'])) {
+			$validate['isFileUpload'] = array(
+				'rule' => array('isFileUpload'),
+				'message' => array(__d('files', 'Please specify the file'))
+			);
+		}
+
+		if (strlen($this->data['PhotoAlbumPhoto'][$field]['name'])) {
+			$validate['photoExtension'] = array(
+				'rule' => array(
+					'extension',
+					array('gif', 'jpeg', 'png', 'jpg', 'zip')
+				),
+				'message' => array(__d('files', 'It is upload disabled file format'))
+			);
+
+			/*
+			$validate['mimetype'] = array(
+				'rule' => array('mimeType', array('???')),
+				'message' => array(__d('files', 'It is upload disabled file format'))
+			);
+			*/
+		}
+
 		$this->validate = Hash::merge(
 			$this->validate,
 			array(
-				'photo' => array(
-					'notBlank' => array(
-						'rule' => array('notBlank'),
-						'message' => __d('net_commons', 'Invalid request.'),
-						'allowEmpty' => false,
-						'required' => true,
-					),
-				),
+				$field => $validate
 			)
 		);
 
@@ -87,7 +106,7 @@ class PhotoAlbumPhoto extends PhotoAlbumsAppModel {
 		foreach ($regenerateData as $data) {
 			$this->set($data);
 			if (!$this->validates()) {
-				return false;
+var_dump($this->validationErrors);				return false;
 			}
 
 			try {
