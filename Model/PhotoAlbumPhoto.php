@@ -64,7 +64,7 @@ class PhotoAlbumPhoto extends PhotoAlbumsAppModel {
 			);
 		}
 
-		if (strlen($this->data['PhotoAlbumPhoto'][$field]['name'])) {
+		if (strlen(Hash::get($this->data, 'PhotoAlbumPhoto.' . $field. '.name'))) {
 			$validate['photoExtension'] = array(
 				'rule' => array(
 					'extension',
