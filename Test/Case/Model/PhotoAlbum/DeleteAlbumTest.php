@@ -27,10 +27,7 @@ class PhotoAlbumDeleteAlbumTest extends WorkflowDeleteTest {
 		'plugin.photo_albums.photo_album_photo',
 		'plugin.photo_albums.photo_album_display_album',
 		'plugin.site_manager.site_setting',	// For Files plugin
-		//'plugin.files.upload_file',
-		//'plugin.files.upload_files_content',
 		'plugin.workflow.workflow_comment',
-		//'plugin.users.user',
 	);
 
 /**
