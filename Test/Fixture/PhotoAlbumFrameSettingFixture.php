@@ -63,6 +63,23 @@ class PhotoAlbumFrameSettingFixture extends CakeTestFixture {
 			'modified_user' => 1,
 			'modified' => '2016-05-25 01:34:38'
 		),
+		array(
+			'id' => 3,
+			'frame_key' => 'frame_3',
+			'display_type' => 1,
+			'albums_per_page' => 1,
+			'albums_order' => 'PhotoAlbum.modified desc',
+			'albums_sort' => 'PhotoAlbum.modified',
+			'albums_direction' => 'desc',
+			'photos_per_page' => 1,
+			'photos_order' => 'PhotoAlbumPhoto.modified desc',
+			'photos_sort' => 'PhotoAlbumPhoto.modified',
+			'photos_direction' => 'desc',
+			'created_user' => 1,
+			'created' => '2016-05-25 01:34:38',
+			'modified_user' => 1,
+			'modified' => '2016-05-25 01:34:38'
+		),
 	);
 
 }

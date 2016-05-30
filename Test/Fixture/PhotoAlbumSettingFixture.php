@@ -57,6 +57,20 @@ class PhotoAlbumSettingFixture extends CakeTestFixture {
 			'modified_user' => 1,
 			'modified' => '2016-05-25 02:23:00'
 		),
+		array(
+			'id' => 2,
+			'block_key' => 'block_2',
+			'use_workflow' => 1,
+			'use_like' => 1,
+			'use_unlike' => 1,
+			'use_comment' => 1,
+			'use_comment_approval' => 1,
+			'room_id' => 1,
+			'created_user' => 1,
+			'created' => '2016-05-25 02:23:00',
+			'modified_user' => 1,
+			'modified' => '2016-05-25 02:23:00'
+		),
 	);
 
 }
