@@ -159,5 +159,8 @@ class PhotoAlbumSaveAlbumTest extends WorkflowSaveTest {
 
 		$result = $this->$model->$method($data);
 		$this->assertNotEmpty($result);
+
+		$actual = $this->$model->find('all');
+		$this->assertNotEmpty($actual);
 	}
 }
