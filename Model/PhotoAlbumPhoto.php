@@ -106,7 +106,7 @@ class PhotoAlbumPhoto extends PhotoAlbumsAppModel {
 		foreach ($regenerateData as $data) {
 			$this->set($data);
 			if (!$this->validates()) {
-var_dump($this->validationErrors);				return false;
+				return false;
 			}
 
 			try {
