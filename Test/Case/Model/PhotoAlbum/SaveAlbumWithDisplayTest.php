@@ -12,6 +12,8 @@ App::uses('PhotoAlbum', 'PhotoAlbums.Model');
 App::uses('WorkflowSaveTest', 'Workflow.TestSuite');
 App::uses('PhotoAlbumFixture', 'PhotoAlbums.Test/Fixture');
 App::uses('PhotoAlbumTestCurrentUtility', 'PhotoAlbums.Test/Case/Model');
+App::uses('TemporaryFolder', 'Files.Utility');
+App::uses('Security', 'Utility');
 
 /**
  * Summary for PhotoAlbumSaveAlbumWithDisplayTest Test Case
@@ -79,17 +81,32 @@ class PhotoAlbumSaveAlbumWithDisplayTest extends WorkflowSaveTest {
  * @return array テストデータ
  */
 	public function dataProviderSave() {
+		$path = CakePlugin::path('PhotoAlbums') . DS .
+			WEBROOT_DIR . DS .
+			Configure::read('App.imageBaseUrl') .
+			'noimage.jpg';
+		$Folder = new TemporaryFolder();
+		copy($path, $Folder->path . DS . 'editTest.jpg');
+		$field = PhotoAlbum::ATTACHMENT_FIELD_NAME;
+
 		$data['PhotoAlbum'] = (new PhotoAlbumFixture())->records[0];
 		$data['PhotoAlbum']['published_photo_count'] = 0;
 		$data['PhotoAlbum']['pending_photo_count'] = 0;
 		$data['PhotoAlbum']['draft_photo_count'] = 0;
 		$data['PhotoAlbum']['disapproved_photo_count'] = 0;
 		$data['PhotoAlbum']['photo_count'] = 0;
+		$data['PhotoAlbum'][$field]['name'] = 'editTest.jpg';
+		$data['PhotoAlbum'][$field]['type'] = 'image/jpeg';
+		$data['PhotoAlbum'][$field]['size'] = filesize($path);
+		$data['PhotoAlbum'][$field]['tmp_name'] = $Folder->path . DS . 'editTest.jpg';
 
 		$results = array();
 		// * 編集の登録処理
 		$results[0] = array($data);
 		// * 新規の登録処理
+		copy($path, $Folder->path . DS . 'createTest.jpg');
+		$data['PhotoAlbum'][$field]['name'] = 'createTest.jpg';
+		$data['PhotoAlbum'][$field]['tmp_name'] = $Folder->path . DS . 'createTest.jpg';
 		$results[1] = array($data);
 		$results[1] = Hash::insert($results[1], '0.PhotoAlbum.id', null);
 		$results[1] = Hash::insert($results[1], '0.PhotoAlbum.key', null);
@@ -135,4 +152,18 @@ class PhotoAlbumSaveAlbumWithDisplayTest extends WorkflowSaveTest {
 		);
 	}
 
+/**
+ * savePhoto test
+ *
+ * @param array $data 登録データ
+ * @dataProvider dataProviderSave
+ * @return void
+ */
+	public function testSave($data) {
+		$model = $this->_modelName;
+		$method = $this->_methodName;
+
+		$result = $this->$model->$method($data);
+		$this->assertNotEmpty($result);
+	}
 }

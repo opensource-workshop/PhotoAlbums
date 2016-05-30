@@ -57,7 +57,7 @@ class PhotoAlbum extends PhotoAlbumsAppModel {
 		$validate = array();
 
 		if (strlen($this->data['PhotoAlbum'][$field]['name'])) {
-			$validate['photoExtension'] = array(
+			$validate['jacketExtension'] = array(
 				'rule' => array(
 					'extension',
 					array('gif', 'jpeg', 'png', 'jpg')
