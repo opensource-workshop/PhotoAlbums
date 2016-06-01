@@ -75,7 +75,7 @@ class PhotoAlbumSaveZipFileTest extends WorkflowSaveTest {
  */
 	public function dataProviderSave() {
 		$path = CakePlugin::path('PhotoAlbums') .
-		'Test' . DS . 'Fixture' . DS . 'test.zip';
+			'Test' . DS . 'Fixture' . DS . 'test.zip';
 		$Folder = new TemporaryFolder();
 		copy($path, $Folder->path . DS . 'test.zip');
 		$field = PhotoAlbumPhoto::ATTACHMENT_FIELD_NAME;
@@ -143,4 +143,39 @@ class PhotoAlbumSaveZipFileTest extends WorkflowSaveTest {
 		$this->assertNotEmpty($result);
 	}
 
+/**
+ * Test to call WorkflowBehavior::beforeSave
+ *
+ * WorkflowBehaviorをモックに置き換えて登録処理を呼び出します。<br>
+ * WorkflowBehavior::beforeSaveが1回呼び出されることをテストします。<br>
+ * ##### 参考URL
+ * http://stackoverflow.com/questions/19833495/how-to-mock-a-cakephp-behavior-for-unit-testing]
+ *
+ * @param array $data 登録データ
+ * @dataProvider dataProviderSave
+ * @return void
+ * @throws CakeException Workflow.Workflowがロードされていないとエラー
+ */
+	public function testCallWorkflowBehavior($data) {
+		$model = $this->_modelName;
+		$method = $this->_methodName;
+
+		if (! $this->$model->Behaviors->loaded('Workflow.Workflow')) {
+			$error = '"Workflow.Workflow" not loaded in ' . $this->$model->alias . '.';
+			throw new CakeException($error);
+		};
+
+		ClassRegistry::removeObject('WorkflowBehavior');
+		$workflowBehaviorMock = $this->getMock('WorkflowBehavior', ['beforeSave']);
+		ClassRegistry::addObject('WorkflowBehavior', $workflowBehaviorMock);
+		$this->$model->Behaviors->unload('Workflow');
+		$this->$model->Behaviors->load('Workflow', $this->$model->actsAs['Workflow.Workflow']);
+
+		$workflowBehaviorMock
+			->expects($this->exactly(2))
+			->method('beforeSave')
+			->will($this->returnValue(true));
+
+		$this->$model->$method($data);
+	}
 }

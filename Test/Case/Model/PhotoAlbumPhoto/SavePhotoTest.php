@@ -74,10 +74,8 @@ class PhotoAlbumSavePhotoTest extends WorkflowSaveTest {
  * @return array テストデータ
  */
 	public function dataProviderSave() {
-		$path = CakePlugin::path('PhotoAlbums') . DS .
-			WEBROOT_DIR . DS .
-			Configure::read('App.imageBaseUrl') .
-			'noimage.jpg';
+		$path = CakePlugin::path('PhotoAlbums') .
+			'Test' . DS . 'Fixture' . DS . 'test.jpg';
 		$Folder = new TemporaryFolder();
 		copy($path, $Folder->path . DS . 'editTest.jpg');
 		$field = PhotoAlbumPhoto::ATTACHMENT_FIELD_NAME;
