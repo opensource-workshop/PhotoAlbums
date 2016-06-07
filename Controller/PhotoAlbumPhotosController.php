@@ -271,9 +271,12 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
  */
 	public function photo() {
 		App::uses('PhotoAlbumPhoto', 'PhotoAlbums.Model');
-
 		$contentId = $this->request->params['pass'][2];
-		$options = array('field' => PhotoAlbumPhoto::ATTACHMENT_FIELD_NAME);
+		$options = array(
+			'field' => PhotoAlbumPhoto::ATTACHMENT_FIELD_NAME,
+			'size' => 'big'
+		);
+
 		return $this->Download->doDownload($contentId, $options);
 	}
 

@@ -254,7 +254,10 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 	public function jacket() {
 		App::uses('PhotoAlbum', 'PhotoAlbums.Model');
 		$contentId = $this->request->params['pass'][1];
-		$options = array('field' => PhotoAlbum::ATTACHMENT_FIELD_NAME);
+		$options = array(
+			'field' => PhotoAlbum::ATTACHMENT_FIELD_NAME,
+			'size' => 'big'
+		);
 
 		return $this->Download->doDownload($contentId, $options);
 	}
