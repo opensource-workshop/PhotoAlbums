@@ -63,6 +63,16 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 	);
 
 /**
+ * beforeFilter
+ *
+ * @return void
+ */
+	public function beforeFilter() {
+		parent::beforeFilter();
+		$this->Auth->allow('jacket');
+	}
+
+/**
  * index method
  *
  * @return void
