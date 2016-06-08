@@ -34,6 +34,8 @@
 							)
 						);
 
+						$this->Form->unlockField('PhotoAlbumDisplayAlbum..album_key');
+						$this->Form->unlockField('PhotoAlbumDisplayAlbum.album_key');
 						echo $this->Form->input(
 							'PhotoAlbumDisplayAlbum..album_key',
 							array(

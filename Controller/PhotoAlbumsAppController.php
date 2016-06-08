@@ -16,4 +16,12 @@ App::uses('AppController', 'Controller');
  */
 class PhotoAlbumsAppController extends AppController {
 
+/**
+ * use components
+ *
+ * @var array
+ */
+	public $components = array(
+		'Security',
+	);
 }
