@@ -150,9 +150,7 @@ class PhotoAlbumFrameSetting extends PhotoAlbumsAppModel {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
 
-			// ＴＯＤＯ 不正なアルバムキーバリデーション
 			$DisplayAlbum = ClassRegistry::init('PhotoAlbums.PhotoAlbumDisplayAlbum', true);
-
 			$conditions = array('frame_key' => $data['PhotoAlbumFrameSetting']['frame_key']);
 			if (!$DisplayAlbum->deleteAll($conditions, false)) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
