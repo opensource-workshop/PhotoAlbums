@@ -49,7 +49,7 @@ class PhotoAlbumFixture extends CakeTestFixture {
 			'id' => 1,
 			'key' => 'Lorem ipsum dolor sit amet',
 			'weight' => 1,
-			'block_id' => 1,
+			'block_id' => 2,
 			'language_id' => 1,
 			'status' => '1',
 			'is_active' => 0,

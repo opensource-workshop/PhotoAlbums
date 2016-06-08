@@ -24,6 +24,39 @@ class PhotoAlbumDisplayAlbum extends PhotoAlbumsAppModel {
 	public $useDbConfig = 'master';
 
 /**
+ * Called during validation operations, before validation. Please note that custom
+ * validation rules can be defined in $validate.
+ *
+ * @param array $options Options passed from Model::save().
+ * @return bool True if validate operation should continue, false to abort
+ * @link http://book.cakephp.org/2.0/ja/models/callback-methods.html#beforevalidate
+ * @see Model::save()
+ */
+	public function beforeValidate($options = array()) {
+		$Album = ClassRegistry::init('PhotoAlbums.PhotoAlbum');
+		$query = array(
+			'fields' => array('PhotoAlbum.key'),
+			'conditions' => array(
+				'block_id' => Current::read('Block.id'),
+			),
+			'recursive' => -1
+		);
+		$list = $Album->find('list', $query);
+
+		$this->validate = Hash::merge($this->validate, array(
+			'album_key' => array(
+				'inList' => array(
+					'rule' => array('inList', $list),
+					'message' => __d('net_commons', 'Invalid request.'),
+					'required' => true,
+				),
+			),
+		));
+
+		return parent::beforeValidate($options);
+	}
+
+/**
  * Get display album key list
  *
  * @return display album key list
