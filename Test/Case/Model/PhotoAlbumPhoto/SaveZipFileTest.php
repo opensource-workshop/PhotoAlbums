@@ -27,6 +27,7 @@ class PhotoAlbumSaveZipFileTest extends WorkflowSaveTest {
 	public $fixtures = array(
 		'plugin.photo_albums.photo_album_photo',
 		'plugin.site_manager.site_setting',	// For Files plugin
+		'plugin.workflow.workflow_comment',
 	);
 
 /**
