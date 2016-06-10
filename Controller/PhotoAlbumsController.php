@@ -48,6 +48,7 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 		'Security',
 		'Workflow.Workflow',
 		'Files.Download',
+		'PhotoAlbums.PhotoAlbums',
 	);
 
 /**
@@ -175,6 +176,7 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
  * @return void
  */
 	public function add() {
+		$this->PhotoAlbums->initializeSetting();
 		$this->view = 'edit';
 
 		$album = $this->PhotoAlbum->create();

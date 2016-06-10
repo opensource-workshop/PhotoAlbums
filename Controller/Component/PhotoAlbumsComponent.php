@@ -23,32 +23,15 @@ class PhotoAlbumsComponent extends Component {
  * @return void
  */
 	public function initializeSetting() {
-		$frameData = Current::read('Frame');
-		if (!isset($frameData['block_id'])) {
-			$Block = ClassRegistry::init('Blocks.Block');
-			$query = array(
-				'conditions' => array(
-					'Block.room_id' => $frameData['room_id'],
-					'Block.plugin_key' => $frameData['plugin_key'],
-					'Block.language_id' => $frameData['language_id'],
-				),
-				'recursive' => -1
-			);
-			$blockData = $Block->find('first',$query);
-
-			$PhotoAlbumSetting = ClassRegistry::init('PhotoAlbums.PhotoAlbumSetting');
-			$data = $PhotoAlbumSetting->create();
-			$data['Frame']['id'] = Current::read('Frame.id');
-			$data += $blockData;
-			if (!$PhotoAlbumSetting->savePhotoAlbumSetting($data)) {
-				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-			}
+		$frame = Current::read('Frame');
+		if ($frame['block_id']) {
+			return;
 		}
 
 		$FrameSetting = ClassRegistry::init('PhotoAlbums.PhotoAlbumFrameSetting');
 		$query = array(
 			'conditions' => array(
-				'PhotoAlbumFrameSetting.frame_key' => $frameData['key']
+				'PhotoAlbumFrameSetting.frame_key' => $frame['key']
 			),
 			'recursive' => -1
 		);
@@ -57,6 +40,36 @@ class PhotoAlbumsComponent extends Component {
 			if (!$FrameSetting->savePhotoAlbumFrameSetting($data)) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
+		}
+
+		$Block = ClassRegistry::init('Blocks.Block');
+		$query = array(
+			'conditions' => array(
+				'Block.room_id' => $frame['room_id'],
+				'Block.plugin_key' => $frame['plugin_key'],
+				'Block.language_id' => $frame['language_id'],
+			),
+			'recursive' => -1
+		);
+		$block = $Block->find('first', $query);
+
+		$PhotoAlbumSetting = ClassRegistry::init('PhotoAlbums.PhotoAlbumSetting');
+		if (!$block) {
+			$data = $PhotoAlbumSetting->create();
+		} else {
+			$query = array(
+				'conditions' => array(
+					'PhotoAlbumSetting.block_key' => $block['Block']['key']
+				),
+				'recursive' => -1
+			);
+			$data = $PhotoAlbumSetting->find('first', $query);
+		}
+		$data['Frame']['id'] = $frame['id'];
+		$data += $block;
+
+		if (!$PhotoAlbumSetting->savePhotoAlbumSetting($data)) {
+			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 		}
 	}
 
