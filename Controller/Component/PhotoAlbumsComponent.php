@@ -23,12 +23,23 @@ class PhotoAlbumsComponent extends Component {
  * @return void
  */
 	public function initializeSetting() {
-		$blockKey = Current::read('Block.key');
-		if (!isset($blockKey)) {
-			$PhotoAlbumSetting = ClassRegistry::init('PhotoAlbums.PhotoAlbumSetting');
+		$frameData = Current::read('Frame');
+		if (!isset($frameData['block_id'])) {
+			$Block = ClassRegistry::init('Blocks.Block');
+			$query = array(
+				'conditions' => array(
+					'Block.room_id' => $frameData['room_id'],
+					'Block.plugin_key' => $frameData['plugin_key'],
+					'Block.language_id' => $frameData['language_id'],
+				),
+				'recursive' => -1
+			);
+			$blockData = $Block->find('first',$query);
 
+			$PhotoAlbumSetting = ClassRegistry::init('PhotoAlbums.PhotoAlbumSetting');
 			$data = $PhotoAlbumSetting->create();
 			$data['Frame']['id'] = Current::read('Frame.id');
+			$data += $blockData;
 			if (!$PhotoAlbumSetting->savePhotoAlbumSetting($data)) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
@@ -37,7 +48,7 @@ class PhotoAlbumsComponent extends Component {
 		$FrameSetting = ClassRegistry::init('PhotoAlbums.PhotoAlbumFrameSetting');
 		$query = array(
 			'conditions' => array(
-				'PhotoAlbumFrameSetting.frame_key' => Current::read('Frame.key')
+				'PhotoAlbumFrameSetting.frame_key' => $frameData['key']
 			),
 			'recursive' => -1
 		);
