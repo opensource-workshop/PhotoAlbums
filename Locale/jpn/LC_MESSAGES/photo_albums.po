@@ -30,17 +30,17 @@ msgstr "写真を追加"
 #: View/Elements/album_list.ctp:95
 #: View/Elements/album_setting_list.ctp:76
 msgid "%s photos"
-msgstr "%s 枚の写真"
+msgstr "写真：%s枚"
 
 #: View/Elements/album_list.ctp:98
 #: View/Elements/album_setting_list.ctp:79
 msgid "%s pending approval"
-msgstr "未承認 %s 枚"
+msgstr "承認待ち写真：%s枚"
 
 #: View/Elements/album_list.ctp:103
 #: View/Elements/album_setting_list.ctp:84
 msgid "%s denied"
-msgstr "差戻し %s 枚"
+msgstr "差戻し写真：%s枚"
 
 #: View/Elements/album_list.ctp:126
 msgid "Edit album"
@@ -154,3 +154,6 @@ msgstr "アルバムがありません。"
 
 msgid "Add album"
 msgstr "アルバムを追加"
+
+msgid "%s in this album."
+msgstr "このアルバムには %s があります。"

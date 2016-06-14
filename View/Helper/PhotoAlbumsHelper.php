@@ -44,7 +44,8 @@ class PhotoAlbumsHelper extends AppHelper {
 					'controller' => 'photo_albums',
 					'action' => 'jacket',
 					Current::read('Block.id'),
-					$data['PhotoAlbum']['id']
+					$data['PhotoAlbum']['id'],
+					'medium'
 				),
 				array(
 					'alt' => __d('photo_albums', 'jacket'),
@@ -264,6 +265,96 @@ class PhotoAlbumsHelper extends AppHelper {
 		);
 
 		$output .= $this->NetCommonsForm->end();
+
+		return $output;
+	}
+
+/**
+ * Creates a status and photo alert element
+ *
+ * @param array $data PhotoAlbumAlbum list data
+ * @return form tag with approve button
+ */
+	public function albumListAlert($data) {
+		$output = $this->Workflow->label($data['PhotoAlbum']['status']);
+		if ($output) {
+			$output = $this->Html->div('photo-albums-album-list-status pull-left', $output);
+		}
+
+		$pending = '';
+		if (Current::permission('content_publishable') &&
+			$data['PhotoAlbum']['pending_photo_count']
+		) {
+			$url = $this->NetCommonsHtml->url(
+				array(
+					'controller' => 'photo_album_photos',
+					'action' => 'index',
+					$data['PhotoAlbum']['key'],
+					'status' => WorkflowComponent::STATUS_APPROVED,
+				)
+			);
+			$pending = __d(
+				'photo_albums',
+				'%s pending approval',
+				$data['PhotoAlbum']['pending_photo_count']
+			);
+			$pending = $this->Html->tag('a', $pending, array('href' => $url));
+		}
+
+		$disapproved = '';
+		if (Current::permission('photo_albums_photo_creatable') &&
+			$data['PhotoAlbum']['disapproved_photo_count']
+		) {
+			$url = $this->NetCommonsHtml->url(
+				array(
+					'controller' => 'photo_album_photos',
+					'action' => 'index',
+					$data['PhotoAlbum']['key'],
+					'status' => WorkflowComponent::STATUS_DISAPPROVED,
+				)
+			);
+			$disapproved = __d(
+				'photo_albums',
+				'%s denied',
+				$data['PhotoAlbum']['disapproved_photo_count']
+			);
+			$disapproved = $this->Html->tag('a', $disapproved, array('href' => $url));
+		}
+
+		$alert = '';
+		if ($pending) {
+			$alert = $pending;
+		}
+
+		if ($disapproved) {
+			$alert .= $disapproved;
+		}
+
+		if ($alert) {
+			$alert = __d('photo_albums', '%s in this album.', $alert);
+
+			$options = array(
+				'type' => 'button',
+				'class' => 'close',
+				'data-dismiss' => 'alert',
+				'aria-label' => 'Close',
+			);
+			$alert = $this->Html->tag('button',
+				'<span aria-hidden="true">&times;</span>',
+				$options
+			) . $alert;
+
+			$options = array('role' => 'alert');
+			$output .= $this->Html->div(
+				'alert alert-warning alert-dismissible pull-right',
+				$alert,
+				$options
+			);
+		}
+
+		if ($output) {
+			$output = $this->Html->div('photo-albums-album-list-alert clearfix', $output);
+		}
 
 		return $output;
 	}

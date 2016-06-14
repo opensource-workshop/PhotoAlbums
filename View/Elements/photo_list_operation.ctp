@@ -9,7 +9,7 @@
  */
 ?>
 
-<div class="clearfix photo-albums-photo-list-operation">
+<header class="clearfix photo-albums-photo-list-operation">
 	<?php if (Current::permission('photo_albums_photo_creatable')): ?>
 		<div class="pull-right" ng-controller="PhotoAlbumsPhotoController as PhotoController">
 			<?php
@@ -159,4 +159,4 @@
 			<?php echo $this->DisplayNumber->dropDownToggle(); ?>
 		</div>
 	<?php endif; ?>
-</div>
+</header>

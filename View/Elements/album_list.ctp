@@ -9,29 +9,35 @@
  */
 ?>
 
-<div class="row">
-	<?php foreach ($albums as $album) : ?>
-		<div class="col-md-6">
-			<a href="
-				<?php
-					echo $this->NetCommonsHtml->url(
-						array(
-							'controller' => 'photo_album_photos',
-							'action' => 'index',
-							$album['PhotoAlbum']['key']
-						)
-					);
-				?>
-			">
-				<?php echo $this->PhotoAlbums->jacketByBackground($album); ?>
-				<?php //echo $this->PhotoAlbums->jacket($album); //imgタグ ?>
-			</a>
+<?php foreach ($albums as $album) : ?>
+	<article class="panel panel-default photo-albums-album-list-panel">
+		<div class="panel-body">
+			<?php echo $this->PhotoAlbums->albumListAlert($album); ?>
 
-			<div class="carousel-caption photo-albums-caption">
-				<?php echo $this->element('PhotoAlbums.album_caption', ['album' => $album]); ?>
+			<div class="row">
+				<div class="col-sm-3">
+					<a href="
+						<?php
+							echo $this->NetCommonsHtml->url(
+								array(
+									'controller' => 'photo_album_photos',
+									'action' => 'index',
+									$album['PhotoAlbum']['key']
+								)
+							);
+						?>
+					" class="thumbnail photo-albums-thumbnail">
+						<?php //echo $this->PhotoAlbums->jacketByBackground($album); ?>
+						<?php echo $this->PhotoAlbums->jacket($album); //imgタグ ?>
+					</a>
+				</div>
+
+				<div class="col-sm-9">
+					<?php echo $this->element('PhotoAlbums.album_caption', ['album' => $album]); ?>
+				</div>
 			</div>
 		</div>
-	<?php endforeach; ?>
-</div>
+	</article>
+<?php endforeach; ?>
 
 <?php echo $this->element('NetCommons.paginator');

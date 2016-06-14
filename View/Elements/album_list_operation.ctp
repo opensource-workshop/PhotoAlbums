@@ -9,7 +9,7 @@
  */
 ?>
 
-<div class="clearfix photo-albums-album-list-operation">
+<header class="clearfix photo-albums-album-list-operation">
 	<div class='pull-right'>
 		<?php
 			echo $this->Workflow->addLinkButton(
@@ -83,5 +83,5 @@
 			<?php echo $this->DisplayNumber->dropDownToggle(); ?>
 		</div>
 	<?php endif; ?>
-</div>
+</header>
 
