@@ -321,15 +321,7 @@ class PhotoAlbumsHelper extends AppHelper {
 			$disapproved = $this->Html->tag('a', $disapproved, array('href' => $url));
 		}
 
-		$alert = '';
-		if ($pending) {
-			$alert = $pending;
-		}
-
-		if ($disapproved) {
-			$alert .= $disapproved;
-		}
-
+		$alert = $pending . $disapproved;
 		if ($alert) {
 			$alert = __d('photo_albums', '%s in this album.', $alert);
 
