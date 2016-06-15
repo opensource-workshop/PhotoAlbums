@@ -11,6 +11,7 @@
 App::uses('PhotoAlbumsAppModel', 'PhotoAlbums.Model');
 App::uses('Current', 'NetCommons.Utility');
 App::uses('WorkflowComponent', 'Workflow.Controller/Component');
+App::uses('PhotoAlbumPhoto', 'PhotoAlbums.Model');
 
 /**
  * Summary for PhotoAlbum Model
@@ -56,26 +57,29 @@ class PhotoAlbum extends PhotoAlbumsAppModel {
 		$field = PhotoAlbum::ATTACHMENT_FIELD_NAME;
 		$validate = array();
 
-		if (strlen($this->data['PhotoAlbum'][$field]['name'])) {
-			$validate['jacketExtension'] = array(
-				'rule' => array(
-					'extension',
-					array('gif', 'jpeg', 'png', 'jpg')
-				),
-				'message' => array(__d('files', 'It is upload disabled file format'))
-			);
-
-			$validate['mimeType'] = array(
-				'rule' => array('mimeType', '#image/.+#'),
-				'message' => array(__d('files', 'It is upload disabled file format'))
+		if (empty($this->data['PhotoAlbum']['id'])) {
+			$validate['isFileUpload'] = array(
+				'rule' => array('isFileUpload'),
+				'message' => array(__d('files', 'Please specify the file')),
+				'required' => true,
 			);
 		}
 
+		$validate['jacketExtension'] = array(
+			'rule' => array(
+				'extension',
+				array('gif', 'jpeg', 'png', 'jpg', 'bmp')
+			),
+			'message' => array(__d('files', 'It is upload disabled file format'))
+		);
+
+		$validate['mimeType'] = array(
+			'rule' => array('mimeType', '#image/.+#'),
+			'message' => array(__d('files', 'It is upload disabled file format'))
+		);
+
 		$this->validate = Hash::merge(
 			$this->validate,
-			array(
-				$field => $validate
-			),
 			array(
 				'name' => array(
 					'notBlank' => array(
@@ -85,6 +89,9 @@ class PhotoAlbum extends PhotoAlbumsAppModel {
 						'required' => true,
 					),
 				),
+			),
+			array(
+				$field => $validate
 			)
 		);
 
@@ -217,6 +224,9 @@ class PhotoAlbum extends PhotoAlbumsAppModel {
 	public function saveAlbumWithDisplay($data) {
 		$this->begin();
 
+		$albumField = PhotoAlbum::ATTACHMENT_FIELD_NAME;
+		$data['PhotoAlbum'][$albumField] = $this->__generateJacket($data);
+
 		$this->set($data);
 		if (!$this->validates()) {
 			return false;
@@ -226,6 +236,25 @@ class PhotoAlbum extends PhotoAlbumsAppModel {
 			$doSaveDisplay = !$this->exists();
 			if (!$album = $this->save(null, false)) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+			}
+
+			$photoField = PhotoAlbumPhoto::ATTACHMENT_FIELD_NAME;
+			$Photo = ClassRegistry::init('PhotoAlbums.PhotoAlbumPhoto');
+			foreach ($data['PhotoAlbumPhoto'] as $photoData) {
+				// ValidationはPhotoAlbumPhotoモデルでおこなう。
+				// 複数選択プレビュー時にJavaScriptで絞っているため、エラーにならないよう次処理へ
+				if (!preg_match('#image/.+#', $photoData[$photoField]['type'])) {
+					continue;
+				}
+
+				$data = $Photo->create();
+				$data['PhotoAlbumPhoto'][$photoField] = $photoData[$photoField];
+				$data['PhotoAlbumPhoto']['album_key'] = $album['PhotoAlbum']['key'];
+				$data['PhotoAlbumPhoto']['language_id'] = $album['PhotoAlbum']['language_id'];
+				$data['PhotoAlbumPhoto']['status'] = $album['PhotoAlbum']['status'];
+				if (!$Photo->savePhoto($data)) {
+					throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+				}
 			}
 
 			if ($doSaveDisplay) {
@@ -245,6 +274,32 @@ class PhotoAlbum extends PhotoAlbumsAppModel {
 		}
 
 		return $album;
+	}
+
+/**
+ * generate jacket data
+ *
+ * @param array $data received post data
+ * @return mixed On success Model::$data, false on validation errors
+ * @throws InternalErrorException
+ */
+	private function __generateJacket($data) {
+		$jackeData = array();
+		$index = $data['PhotoAlbum']['selectedJacketIndex'];
+		if (!strlen($index)) {
+			return $jackeData;
+		}
+
+		$photoField = PhotoAlbumPhoto::ATTACHMENT_FIELD_NAME;
+		$jackeData = $data['PhotoAlbumPhoto'][$index][$photoField];
+		$jackeData['tmp_name'] .= '_CopyForJacket';
+
+		copy(
+			$data['PhotoAlbumPhoto'][$index][$photoField]['tmp_name'],
+			$jackeData['tmp_name']
+		);
+
+		return $jackeData;
 	}
 
 /**

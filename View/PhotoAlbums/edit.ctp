@@ -9,40 +9,24 @@
  */
 ?>
 
+<?php echo $this->NetCommonsHtml->script('/photo_albums/js/photo_albums.js'); ?>
+
 <?php echo $this->NetCommonsForm->create('PhotoAlbum', array('type' => 'file')); ?>
 	<?php echo $this->NetCommonsForm->hidden('PhotoAlbum.block_id'); ?>
 	<?php echo $this->NetCommonsForm->hidden('PhotoAlbum.key'); ?>
 	<?php echo $this->NetCommonsForm->hidden('PhotoAlbum.language_id'); ?>
 	<?php echo $this->NetCommonsForm->hidden('PhotoAlbum.status'); ?>
 
-	<div class = "row">
-		<div class="col-md-4">
-			<div class="thumbnail">
-				<?php echo $this->PhotoAlbums->jacket($this->request->data); ?>
-			</div>
-			<?php
-				echo $this->NetCommonsForm->uploadFile(
-					PhotoAlbum::ATTACHMENT_FIELD_NAME,
-					array(
-						'label' => false
-					)
-				);
-			?>
-		</div>
-
-		<div class="col-md-8">
-			<?php
-				echo $this->NetCommonsForm->input(
-					'PhotoAlbum.name',
-					array(
-						'type' => 'text',
-						'label' => __d('photo_albums', 'Album Name'),
-						'required' => true,
-					)
-				);
-			?>
-		</div>
-	</div>
+	<?php
+		echo $this->NetCommonsForm->input(
+			'PhotoAlbum.name',
+			array(
+				'type' => 'text',
+				'label' => __d('photo_albums', 'Album Name'),
+				'required' => true,
+			)
+		);
+	?>
 
 	<?php
 		echo $this->NetCommonsForm->input(
@@ -50,9 +34,58 @@
 			array(
 				'type' => 'textarea',
 				'label' => __d('photo_albums', 'Album description'),
+				'help' => __d('photo_albums', 'You can see this value on album list or top of photo list.'),
 			)
 		);
 	?>
+
+	<div ng-controller="PhotoAlbumsPreviewController">
+		<?php
+			App::uses('PhotoAlbumPhoto', 'PhotoAlbums.Model');
+			$this->Form->unlockField('PhotoAlbumPhoto..' . PhotoAlbumPhoto::ATTACHMENT_FIELD_NAME);
+			$this->Form->unlockField('PhotoAlbumPhoto.' . PhotoAlbumPhoto::ATTACHMENT_FIELD_NAME);
+			$this->Form->unlockField('PhotoAlbum.selectedJacketIndex');
+			echo $this->NetCommonsForm->uploadFile(
+				'PhotoAlbumPhoto..' . PhotoAlbumPhoto::ATTACHMENT_FIELD_NAME,
+				array(
+					'label' => __d('photo_albums', 'Upload photos'),
+					'help' => __d('photo_albums', 'Select photo file. You can select zip file.'),
+					'required' => true,
+					'multiple',
+					'nc-photo-albums-preview' => 'preview()',
+				)
+			);
+			echo $this->NetCommonsForm->hidden(
+				'PhotoAlbum.selectedJacketIndex',
+				array('ng-value' => 'selectedJacket.index')
+			);
+		?>
+
+		<div class="row">
+			<div class="col-sm-3">
+				<div class="thumbnail photo-albums-thumbnail" ng-show="selectedJacket.index >= 0">
+					<img ng-src="{{selectedJacket.fileReaderResult}}">
+				</div>
+				<div class="thumbnail photo-albums-thumbnail-not-selected" ng-show="selectedJacket.index == undefind">
+				</div>
+				<span class="small">
+					<?php echo __d('photo_albums', 'Jacket preview'); ?>
+				</span>
+			</div>
+
+
+			<div class="col-sm-9 photo-albums-preview-list">
+				<div class="photo-albums-thumbnail-not-selected" ng-show="selectedJacket.index == undfind">
+					<?php echo __d('photo_albums', 'Select photo'); ?>
+				</div>
+				<div class="photo-albums-preview-photo" ng-repeat="(index, fileReaderResult) in fileReaderResults track by $index">
+					<a class="thumbnail" href="#" ng-click="selectJacket(index)">
+						<img ng-src="{{fileReaderResult}}">
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<hr />
 	<?php echo $this->Workflow->inputComment('PhotoAlbum.status'); ?>

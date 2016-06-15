@@ -175,3 +175,34 @@
 	overflow: hidden;
 	*/
 }
+
+.photo-albums-thumbnail-not-selected {
+	height: 184px;
+}
+.photo-albums-preview-list {
+	max-width:560px;
+	max-height:304px;
+	overflow: auto;
+}
+.photo-albums-preview-list .photo-albums-thumbnail-not-selected {
+	display: table-cell;
+	vertical-align: middle;
+	height: 184px;
+}
+.photo-albums-preview-list .photo-albums-preview-photo {
+	float: left;
+	margin: 4px;
+}
+.photo-albums-preview-list .thumbnail{
+	background-color: #e5e5e5;
+	width: 88px;
+	height: 64px;
+	display: table-cell;
+	vertical-align: middle;
+	padding: 0;
+}
+.photo-albums-preview-list img {
+	/* thumbnailのborder分マイナス */
+	max-width: 86px;
+	max-height: 62px;
+}

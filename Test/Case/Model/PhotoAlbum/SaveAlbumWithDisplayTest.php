@@ -14,6 +14,7 @@ App::uses('PhotoAlbumFixture', 'PhotoAlbums.Test/Fixture');
 App::uses('PhotoAlbumTestCurrentUtility', 'PhotoAlbums.Test/Case/Model');
 App::uses('TemporaryFolder', 'Files.Utility');
 App::uses('Security', 'Utility');
+App::uses('PhotoAlbumPhoto', 'PhotoAlbums.Model');
 
 /**
  * Summary for PhotoAlbumSaveAlbumWithDisplayTest Test Case
@@ -86,7 +87,7 @@ class PhotoAlbumSaveAlbumWithDisplayTest extends WorkflowSaveTest {
 			'Test' . DS . 'Fixture' . DS . 'test.jpg';
 		$Folder = new TemporaryFolder();
 		copy($path, $Folder->path . DS . 'editTest.jpg');
-		$field = PhotoAlbum::ATTACHMENT_FIELD_NAME;
+		$field = PhotoAlbumPhoto::ATTACHMENT_FIELD_NAME;
 
 		$data['PhotoAlbum'] = (new PhotoAlbumFixture())->records[0];
 		$data['PhotoAlbum']['published_photo_count'] = 0;
@@ -94,10 +95,11 @@ class PhotoAlbumSaveAlbumWithDisplayTest extends WorkflowSaveTest {
 		$data['PhotoAlbum']['draft_photo_count'] = 0;
 		$data['PhotoAlbum']['disapproved_photo_count'] = 0;
 		$data['PhotoAlbum']['photo_count'] = 0;
-		$data['PhotoAlbum'][$field]['name'] = 'editTest.jpg';
-		$data['PhotoAlbum'][$field]['type'] = 'image/jpeg';
-		$data['PhotoAlbum'][$field]['size'] = filesize($path);
-		$data['PhotoAlbum'][$field]['tmp_name'] = $Folder->path . DS . 'editTest.jpg';
+		$data['PhotoAlbum']['selectedJacketIndex'] = 0;
+		$data['PhotoAlbumPhoto'][0][$field]['name'] = 'editTest.jpg';
+		$data['PhotoAlbumPhoto'][0][$field]['type'] = 'image/jpeg';
+		$data['PhotoAlbumPhoto'][0][$field]['size'] = filesize($path);
+		$data['PhotoAlbumPhoto'][0][$field]['tmp_name'] = $Folder->path . DS . 'editTest.jpg';
 
 		$results = array();
 		// * 編集の登録処理
@@ -105,7 +107,7 @@ class PhotoAlbumSaveAlbumWithDisplayTest extends WorkflowSaveTest {
 		// * 新規の登録処理
 		copy($path, $Folder->path . DS . 'createTest.jpg');
 		$data['PhotoAlbum'][$field]['name'] = 'createTest.jpg';
-		$data['PhotoAlbum'][$field]['tmp_name'] = $Folder->path . DS . 'createTest.jpg';
+		$data['PhotoAlbumPhoto'][0][$field]['tmp_name'] = $Folder->path . DS . 'createTest.jpg';
 		$results[1] = array($data);
 		$results[1] = Hash::insert($results[1], '0.PhotoAlbum.id', null);
 		$results[1] = Hash::insert($results[1], '0.PhotoAlbum.key', null);
@@ -164,5 +166,41 @@ class PhotoAlbumSaveAlbumWithDisplayTest extends WorkflowSaveTest {
 
 		$result = $this->$model->$method($data);
 		$this->assertNotEmpty($result);
+	}
+
+/**
+ * Test to call WorkflowBehavior::beforeSave
+ *
+ * WorkflowBehaviorをモックに置き換えて登録処理を呼び出します。<br>
+ * WorkflowBehavior::beforeSaveが2回呼び出されることをテストします。<br>
+ * ##### 参考URL
+ * http://stackoverflow.com/questions/19833495/how-to-mock-a-cakephp-behavior-for-unit-testing]
+ *
+ * @param array $data 登録データ
+ * @dataProvider dataProviderSave
+ * @return void
+ * @throws CakeException Workflow.Workflowがロードされていないとエラー
+ */
+	public function testCallWorkflowBehavior($data) {
+		$model = $this->_modelName;
+		$method = $this->_methodName;
+
+		if (! $this->$model->Behaviors->loaded('Workflow.Workflow')) {
+			$error = '"Workflow.Workflow" not loaded in ' . $this->$model->alias . '.';
+			throw new CakeException($error);
+		};
+
+		ClassRegistry::removeObject('WorkflowBehavior');
+		$workflowBehaviorMock = $this->getMock('WorkflowBehavior', ['beforeSave']);
+		ClassRegistry::addObject('WorkflowBehavior', $workflowBehaviorMock);
+		$this->$model->Behaviors->unload('Workflow');
+		$this->$model->Behaviors->load('Workflow', $this->$model->actsAs['Workflow.Workflow']);
+
+		$workflowBehaviorMock
+			->expects($this->exactly(2))
+			->method('beforeSave')
+			->will($this->returnValue(true));
+
+		$this->$model->$method($data);
 	}
 }

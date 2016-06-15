@@ -157,3 +157,18 @@ msgstr "アルバムを追加"
 
 msgid "%s in this album."
 msgstr "このアルバムには %s があります。"
+
+msgid "You can see this value on album list or top of photo list."
+msgstr "※アルバムの説明はアルバム一覧に表示されます。<br>※写貞一覧からはページ上部のアルバム情報「アルバムの説明を見る」から確認できます。"
+
+msgid "Upload photos"
+msgstr "写真のアップロード"
+
+msgid "Select photo file. You can select zip file."
+msgstr "※アルバムを作成するには1枚以上の写真が必要です。<br>※写真選択時にshiftキーを押しながら選択すれば一度にアップすることができます。<br>※ZIP圧縮ファイルもアップすることができます。<br>※アップロードには枚数や大きさに応じた時間がかかります。<br>※画像の容量が大きいとアップロードできない場合があります。その場合は何回かに分けてアップしてください。"
+
+msgid "Jacket preview"
+msgstr "アルバムの表紙プレビュー"
+
+msgid "Select photo"
+msgstr "写真がありません。写真を選択してください。"
