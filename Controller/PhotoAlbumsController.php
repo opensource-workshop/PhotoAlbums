@@ -61,6 +61,7 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 		'Users.DisplayUser',
 		'NetCommons.DisplayNumber',
 		'PhotoAlbums.PhotoAlbums',
+		'PhotoAlbums.PhotoAlbumsImage',
 	);
 
 /**
@@ -178,11 +179,12 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 	public function add() {
 		$this->PhotoAlbums->initializeSetting();
 		$this->view = 'edit';
+		$this->set('photos', array());
 
 		$album = $this->PhotoAlbum->create();
 		if ($this->request->is('post')) {
 			$this->request->data['PhotoAlbum']['status'] = $this->Workflow->parseStatus();
-			$album = $this->PhotoAlbum->saveAlbumWithDisplay($this->request->data);
+			$album = $this->PhotoAlbum->saveAlbumForAdd($this->request->data);
 			if ($album) {
 				$this->redirect(
 					array(
@@ -225,10 +227,23 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 		if (!$album) {
 			throw new NotFoundException(__('Invalid photo album'));
 		}
+
+		$frameSetting = $this->PhotoAlbumFrameSetting->getFrameSetting();
+		$sort = $frameSetting['PhotoAlbumFrameSetting']['photos_sort'];
+		$direction = $frameSetting['PhotoAlbumFrameSetting']['photos_direction'];
+		$query = array(
+			'conditions' => $this->PhotoAlbumPhoto->getWorkflowConditions() + array(
+				'PhotoAlbumPhoto.album_key' => $album['PhotoAlbum']['key'],
+			),
+			'order' => [$sort => $direction],
+			'recursive' => -1,
+		);
+		$this->set('photos', $this->PhotoAlbumPhoto->find('all', $query));
+
 		if ($this->request->is(array('post', 'put'))) {
 			$data = $this->request->data;
 			$data['PhotoAlbum']['status'] = $this->Workflow->parseStatus();
-			if ($this->PhotoAlbum->saveAlbum($data)) {
+			if ($this->PhotoAlbum->saveAlbumForEdit($data)) {
 				$this->redirect(
 					array(
 						'action' => 'index',
@@ -238,6 +253,7 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 				);
 			}
 			$this->NetCommons->handleValidationError($this->PhotoAlbum->validationErrors);
+			$this->request->data['PhotoAlbum']['id'] = $album['PhotoAlbum']['id'];
 		} else {
 			$this->request->data = $album;
 		}

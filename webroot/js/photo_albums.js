@@ -79,6 +79,7 @@ NetCommonsApp.controller('PhotoAlbumsPreviewController', ['$scope',
   function($scope) {
     $scope.files = [];
     $scope.fileReaderResults = {};
+    $scope.fileReaderResultsCount = 0;
     $scope.selectedJacket = {};
 
     $scope.preview = function() {
@@ -104,6 +105,8 @@ NetCommonsApp.controller('PhotoAlbumsPreviewController', ['$scope',
               index: index
             }
           }
+
+          $scope.fileReaderResultsCount = Object.keys($scope.fileReaderResults).length;
         };
       });
     };
@@ -112,6 +115,13 @@ NetCommonsApp.controller('PhotoAlbumsPreviewController', ['$scope',
       $scope.selectedJacket = {
         fileReaderResult: $scope.fileReaderResults[index],
         index: index
+      };
+    }
+
+    $scope.selectJacketUrl = function(url, photo_id) {
+      $scope.selectedJacket = {
+        url: url,
+        photo_id: photo_id
       };
     }
   }

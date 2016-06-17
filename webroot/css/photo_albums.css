@@ -157,6 +157,7 @@
 	vertical-align: middle;
 	padding: 0;
 	*/
+	margin: 0;
 }
 .photo-albums-thumbnail img {
 	/*
@@ -176,11 +177,15 @@
 	*/
 }
 
+.photo-albums-selected-jacket {}
+.photo-albums-selected-jacket .thumbnail {
+	margin: 1.7em 0 0 0;
+}
 .photo-albums-thumbnail-not-selected {
 	height: 184px;
 }
 .photo-albums-preview-list {
-	max-width:560px;
+	max-width:616px;
 	max-height:304px;
 	overflow: auto;
 }

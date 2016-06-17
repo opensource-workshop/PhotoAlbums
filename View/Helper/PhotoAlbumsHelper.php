@@ -28,6 +28,7 @@ class PhotoAlbumsHelper extends AppHelper {
 		'NetCommons.NetCommonsForm',
 		'NetCommons.LinkButton',
 		'Workflow.Workflow',
+		'PhotoAlbums.PhotoAlbumsImage',
 	);
 
 /**
@@ -39,14 +40,7 @@ class PhotoAlbumsHelper extends AppHelper {
 	public function jacket($data) {
 		if (isset($data['UploadFile']['jacket']['id'])) {
 			$output = $this->Html->image(
-				array(
-					'plugin' => 'photo_albums',
-					'controller' => 'photo_albums',
-					'action' => 'jacket',
-					Current::read('Block.id'),
-					$data['PhotoAlbum']['id'],
-					'medium'
-				),
+				$this->PhotoAlbumsImage->jacketUrlArray($data, 'medium'),
 				array(
 					'alt' => __d('photo_albums', 'jacket'),
 					'class' => 'img-responsive photo-albums-jacket'
@@ -85,13 +79,7 @@ class PhotoAlbumsHelper extends AppHelper {
 	public function jacketByBackground($data) {
 		if (isset($data['UploadFile']['jacket']['id'])) {
 			$imageUrl = $this->Html->url(
-				array(
-					'plugin' => 'photo_albums',
-					'controller' => 'photo_albums',
-					'action' => 'jacket',
-					Current::read('Block.id'),
-					$data['PhotoAlbum']['id']
-				)
+				$this->PhotoAlbumsImage->jacketUrlArray($data)
 			);
 		} else {
 			$imageUrl = $this->assetUrl(
@@ -272,7 +260,7 @@ class PhotoAlbumsHelper extends AppHelper {
 /**
  * Creates a status and photo alert element
  *
- * @param array $data PhotoAlbumAlbum list data
+ * @param array $data PhotoAlbumAlbum data
  * @return form tag with approve button
  */
 	public function albumListAlert($data) {
