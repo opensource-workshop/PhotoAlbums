@@ -11,7 +11,7 @@ NetCommonsApp.requires.push('ui.bootstrap.modal');
 
 
 /**
- * PhotoAlbums Controller
+ * PhotoAlbumsPhoto Controller
  *
  * @param {string} Controller name
  * @param {'$modal', '$http'} Controller constructor function.
@@ -37,6 +37,7 @@ NetCommonsApp.controller('PhotoAlbumsPhotoController', ['$uibModal', '$http',
   }
 ]);
 
+
 /**
  * PhotoAlbums modal Controller
  *
@@ -50,6 +51,7 @@ NetCommonsApp.controller('PhotoAlbumsModalController', ['$scope', '$uibModalInst
     };
   }
 ]);
+
 
 /**
  * PhotoAlbums image preview directive
@@ -66,8 +68,10 @@ NetCommonsApp.directive('ncPhotoAlbumsPreview', [
           scope.$apply(attrs.ncPhotoAlbumsPreview);
         });
       }
-  };
-}]);
+    };
+  }
+]);
+
 
 /**
  * PhotoAlbums image preview Controller
@@ -97,13 +101,13 @@ NetCommonsApp.controller('PhotoAlbumsPreviewController', ['$scope',
         fileReader.onload = function() {
           $scope.$apply(function() {
             $scope.fileReaderResults[index] = fileReader.result;
-          })
+          });
 
           if (Object.keys($scope.fileReaderResults).length == 1) {
             $scope.selectedJacket = {
               fileReaderResult: $scope.fileReaderResults[index],
               index: index
-            }
+            };
           }
 
           $scope.fileReaderResultsCount = Object.keys($scope.fileReaderResults).length;
@@ -116,13 +120,13 @@ NetCommonsApp.controller('PhotoAlbumsPreviewController', ['$scope',
         fileReaderResult: $scope.fileReaderResults[index],
         index: index
       };
-    }
+    };
 
     $scope.selectJacketUrl = function(url, photo_id) {
       $scope.selectedJacket = {
         url: url,
         photo_id: photo_id
       };
-    }
+    };
   }
 ]);

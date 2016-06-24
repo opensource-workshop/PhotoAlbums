@@ -30,7 +30,7 @@ class PhotoAlbumPhotosComponent extends Component {
 				'PhotoAlbum.block_id' => Current::read('Block.id'),
 				'PhotoAlbum.key' => $controller->request->params['pass'][1]
 			),
-			'recursive' => -1,
+			'recursive' => 0,
 		);
 		$album = $controller->PhotoAlbum->find('first', $query);
 

@@ -104,19 +104,12 @@ class PhotoAlbumsHelper extends AppHelper {
  * @return form tag with approve button
  */
 	public function photoActionBar($data) {
-		$output = '';
-
-		if ($data['PhotoAlbumPhoto']['status'] != WorkflowComponent::STATUS_PUBLISHED) {
-			$output .= $this->Workflow->label($data['PhotoAlbumPhoto']['status']);
-			$output = $this->Html->div('pull-left', $output);
-		}
-
-		$operationOutput = $this->approveButton($data);
+		$output = $this->approveButton($data);
 
 		if (Current::permission('photo_albums_photo_creatable') &&
 			$this->Workflow->canEdit('PhotoAlbumPhoto', $data)
 		) {
-			$operationOutput .= $this->LinkButton->edit(
+			$output .= $this->LinkButton->edit(
 				'',
 				array(
 					'plugin' => 'photo_albums',
@@ -130,12 +123,6 @@ class PhotoAlbumsHelper extends AppHelper {
 				)
 			);
 		}
-
-		if ($operationOutput) {
-			$operationOutput = $this->Html->div('pull-right', $operationOutput);
-		}
-
-		$output .= $operationOutput;
 
 		return $this->Html->div('photo-albums-photo-action-bar', $output);
 	}
@@ -168,22 +155,23 @@ class PhotoAlbumsHelper extends AppHelper {
 					'action' => 'publish',
 					Current::read('Block.id'),
 					$data['PhotoAlbumPhoto']['album_key']
-				),
-				'class' => 'label'
+				)
 			)
 		);
 		$options = array('value' => $data['PhotoAlbumPhoto']['id']);
 		$output .= $this->NetCommonsForm->hidden('PhotoAlbumPhoto.0.id', $options);
 
+		$title = '<span class="hidden-xs">' . __d('photo_albums', 'Approve') . '</span>';
 		$onClickScript = 'return confirm(\'' .
 				__d('photo_albums', 'Approving the photo. Are you sure to proceed?') .
 				'\')';
 		$output .= $this->Workflow->publishLinkButton(
-			'',
+			$title,
 			array(
 				'iconSize' => 'btn-xs',
 				'onclick' => $onClickScript,
 				'ng-class' => '{disabled: sending}',
+				'escapeTitle' => false,
 			)
 		);
 

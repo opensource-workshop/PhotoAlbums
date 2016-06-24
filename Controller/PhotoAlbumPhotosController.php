@@ -65,6 +65,7 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 	public $helpers = array(
 		'Workflow.Workflow',
 		'NetCommons.DisplayNumber',
+		'Users.DisplayUser',
 	);
 
 /**

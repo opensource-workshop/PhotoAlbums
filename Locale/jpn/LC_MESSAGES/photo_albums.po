@@ -44,7 +44,7 @@ msgstr "差戻し写真：%s枚"
 
 #: View/Elements/album_list.ctp:126
 msgid "Edit album"
-msgstr "アルバム編集"
+msgstr "アルバムの編集"
 
 #: View/Elements/frame_setting.ctp:18
 msgid "Display type"
@@ -179,3 +179,11 @@ msgstr "表紙に設定できる写真がありません。選択写真一覧か
 msgid "Click the photo, then the jacket changes."
 msgstr "※写真をクリックすると表紙の写真を変える事ができます。"
 
+msgid "Created date:%s"
+msgstr "作成：%s"
+
+msgid "Updated date:%s"
+msgstr "更新：%s"
+
+msgid "Approve"
+msgstr "承認"

@@ -25,19 +25,34 @@
 	</a>
 </h1>
 
-<div class="photo-albums-album-list-information small">
+<div class="photo-albums-album-note small">
 	<span>
 		<?php echo __d('photo_albums', '%s photos', $album['PhotoAlbum']['photo_count']); ?>
 	</span>
 	<span>
-		<?php echo $this->Date->dateFormat($album['PhotoAlbum']['modified']); ?>
+		<?php echo __d('photo_albums', 'Updated date:%s', $this->Date->dateFormat($album['PhotoAlbum']['modified'])); ?>
 	</span>
+	<?php if ($this->request->params['controller'] == 'photo_album_photos') : ?>
+		<span>
+			<?php echo __d('photo_albums', 'Created date:%s', $this->Date->dateFormat($album['PhotoAlbum']['created'])); ?>
+		</span>
+	<?php endif; ?>
 	<span>
 		<?php echo $this->DisplayUser->handleLink($album, array('avatar' => true)); ?>
 	</span>
 </div>
 
-<p class="photo-albums-description">
-	<?php echo h($album['PhotoAlbum']['description']); ?>
-</p>
+<?php if ($this->request->params['controller'] == 'photo_albums') : ?>
+	<p class="photo-albums-description">
+		<?php echo h($album['PhotoAlbum']['description']); ?>
+	</p>
+<?php endif; ?>
 
+<?php if ($this->request->params['controller'] == 'photo_album_photos' && $album['PhotoAlbum']['description']) : ?>
+	<button class="btn btn-default btn-xs" type="button" data-toggle="collapse" data-target="#photo-albums-description<?php echo $frameSetting['PhotoAlbumFrameSetting']['id']; ?>" aria-expanded="false" aria-controls="collapseExample">
+		<?php echo __d('photo_albums', 'Album description'); ?>
+	</button>
+	<div class="collapse" id="photo-albums-description<?php echo $frameSetting['PhotoAlbumFrameSetting']['id']; ?>">
+		<?php echo nl2br(h($album['PhotoAlbum']['description'])); ?>
+	</div>
+<?php endif;
