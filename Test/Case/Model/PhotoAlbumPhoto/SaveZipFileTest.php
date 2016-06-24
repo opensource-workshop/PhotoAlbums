@@ -105,6 +105,7 @@ class PhotoAlbumSaveZipFileTest extends WorkflowSaveTest {
  */
 	public function dataProviderSaveOnExceptionError() {
 		$data = $this->dataProviderSave()[0][0];
+		$data['UploadFile'] = array('photo' => 'dummy');
 
 		return array(
 			array($data, 'PhotoAlbums.PhotoAlbumPhoto', 'save'),
