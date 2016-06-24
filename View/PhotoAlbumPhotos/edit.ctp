@@ -31,7 +31,6 @@
 		</div>
 	<?php endif; ?>
 
-	<?php echo $this->NetCommonsForm->hidden('id'); ?>
 	<?php echo $this->NetCommonsForm->hidden('album_key'); ?>
 	<?php echo $this->NetCommonsForm->hidden('key'); ?>
 	<?php echo $this->NetCommonsForm->hidden('language_id'); ?>

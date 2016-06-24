@@ -57,7 +57,7 @@ class PhotoAlbumPhoto extends PhotoAlbumsAppModel {
 	public function beforeValidate($options = array()) {
 		$field = PhotoAlbumPhoto::ATTACHMENT_FIELD_NAME;
 		$validate = array();
-		if (empty($this->data['PhotoAlbumPhoto']['id'])) {
+		if (empty($this->data['UploadFile'])) {
 			$validate['isFileUpload'] = array(
 				'rule' => array('isFileUpload'),
 				'message' => array(__d('files', 'Please specify the file'))
