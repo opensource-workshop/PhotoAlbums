@@ -280,6 +280,8 @@ class PhotoAlbum extends PhotoAlbumsAppModel {
 		$UploadFile = ClassRegistry::init('Files.UploadFile');
 		$fieldName = PhotoAlbumPhoto::ATTACHMENT_FIELD_NAME;
 		$file = $UploadFile->getFile('photo_albums', $photoId, $fieldName);
+		$path = $UploadFile->getRealFilePath($file);
+
 		$Folder = new TemporaryFolder();
 		$tmpName = $Folder->path . DS . $file['UploadFile']['real_file_name'];
 		$jackeData = array(
@@ -289,10 +291,6 @@ class PhotoAlbum extends PhotoAlbumsAppModel {
 			'error' => UPLOAD_ERR_OK,
 			'size' => $file['UploadFile']['size'],
 		);
-		$path = $UploadFile->uploadBasePath .
-			$file['UploadFile']['path'] .
-			$file['UploadFile']['id'] . DS .
-			$file['UploadFile']['real_file_name'];
 		copy($path, $tmpName);
 
 		return $jackeData;
