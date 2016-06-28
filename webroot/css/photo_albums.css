@@ -97,7 +97,7 @@
 
 
 .photo-albums-album-list-panel {
-	/*
+	/* 譫縺ｪ縺礼畑螳夂ｾｩ
 	border-top: 0;
 	border-left: 0;
 	border-right: 0;
@@ -106,7 +106,7 @@
 	*/
 }
 .photo-albums-album-list-panel .panel-body{
-	/*
+	/* 譫縺ｪ縺礼畑螳夂ｾｩ
 	padding: 16px 0 8px 0;
 	*/
 }
@@ -123,7 +123,7 @@
 	margin: 0 8px;
 }
 .photo-albums-thumbnail {
-	/*
+	/* 逕ｻ蜒丞崋螳夂畑螳夂ｾｩ
 	background-color: #e5e5e5;
 	width: 184px;
 	height: 152px;
@@ -134,7 +134,7 @@
 	margin: 0;
 }
 .photo-albums-thumbnail img {
-	/*
+	/* 逕ｻ蜒丞崋螳夂畑螳夂ｾｩ
 	max-width: 184px;
 	max-height: 152px;
 	*/
@@ -181,7 +181,7 @@
 	padding: 0;
 }
 .photo-albums-preview-list img {
-	/* thumbnailのborder分マイナス */
+	/* thumbnail縺ｮborder蛻�(2px)繝槭う繝翫せ */
 	max-width: 86px;
 	max-height: 62px;
 }
@@ -193,6 +193,28 @@
 .photo-albums-album-information .photo-albums-album-list-status{
 	display: block;
 	margin-top: 0.8em;
+}
+
+.photo-albums-setting-list {}
+.photo-albums-setting-list > tbody > tr > td {
+	vertical-align: middle;
+}
+.photo-albums-setting-thumbnail {
+	background-color: #e5e5e5;
+	width: 72px;
+	height: 64px;
+	display: table-cell;
+	vertical-align: middle;
+	padding: 0;
+	margin: 0;
+}
+.photo-albums-setting-thumbnail img {
+	max-height: 56px;
+}
+.photo-albums-setting-list .photo-albums-name {
+	display: table-cell;
+	vertical-align: middle;
+	padding: 0 0 0 8px;
 }
 
 .photo-albums-photo-list {
@@ -258,3 +280,4 @@
 .photo-albums-photo-action-bar form {
 	display: inline;
 }
+

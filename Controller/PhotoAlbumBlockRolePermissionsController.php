@@ -61,6 +61,14 @@ class PhotoAlbumBlockRolePermissionsController extends PhotoAlbumsAppController 
 	public $helpers = array(
 		'Blocks.BlockTabs' => array(
 			'mainTabs' => array(
+				'block_index' => array(
+					'url' => array(
+						'plugin' => 'photo_albums',
+						'controller' => 'photo_album_settings',
+						'action' => 'index'
+					),
+					'label' => array('net_commons', 'List')
+				),
 				'frame_settings',
 				'role_permissions'
 			)

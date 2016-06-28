@@ -22,7 +22,7 @@
 		?>
 	</div>
 
-	<?php if (!empty($albums)): ?>
+	<?php if ($this->request->params['controller'] == 'photo_albums'): ?>
 		<div class="pull-left">
 			<span class="btn-group">
 				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">

@@ -9,57 +9,51 @@
  */
 ?>
 
+<table class="table photo-albums-setting-list">
+	<thead>
+		<tr>
+			<?php echo $this->TableList->tableHeader('PhotoAlbum.status', __d('photo_albums', 'Status'), ['sort' => true]); ?>
+			<?php echo $this->TableList->tableHeader('PhotoAlbum.name', __d('photo_albums', 'Album Name'), ['sort' => true]); ?>
+			<?php echo $this->TableList->tableHeader('PhotoAlbum.latest_photo_count', __d('photo_albums', 'Photo'), ['sort' => true, 'type' => 'numeric']); ?>
+			<?php echo $this->TableList->tableHeader('TrackableUpdater.handlename', __d('net_commons', 'Modified user'), ['sort' => true, 'type' => 'handle']); ?>
+			<?php echo $this->TableList->tableHeader('PhotoAlbum.modified', __d('net_commons', 'Modified datetime'), ['sort' => true, 'type' => 'datetime']); ?>
+		</tr>
+	</thead>
 
-<div class="photo-albums-album-setting-list">
-	<div class="row table table-hover">
+	<tbody>
 		<?php foreach ($albums as $album) : ?>
-			<div class="col-sm-6">
-				<?php echo $this->PhotoAlbums->jacketByBackground($album); ?>
+			<tr<?php echo $this->PhotoAlbums->activeClass($album) ?>>
+				<?php echo $this->TableList->tableData('PhotoAlbum.latest_photo_count', $this->Workflow->label($album['PhotoAlbum']['status']), ['escape' => false]); ?>
+				<td>
+					<div class="thumbnail photo-albums-setting-thumbnail">
+						<?php echo $this->PhotoAlbums->jacket($album, 'small'); ?>
+					</div>
 
-				<div class="carousel-caption photo-albums-caption">
-					<?php
-						echo $this->Form->input(
-							'PhotoAlbumDisplayAlbum..album_key',
-							array(
-								'type' => 'checkbox',
-								'value' => $album['PhotoAlbum']['key'],
-								'checked' => in_array($album['PhotoAlbum']['key'], $displayAlbumKeys),
-								'label' => false,
-								'div' => false,
-								'class' => false,
-								'hiddenField' => false,
-								//'ng-model' => 'FrameSettingController.checkModel[' . $index . ']',
-								'ng-disabled' => 'FrameSettingController.displayType != ' . PhotoAlbumFrameSetting::DISPLAY_TYPE_ALBUMS,
-								'ng-hide' => 'FrameSettingController.displayType != ' . PhotoAlbumFrameSetting::DISPLAY_TYPE_ALBUMS
-							)
-						);
-
-						$this->Form->unlockField('PhotoAlbumDisplayAlbum..album_key');
-						$this->Form->unlockField('PhotoAlbumDisplayAlbum.album_key');
-						echo $this->Form->input(
-							'PhotoAlbumDisplayAlbum..album_key',
-							array(
-								'type' => 'radio',
-								'options' => array($album['PhotoAlbum']['key'] => null),
-								'value' => $album['PhotoAlbum']['key'],
-								'checked' => in_array($album['PhotoAlbum']['key'], $displayAlbumKeys),
-								'label' => false,
-								'div' => false,
-								'class' => false,
-								'hiddenField' => false,
-								//'ng-model' => 'FrameSettingController.checkModel[' . $index . ']',
-								'ng-disabled' => 'FrameSettingController.displayType == ' . PhotoAlbumFrameSetting::DISPLAY_TYPE_ALBUMS,
-								'ng-hide' => 'FrameSettingController.displayType == ' . PhotoAlbumFrameSetting::DISPLAY_TYPE_ALBUMS
-							)
-						);
-					?>
-
-					<?php echo $this->element('PhotoAlbums.album_caption', ['album' => $album]); ?>
-				</div>
-			</div>
+					<div class="photo-albums-name">
+						<?php echo h($album['PhotoAlbum']['name']) ?>
+						<?php
+							echo $this->LinkButton->edit(
+								'',
+								array(
+									'editUrl' => array(
+										'plugin' => 'photo_albums',
+										'controller' => 'photo_albums',
+										'action' => 'edit',
+										'key' => $album['PhotoAlbum']['key']
+									)
+								),
+								array('iconSize' => ' btn-xs')
+							);
+						?>
+					</div>
+				</td>
+				<?php echo $this->TableList->tableData('PhotoAlbum.latest_photo_count', $album['PhotoAlbum']['latest_photo_count'], ['type' => 'numeric']); ?>
+				<?php echo $this->TableList->tableData('TrackableUpdater', $album, ['type' => 'handle']); ?>
+				<?php echo $this->TableList->tableData('PhotoAlbum.modified', $album['PhotoAlbum']['modified'], ['type' => 'datetime']); ?>
+			</tr>
 		<?php endforeach; ?>
-	</div>
-</div>
+	</tbody>
+</table>
+
 <?php
-// ＴＯＤＯ 改ページ
-//echo $this->element('NetCommons.paginator');
+echo $this->element('NetCommons.paginator');

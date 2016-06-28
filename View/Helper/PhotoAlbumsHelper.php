@@ -35,12 +35,13 @@ class PhotoAlbumsHelper extends AppHelper {
  * Creates a formatted img element for jacket.
  *
  * @param array $data PhotoAlbum data with UploadFile
+ * @param string $size thumb, small, medium, big
  * @return img tag
  */
-	public function jacket($data) {
+	public function jacket($data, $size = 'medium') {
 		if (isset($data['UploadFile']['jacket']['id'])) {
 			$output = $this->Html->image(
-				$this->PhotoAlbumsImage->jacketUrlArray($data, 'medium'),
+				$this->PhotoAlbumsImage->jacketUrlArray($data, $size),
 				array(
 					'alt' => __d('photo_albums', 'jacket'),
 					'class' => 'img-responsive photo-albums-jacket'
@@ -325,5 +326,19 @@ class PhotoAlbumsHelper extends AppHelper {
 		}
 
 		return $output;
+	}
+
+/**
+ * Creates active class for tr tag
+ *
+ * @param array $data PhotoAlbum data
+ * @return img tag
+ */
+	public function activeClass($data) {
+		if (in_array($data['PhotoAlbum']['key'], $this->_View->viewVars['displayAlbumKeys'])) {
+			return ' class="active"';
+		}
+
+		return '';
 	}
 }

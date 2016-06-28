@@ -187,3 +187,9 @@ msgstr "更新：%s"
 
 msgid "Approve"
 msgstr "承認"
+
+msgid "Status"
+msgstr "状態"
+
+msgid "Change displayed alubum on %s"
+msgstr "表示されているアルバムは、%sで設定してください。"

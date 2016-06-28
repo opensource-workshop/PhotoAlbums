@@ -65,12 +65,21 @@ class PhotoAlbumFrameSettingsController extends PhotoAlbumsAppController {
 	public $helpers = array(
 		'Blocks.BlockTabs' => array(
 			'mainTabs' => array(
+				'block_index' => array(
+					'url' => array(
+						'plugin' => 'photo_albums',
+						'controller' => 'photo_album_settings',
+						'action' => 'index'
+					),
+					'label' => array('net_commons', 'List')
+				),
 				'frame_settings',
 				'role_permissions'
 			)
 		),
 		'NetCommons.DisplayNumber',
 		'NetCommons.Date',
+		'NetCommons.TableList',
 		'Workflow.Workflow',
 	);
 

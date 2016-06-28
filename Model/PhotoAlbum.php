@@ -153,6 +153,12 @@ class PhotoAlbum extends PhotoAlbumsAppModel {
 					$pendingCount +
 					$draftCount +
 					$disapprovedCount,
+				// ＴＯＤＯ:Use CounterCache
+				'latest_photo_count' => $publishedCount +
+					$pendingCount +
+					$draftCount +
+					$disapprovedCount,
+
 			);
 		}
 
