@@ -211,9 +211,7 @@
 	padding: 0 0 0 8px;
 }
 .photo-albums-frame-setting-display-type {}
-.photo-albums-frame-setting-display-type .radio {
-	margin: 0 0 0 20px;
-}
+.photo-albums-frame-setting-display-type .radio {}
 .photo-albums-frame-setting-display-type .checkbox {
 	margin: 0 0 0 40px;
 }

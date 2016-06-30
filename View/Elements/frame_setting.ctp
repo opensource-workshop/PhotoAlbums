@@ -25,11 +25,8 @@
 <?php echo $this->NetCommonsForm->hidden('frame_key'); ?>
 
 <div class="form-group photo-albums-frame-setting-display-type">
-	<?php echo $this->NetCommonsForm->label(__d('photo_albums', 'Display type')); ?>
 	<?php
-		//NetCommonsFormHelperだとタグの構成がよくわからなくなる
-		//echo $this->NetCommonsForm->input(
-		echo $this->Form->input(
+		echo $this->NetCommonsForm->input(
 			'PhotoAlbumFrameSetting.display_type',
 			array(
 				'type' => 'radio',
@@ -37,40 +34,41 @@
 					PhotoAlbumFrameSetting::DISPLAY_TYPE_ALBUMS => __d('photo_albums', 'List of album'),
 					PhotoAlbumFrameSetting::DISPLAY_TYPE_PHOTOS => __d('photo_albums', 'List of photo'),
 				),
-				'legend' => false,
 				'div' => false,
-				'before' => '<div class="radio"><label>',
-				'separator' => '</label></div><div class="radio"><label>',
-				'after' => '</label></div>',
 				'class' => false,
-				'label' => false,
+				'label' => __d('photo_albums', 'Display type'),
 				'error' => false,
 				'ng-change' => 'FrameSettingController.checkDisplayTypeSlide = false',
 				'ng-model' => 'FrameSettingController.displayType',
 			)
 		);
-
-		//NetCommonsFormHelperだとタグの構成がよくわからなくなる
-		//echo $this->NetCommonsForm->input(
-		echo $this->Form->input(
-			'PhotoAlbumFrameSetting.display_type',
-			array(
-				'type' => 'checkbox',
-				'value' => PhotoAlbumFrameSetting::DISPLAY_TYPE_SLIDE,
-				'before' => '<div class="checkbox"><label>',
-				//labelタグで囲われると、Bootstrapの定義によってpaddingが入ってしまう
-				'after' => __d('photo_albums', 'Slide show') . '</label></div>',
-				'label' => false,
-				//'after' => '</label></div>',
-				//'label' => __d('photo_albums', 'Slide show'),
-				'div' => false,
-				'class' => false,
-				'hiddenField' => false,
-				'ng-model' => 'FrameSettingController.checkDisplayTypeSlide',
-				'ng-change' => 'FrameSettingController.checkDisplayTypeSlide && (FrameSettingController.displayType=' . PhotoAlbumFrameSetting::DISPLAY_TYPE_PHOTOS . ')',
-			)
-		);
 	?>
+	<div class="form-checkbox-outer">
+		<div class="checkbox">
+			<label class="control-label">
+				<?php
+					echo $this->NetCommonsForm->input(
+						'PhotoAlbumFrameSetting.display_type',
+						array(
+							'type' => 'checkbox',
+							'value' => PhotoAlbumFrameSetting::DISPLAY_TYPE_SLIDE,
+							//'before' => '<div class="checkbox"><label>',
+							//labelタグで囲われると、Bootstrapの定義によってpaddingが入ってしまう
+							//'after' => __d('photo_albums', 'Slide show') . '</label></div>',
+							//'label' => false,
+							//'after' => '</label></div>',
+							//'label' => __d('photo_albums', 'Slide show'),
+							'div' => false,
+							'class' => false,
+							'hiddenField' => false,
+							'ng-model' => 'FrameSettingController.checkDisplayTypeSlide',
+							'ng-change' => 'FrameSettingController.checkDisplayTypeSlide && (FrameSettingController.displayType=' . PhotoAlbumFrameSetting::DISPLAY_TYPE_PHOTOS . ')',
+						)
+					) . __d('photo_albums', 'Slide show');
+				?>
+			</label>
+		</div>
+	</div>
 </div>
 
 <!-- TODO ここで良い？下だと表示タイプの選択と距離が出る -->
