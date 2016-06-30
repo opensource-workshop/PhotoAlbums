@@ -1,6 +1,6 @@
 <?php
 /**
- * PhotoAlbumFrameSettings Controller
+ * PhotoAlbumSettings Controller
  *
  * @copyright Copyright 2014, NetCommons Project
  * @author Kohei Teraguchi <kteraguchi@commonsnet.org>
@@ -11,7 +11,7 @@
 App::uses('PhotoAlbumsAppController', 'PhotoAlbums.Controller');
 
 /**
- * PhotoAlbumFrameSettings Controller
+ * PhotoAlbumSettings Controller
  *
  * @property PhotoAlbumFrameSetting $PhotoAlbumFrameSetting
  * @property PhotoAlbum $PhotoAlbum
@@ -21,7 +21,7 @@ App::uses('PhotoAlbumsAppController', 'PhotoAlbums.Controller');
  * @property PermissionComponent $Permission
  * @property PhotoAlbumsComponent $PhotoAlbums
  */
-class PhotoAlbumFrameSettingsController extends PhotoAlbumsAppController {
+class PhotoAlbumSettingsController extends PhotoAlbumsAppController {
 
 /**
  * layout
@@ -50,7 +50,7 @@ class PhotoAlbumFrameSettingsController extends PhotoAlbumsAppController {
 		'Pages.PageLayout',
 		'NetCommons.Permission' => array(
 			'allow' => array(
-				'edit' => 'page_editable',
+				'index' => 'page_editable',
 			),
 		),
 		'Paginator',
@@ -80,8 +80,8 @@ class PhotoAlbumFrameSettingsController extends PhotoAlbumsAppController {
 		'NetCommons.DisplayNumber',
 		'NetCommons.Date',
 		'NetCommons.TableList',
+		'Blocks.BlockIndex',
 		'Workflow.Workflow',
-		//'PhotoAlbums.PhotoAlbumsJson',
 	);
 
 /**
@@ -89,42 +89,32 @@ class PhotoAlbumFrameSettingsController extends PhotoAlbumsAppController {
  *
  * @return void
  */
-	public function edit() {
+	public function index() {
 		$this->PhotoAlbums->initializeSetting();
 
-		if ($this->request->is(array('post', 'put'))) {
-			if ($this->PhotoAlbumFrameSetting->savePhotoAlbumFrameSetting($this->request->data)) {
-				$this->redirect(NetCommonsUrl::backToPageUrl());
-				return;
-			}
-			$this->NetCommons->handleValidationError($this->PhotoAlbumFrameSetting->validationErrors);
-		} else {
-			$this->request->data = $this->PhotoAlbumFrameSetting->getFrameSetting();
-
-			$query = array(
-				'fields' => array(
-					'PhotoAlbumDisplayAlbum.album_key'
-				),
-				'conditions' => array(
-					'frame_key' => Current::read('Frame.key')
-				),
-				'recursive' => -1
-			);
-			$displayAlbum = $this->PhotoAlbumDisplayAlbum->find('all', $query);
-			$extractData = Hash::extract($displayAlbum, '{n}.PhotoAlbumDisplayAlbum');
-			$this->request->data['PhotoAlbumDisplayAlbum'] = $extractData;
-		}
+		$frameSetting = $this->PhotoAlbumFrameSetting->getFrameSetting();
 
 		$conditions = $this->PhotoAlbum->getWorkflowConditions();
 		$conditions['PhotoAlbum.block_id'] = Current::read('Block.id');
 		$this->Paginator->settings = array(
 			'PhotoAlbum' => array(
-				'order' => array('PhotoAlbum.id' => 'desc'),
+				'sort' => $frameSetting['PhotoAlbumFrameSetting']['albums_sort'],
+				'direction' => $frameSetting['PhotoAlbumFrameSetting']['albums_direction'],
+				'limit' => $frameSetting['PhotoAlbumFrameSetting']['albums_per_page'],
 				'conditions' => $conditions
 			)
 		);
 		$this->set('albums', $this->Paginator->paginate('PhotoAlbum'));
-		$extractData = Hash::extract($this->request->data['PhotoAlbumDisplayAlbum'], '{n}.album_key');
-		$this->set('displayAlbumKeys', $extractData);
+
+		$query = array(
+			'fields' => array(
+				'PhotoAlbumDisplayAlbum.album_key'
+			),
+			'conditions' => array(
+				'PhotoAlbumDisplayAlbum.frame_key' => Current::read('Frame.key')
+			),
+			'recursive' => -1
+		);
+		$this->set('displayAlbumKeys', $this->PhotoAlbumDisplayAlbum->find('list', $query));
 	}
 }

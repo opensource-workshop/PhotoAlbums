@@ -10,31 +10,64 @@
 ?>
 
 <?php echo $this->Html->css('/photo_albums/css/photo_albums.css'); ?>
+<script>
+	NetCommonsApp.value('photoAlbumsValues', {
+		// スライド選択時に強制的に写真一覧を選択させる
+		displayType: '<?php echo ($this->request->data['PhotoAlbumFrameSetting']['display_type'] == PhotoAlbumFrameSetting::DISPLAY_TYPE_SLIDE)?PhotoAlbumFrameSetting::DISPLAY_TYPE_PHOTOS:$this->request->data['PhotoAlbumFrameSetting']['display_type'] ?>',
+		checkDisplayTypeSlide: <?php echo ($this->request->data['PhotoAlbumFrameSetting']['display_type'] == PhotoAlbumFrameSetting::DISPLAY_TYPE_SLIDE)?'true':'false' ?>,
+		//checkAlbumKeys: <?php echo json_encode(array_fill_keys($displayAlbumKeys, true)); ?>,
+		checkAlbumKey: '<?php echo Hash::get($displayAlbumKeys, 0, 'null') ?>'
+	});
+</script>
+
 
 <?php echo $this->NetCommonsForm->hidden('id'); ?>
 <?php echo $this->NetCommonsForm->hidden('frame_key'); ?>
 
-<div class="form-group">
+<div class="form-group photo-albums-frame-setting-display-type">
 	<?php echo $this->NetCommonsForm->label(__d('photo_albums', 'Display type')); ?>
 	<?php
-		echo $this->NetCommonsForm->input(
+		//NetCommonsFormHelperだとタグの構成がよくわからなくなる
+		//echo $this->NetCommonsForm->input(
+		echo $this->Form->input(
 			'PhotoAlbumFrameSetting.display_type',
 			array(
 				'type' => 'radio',
 				'options' => array(
 					PhotoAlbumFrameSetting::DISPLAY_TYPE_ALBUMS => __d('photo_albums', 'List of album'),
 					PhotoAlbumFrameSetting::DISPLAY_TYPE_PHOTOS => __d('photo_albums', 'List of photo'),
-					PhotoAlbumFrameSetting::DISPLAY_TYPE_SLIDE => __d('photo_albums', 'Slide show')
 				),
 				'legend' => false,
-				'div' => true,
+				'div' => false,
+				'before' => '<div class="radio"><label>',
+				'separator' => '</label></div><div class="radio"><label>',
+				'after' => '</label></div>',
 				'class' => false,
 				'label' => false,
-				'before' => '<div class="radio-inline"><label class="radio-inline">',
-				'after' => '</div></label>',
-				'separator' => '</label></div><div class="radio-inline"><label class="radio-inline">',
-				'ng-change' => 'FrameSettingController.changeDisplayType()',
+				'error' => false,
+				'ng-change' => 'FrameSettingController.checkDisplayTypeSlide = false',
 				'ng-model' => 'FrameSettingController.displayType',
+			)
+		);
+
+		//NetCommonsFormHelperだとタグの構成がよくわからなくなる
+		//echo $this->NetCommonsForm->input(
+		echo $this->Form->input(
+			'PhotoAlbumFrameSetting.display_type',
+			array(
+				'type' => 'checkbox',
+				'value' => PhotoAlbumFrameSetting::DISPLAY_TYPE_SLIDE,
+				'before' => '<div class="checkbox"><label>',
+				//labelタグで囲われると、Bootstrapの定義によってpaddingが入ってしまう
+				'after' => __d('photo_albums', 'Slide show') . '</label></div>',
+				'label' => false,
+				//'after' => '</label></div>',
+				//'label' => __d('photo_albums', 'Slide show'),
+				'div' => false,
+				'class' => false,
+				'hiddenField' => false,
+				'ng-model' => 'FrameSettingController.checkDisplayTypeSlide',
+				'ng-change' => 'FrameSettingController.checkDisplayTypeSlide && (FrameSettingController.displayType=' . PhotoAlbumFrameSetting::DISPLAY_TYPE_PHOTOS . ')',
 			)
 		);
 	?>
@@ -48,7 +81,7 @@
 		if (empty($albums)) {
 			echo '<div>' . __d('photo_albums', 'Album is not found') . '</div>';
 		} else {
-			echo $this->element('PhotoAlbums.album_setting_list');
+			echo $this->element('PhotoAlbums.album_frame_setting_list');
 		}
 	?>
 </div>

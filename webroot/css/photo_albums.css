@@ -3,12 +3,6 @@
 	margin:0 0 0 10%;
 }
 
-.photo-albums-frame-setting-album-list {
-	max-height:640px;
-	overflow: auto;
-	border-top: 1px solid #ddd;
-}
-
 .photo-albums-album-list-operation,
 .photo-albums-photo-list-operation {
 	margin: 8px 0;
@@ -215,6 +209,21 @@
 	display: table-cell;
 	vertical-align: middle;
 	padding: 0 0 0 8px;
+}
+.photo-albums-frame-setting-display-type {}
+.photo-albums-frame-setting-display-type .radio {
+	margin: 0 0 0 20px;
+}
+.photo-albums-frame-setting-display-type .checkbox {
+	margin: 0 0 0 40px;
+}
+.photo-albums-frame-setting-list {
+	max-height:320px;
+	overflow: auto;
+	border-top: 1px solid #ddd;
+}
+.photo-albums-frame-setting-list .photo-albums-setting-list > tbody > tr > td {
+	padding: 2px 8px;
 }
 
 .photo-albums-photo-list {

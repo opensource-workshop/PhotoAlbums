@@ -13,10 +13,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: View/Elements/album_list.ctp:62
 #: View/Elements/frame_setting.ctp:27
 msgid "Slide show"
-msgstr "スライドショー"
+msgstr "スライドショー<br>※一つのアルバムのにある写真をスライドショー形式で表示します"
 
 #: View/Elements/album_list.ctp:65
 msgid "Photo list"
@@ -52,11 +51,11 @@ msgstr "表示タイプ"
 
 #: View/Elements/frame_setting.ctp:25
 msgid "List of album"
-msgstr "アルバムの一覧"
+msgstr "アルバムを一覧表示<br>※アルバムの説明文を出す事ができます"
 
 #: View/Elements/frame_setting.ctp:26
 msgid "List of photo"
-msgstr "写真の一覧"
+msgstr "写真の一覧表示<br>※一つのアルバムのにある写真を一覧で表示します"
 
 #: View/Elements/frame_setting.ctp:45
 msgid "Select display albums"

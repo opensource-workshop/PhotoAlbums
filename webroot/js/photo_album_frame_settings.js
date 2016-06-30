@@ -15,10 +15,8 @@
 NetCommonsApp.controller('PhotoAlbumsFrameSettingController', ['photoAlbumsValues',
   function(photoAlbumsValues) {
     this.displayType = photoAlbumsValues.displayType;
-    this.checkModel = photoAlbumsValues.checkModel;
-
-    this.changeDisplayType = function() {
-      console.log(this.displayType);
-    };
+    this.checkDisplayTypeSlide = photoAlbumsValues.checkDisplayTypeSlide;
+    //this.checkAlbumKeys = photoAlbumsValues.checkAlbumKeys;
+    this.checkAlbumKey = photoAlbumsValues.checkAlbumKey;
   }
 ]);

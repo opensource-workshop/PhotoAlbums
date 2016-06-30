@@ -32,16 +32,20 @@
 					<div class="photo-albums-name">
 						<?php echo h($album['PhotoAlbum']['name']) ?>
 						<?php
+							$url = $this->Html->url(
+								array(
+									'base' => false,
+									'plugin' => 'photo_albums',
+									'controller' => 'photo_albums',
+									'action' => 'edit',
+									Current::read('Block.id'),
+									$album['PhotoAlbum']['key'],
+									'?' => ['frame_id' => Current::read('Frame.id')],
+								)
+							);
 							echo $this->LinkButton->edit(
 								'',
-								array(
-									'editUrl' => array(
-										'plugin' => 'photo_albums',
-										'controller' => 'photo_albums',
-										'action' => 'edit',
-										'key' => $album['PhotoAlbum']['key']
-									)
-								),
+								$url,
 								array('iconSize' => ' btn-xs')
 							);
 						?>
@@ -54,6 +58,3 @@
 		<?php endforeach; ?>
 	</tbody>
 </table>
-
-<?php
-echo $this->element('NetCommons.paginator');

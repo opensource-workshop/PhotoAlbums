@@ -14,7 +14,13 @@
 		<?php
 			echo $this->Workflow->addLinkButton(
 				__d('photo_albums', 'Add album'),
-				null,
+				array(
+					'plugin' => 'photo_albums',
+					'controller' => 'photo_albums',
+					'action' => 'add',
+					'block_id' => Current::read('Block.id'),
+					'frame_id' => Current::read('Frame.id'),
+				),
 				array(
 					'tooltip' => __d('photo_albums', 'Create albums')
 				)

@@ -186,6 +186,7 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 			$this->request->data['PhotoAlbum']['status'] = $this->Workflow->parseStatus();
 			$album = $this->PhotoAlbum->saveAlbumForAdd($this->request->data);
 			if ($album) {
+				// ＴＯＤＯ:設定画面からの戻り先処理
 				$this->redirect(
 					array(
 						'controller' => 'photo_album_photos',
@@ -244,6 +245,7 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 			$data = $this->request->data;
 			$data['PhotoAlbum']['status'] = $this->Workflow->parseStatus();
 			if ($this->PhotoAlbum->saveAlbumForEdit($data)) {
+				// ＴＯＤＯ:設定画面からの戻り先処理
 				$this->redirect(
 					array(
 						'action' => 'index',
