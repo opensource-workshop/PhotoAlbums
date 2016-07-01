@@ -46,12 +46,6 @@
 						array(
 							'type' => 'checkbox',
 							'value' => PhotoAlbumFrameSetting::DISPLAY_TYPE_SLIDE,
-							//'before' => '<div class="checkbox"><label>',
-							//labelタグで囲われると、Bootstrapの定義によってpaddingが入ってしまう
-							//'after' => __d('photo_albums', 'Slide show') . '</label></div>',
-							//'label' => false,
-							//'after' => '</label></div>',
-							//'label' => __d('photo_albums', 'Slide show'),
 							'div' => false,
 							'class' => false,
 							'hiddenField' => false,
