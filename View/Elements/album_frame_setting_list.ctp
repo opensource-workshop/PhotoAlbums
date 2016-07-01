@@ -15,82 +15,134 @@
 			<tr>
 				<th>
 					<?php
-						/*
 						echo $this->Form->input(
-							'PhotoAlbumDisplayAlbum..album_key',
+							'CheckAll',
 							array(
 								'type' => 'checkbox',
+								'name' => false,
+								'secure' => false,
 								'checked' => false,
 								'label' => false,
 								'div' => false,
 								'class' => false,
 								'hiddenField' => false,
-								//'ng-model' => 'FrameSettingController.checkModel[' . $index . ']',
+								'ng-model' => 'FrameSettingController.checkedAll',
+								'ng-click' => 'FrameSettingController.checkAll()',
 								'ng-disabled' => 'FrameSettingController.displayType != ' . PhotoAlbumFrameSetting::DISPLAY_TYPE_ALBUMS,
 								'ng-hide' => 'FrameSettingController.displayType != ' . PhotoAlbumFrameSetting::DISPLAY_TYPE_ALBUMS
 							)
 						);
-						*/
 					?>
 				</th>
-				<?php echo $this->TableList->tableHeader('PhotoAlbum.name', __d('photo_albums', 'Album Name'), ['sort' => true]); ?>
-				<?php echo $this->TableList->tableHeader('PhotoAlbum.status', __d('photo_albums', 'Status'), ['sort' => true]); ?>
-				<?php echo $this->TableList->tableHeader('PhotoAlbum.latest_photo_count', __d('photo_albums', 'Photo'), ['sort' => true, 'type' => 'numeric']); ?>
+				<th>
+					<a href="" ng-click="FrameSettingController.sortBy('PhotoAlbum.name')">
+						<?php echo __d('photo_albums', 'Album Name'); ?>
+					</a>
+				</th>
+				<th>
+					<a href="" ng-click="FrameSettingController.sortBy('PhotoAlbum.status')">
+						<?php echo __d('photo_albums', 'Status'); ?>
+					</a>
+				</th>
+				<th>
+					<a href="" ng-click="FrameSettingController.sortBy('PhotoAlbum.latest_photo_count')">
+						<?php echo __d('photo_albums', 'Photo'); ?>
+					</a>
+				</th>
 			</tr>
 		</thead>
 
 		<tbody>
-			<?php foreach ($albums as $album) : ?>
-				<tr<?php echo $this->PhotoAlbums->activeClass($album) ?>>
-					<td>
+			<tr ng-class="{active: false}" ng-repeat="(index, album) in FrameSettingController.albums | orderBy:FrameSettingController.propertyName:FrameSettingController.reverse">
+				<td>
+					<?php
+						echo $this->Form->input(
+							'PhotoAlbumDisplayAlbum..album_key',
+							array(
+								'type' => 'checkbox',
+								'label' => false,
+								'div' => false,
+								'class' => false,
+								'hiddenField' => false,
+								'ng-value' => 'album.PhotoAlbum.key',
+								'ng-hide' => 'FrameSettingController.displayType != ' . PhotoAlbumFrameSetting::DISPLAY_TYPE_ALBUMS,
+								'ng-disabled' => 'FrameSettingController.displayType != ' . PhotoAlbumFrameSetting::DISPLAY_TYPE_ALBUMS,
+								'ng-checked' => "FrameSettingController.displayAlbumKeys.indexOf(album.PhotoAlbum.key) > -1",
+							)
+						);
+
+						$this->Form->unlockField('PhotoAlbumDisplayAlbum..album_key');
+						$this->Form->unlockField('PhotoAlbumDisplayAlbum.album_key');
+						echo $this->Form->input(
+							'PhotoAlbumDisplayAlbum..album_key',
+							array(
+								'type' => 'radio',
+								'options' => array(''),
+								'label' => false,
+								'div' => false,
+								'class' => false,
+								'hiddenField' => false,
+								'ng-value' => 'album.PhotoAlbum.key',
+								'ng-hide' => 'FrameSettingController.displayType == ' . PhotoAlbumFrameSetting::DISPLAY_TYPE_ALBUMS,
+								'ng-disabled' => 'FrameSettingController.displayType == ' . PhotoAlbumFrameSetting::DISPLAY_TYPE_ALBUMS,
+								'ng-checked' => "album.PhotoAlbum.key == '" . Hash::get($displayAlbumKeys, 0) . "'",
+							)
+						);
+					?>
+				</td>
+
+				<td>
+					<div class="thumbnail photo-albums-setting-thumbnail">
 						<?php
-							echo $this->Form->input(
-								'PhotoAlbumDisplayAlbum..album_key',
+							echo $this->Html->image(
+								'PhotoAlbums.noimage.gif',
 								array(
-									'type' => 'checkbox',
-									'value' => $album['PhotoAlbum']['key'],
-									'checked' => in_array($album['PhotoAlbum']['key'], $displayAlbumKeys),
-									'label' => false,
-									'div' => false,
-									'class' => false,
-									'hiddenField' => false,
-									//'ng-model' => 'FrameSettingController.checkAlbumKeys[' . $album['PhotoAlbum']['key'] . ']',
-									'ng-disabled' => 'FrameSettingController.displayType != ' . PhotoAlbumFrameSetting::DISPLAY_TYPE_ALBUMS,
-									'ng-hide' => 'FrameSettingController.displayType != ' . PhotoAlbumFrameSetting::DISPLAY_TYPE_ALBUMS
+									'alt' => __d('photo_albums', 'jacket'),
+									'class' => 'img-responsive photo-albums-jacket',
+									'ng-hide' => 'album.UploadFile.jacket.id',
 								)
 							);
 
-							$this->Form->unlockField('PhotoAlbumDisplayAlbum..album_key');
-							$this->Form->unlockField('PhotoAlbumDisplayAlbum.album_key');
-							echo $this->Form->input(
-								'PhotoAlbumDisplayAlbum..album_key',
+							$srcPrefix = $this->Html->url(
 								array(
-									'type' => 'radio',
-									'options' => array($album['PhotoAlbum']['key'] => null),
-									'label' => false,
-									'div' => false,
-									'class' => false,
-									'hiddenField' => false,
-									'ng-model' => 'FrameSettingController.checkAlbumKey',
-									'ng-disabled' => 'FrameSettingController.displayType == ' . PhotoAlbumFrameSetting::DISPLAY_TYPE_ALBUMS,
-									'ng-hide' => 'FrameSettingController.displayType == ' . PhotoAlbumFrameSetting::DISPLAY_TYPE_ALBUMS
+									'plugin' => 'photo_albums',
+									'controller' => 'photo_albums',
+									'action' => 'jacket',
+									Current::read('Block.id'),
 								)
 							);
 						?>
-					</td>
-					<td>
-						<div class="thumbnail photo-albums-setting-thumbnail">
-							<?php echo $this->PhotoAlbums->jacket($album, 'small'); ?>
-						</div>
+						<img
+							class="img-responsive photo-albums-jacket"
+							alt="<?php echo __d('photo_albums', 'jacket'); ?>"
+							ng-src="{{album.UploadFile.jacket.id ? ('<?php echo $srcPrefix ?>/' + album.PhotoAlbum.id + '/small') : null}}"
+							ng-hide="!album.UploadFile.jacket.id"
+						>
+					</div>
 
-						<div class="photo-albums-name">
-							<?php echo h($album['PhotoAlbum']['name']) ?>
-						</div>
-					</td>
-					<?php echo $this->TableList->tableData('PhotoAlbum.status', $this->Workflow->label($album['PhotoAlbum']['status']), ['escape' => false]); ?>
-					<?php echo $this->TableList->tableData('PhotoAlbum.latest_photo_count', $album['PhotoAlbum']['latest_photo_count'], ['type' => 'numeric']); ?>
-				</tr>
-			<?php endforeach; ?>
+					<div class="photo-albums-name">
+						{{album.PhotoAlbum.name}}
+					</div>
+				</td>
+
+				<td>
+					<span ng-switch="album.PhotoAlbum.status">
+						<span class="workflow-label label label-info" ng-switch-when="<?php echo WorkflowComponent::STATUS_IN_DRAFT ?>">
+							<?php echo __d('net_commons', 'Temporary'); ?>
+						</span>
+						<span class="workflow-label label label-warning" ng-switch-when="<?php echo WorkflowComponent::STATUS_APPROVED ?>">
+							<?php echo __d('net_commons', 'Approving'); ?>
+						</span>
+						<span class="workflow-label label label-danger" ng-switch-when="<?php echo WorkflowComponent::STATUS_DISAPPROVED ?>">
+							<?php echo __d('net_commons', 'Disapproving'); ?>
+						</span>
+					</span>
+				</td>
+
+				<td class="nc-table-numeric">
+					{{album.PhotoAlbum.latest_photo_count}}
+				</td>
+			</tr>
 		</tbody>
 	</table>
 </div>

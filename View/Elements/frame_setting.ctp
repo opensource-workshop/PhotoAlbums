@@ -11,13 +11,7 @@
 
 <?php echo $this->Html->css('/photo_albums/css/photo_albums.css'); ?>
 <script>
-	NetCommonsApp.value('photoAlbumsValues', {
-		// スライド選択時に強制的に写真一覧を選択させる
-		displayType: '<?php echo ($this->request->data['PhotoAlbumFrameSetting']['display_type'] == PhotoAlbumFrameSetting::DISPLAY_TYPE_SLIDE)?PhotoAlbumFrameSetting::DISPLAY_TYPE_PHOTOS:$this->request->data['PhotoAlbumFrameSetting']['display_type'] ?>',
-		checkDisplayTypeSlide: <?php echo ($this->request->data['PhotoAlbumFrameSetting']['display_type'] == PhotoAlbumFrameSetting::DISPLAY_TYPE_SLIDE)?'true':'false' ?>,
-		//checkAlbumKeys: <?php echo json_encode(array_fill_keys($displayAlbumKeys, true)); ?>,
-		checkAlbumKey: '<?php echo Hash::get($displayAlbumKeys, 0, 'null') ?>'
-	});
+	NetCommonsApp.value('photoAlbumsValues', <?php echo $this->PhotoAlbumsJson->frameSetting(); ?>);
 </script>
 
 
@@ -44,7 +38,7 @@
 		);
 	?>
 	<div class="form-checkbox-outer">
-		<div class="checkbox">
+			<div class="checkbox">
 			<label class="control-label">
 				<?php
 					echo $this->NetCommonsForm->input(

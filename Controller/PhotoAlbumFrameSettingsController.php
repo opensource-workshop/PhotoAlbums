@@ -81,7 +81,7 @@ class PhotoAlbumFrameSettingsController extends PhotoAlbumsAppController {
 		'NetCommons.Date',
 		'NetCommons.TableList',
 		'Workflow.Workflow',
-		//'PhotoAlbums.PhotoAlbumsJson',
+		'PhotoAlbums.PhotoAlbumsJson',
 	);
 
 /**
