@@ -35,7 +35,7 @@ echo $this->NetCommonsHtml->css('/photo_albums/css/photo_albums.css');
 				);
 				*/
 			?>
-			<div class="photo-albums-photo" style="background-image:url(
+			<div class="photo-albums-slide-photo" style="background-image:url(
 				<?php
 					echo $this->Html->url(
 						array(

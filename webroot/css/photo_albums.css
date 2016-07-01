@@ -206,10 +206,28 @@
 	display: inline;
 }
 
-
+.photo-albums-slide-photo {
+	height: 400px;
+	width: 100%;
+	background-repeat: no-repeat;
+	background-position: center center;
+	-webkit-background-size: contain;
+	-moz-background-size: contain;
+	-o-background-size: contain;
+	background-size: cover;
+}
+.modal-dialog .photo-albums-slide-photo {
+	height: 100%;
+	background-repeat: no-repeat;
+	background-position: center center;
+	-webkit-background-size: contain;
+	-moz-background-size: contain;
+	-o-background-size: contain;
+	background-size: contain;
+}
 .photo-albums-photo-slide .modal-dialog {
-	width: 80%;
-	height: 90%;
+	width: 90%;
+	height: 95%;
 }
 .photo-albums-photo-slide .modal-content {
 	background-color: rgba(0, 0, 0, .8);
