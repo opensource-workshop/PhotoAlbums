@@ -80,7 +80,8 @@
 .photo-albums-selected-jacket .thumbnail {
 	margin: 1.7em 0 0 0;
 }
-.photo-albums-thumbnail-not-selected {
+.photo-albums-selected-jacket .photo-albums-thumbnail-not-selected,
+.photo-albums-preview-list .photo-albums-thumbnail-not-selected {
 	height: 184px;
 }
 .photo-albums-preview-list {
@@ -89,9 +90,8 @@
 	overflow: auto;
 }
 .photo-albums-preview-list .photo-albums-thumbnail-not-selected {
-	display: table-cell;
+	line-height: 184px;
 	vertical-align: middle;
-	height: 184px;
 }
 .photo-albums-preview-list .photo-albums-preview-photo {
 	float: left;
