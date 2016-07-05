@@ -10,10 +10,6 @@
 ?>
 
 <?php echo $this->Html->css('/photo_albums/css/photo_albums.css'); ?>
-<script>
-	NetCommonsApp.value('photoAlbumsValues', <?php echo $this->PhotoAlbumsJson->frameSetting(); ?>);
-</script>
-
 
 <?php echo $this->NetCommonsForm->hidden('id'); ?>
 <?php echo $this->NetCommonsForm->hidden('frame_key'); ?>

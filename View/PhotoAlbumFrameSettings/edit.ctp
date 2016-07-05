@@ -13,7 +13,10 @@
 <article class="block-setting-body">
 	<?php echo $this->BlockTabs->main(BlockTabsHelper::MAIN_TAB_FRAME_SETTING); ?>
 
-	<div class="tab-content"  ng-controller="PhotoAlbumsFrameSettingController as FrameSettingController">
+	<div class="tab-content"
+		ng-controller="PhotoAlbumsFrameSettingController as FrameSettingController"
+		ng-init="FrameSettingController.setValues(<?php echo h($this->PhotoAlbumsJson->frameSetting()); ?>)"
+	>
 		<?php
 			echo $this->element(
 				'Blocks.edit_form',

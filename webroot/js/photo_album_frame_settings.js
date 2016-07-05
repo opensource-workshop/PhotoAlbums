@@ -12,15 +12,17 @@
  *
  * @param {string} Controller name
  */
-NetCommonsApp.controller('PhotoAlbumsFrameSettingController', ['photoAlbumsValues',
-  function(photoAlbumsValues) {
-    this.displayType = photoAlbumsValues.displayType;
-    this.checkDisplayTypeSlide = photoAlbumsValues.checkDisplayTypeSlide;
-    this.albums = photoAlbumsValues.albums;
-    this.displayAlbumKeys = photoAlbumsValues.displayAlbumKeys;
-
+NetCommonsApp.controller('PhotoAlbumsFrameSettingController', [
+  function() {
     this.checkedAll = false;
     this.reverse = false;
+
+    this.setValues = function(photoAlbumsValues) {
+      this.displayType = photoAlbumsValues.displayType;
+      this.checkDisplayTypeSlide = photoAlbumsValues.checkDisplayTypeSlide;
+      this.albums = photoAlbumsValues.albums;
+      this.displayAlbumKeys = photoAlbumsValues.displayAlbumKeys;
+    };
 
     this.checkAll = function() {
       this.displayAlbumKeys = [];
