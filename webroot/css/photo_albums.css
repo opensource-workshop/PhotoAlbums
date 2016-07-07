@@ -206,6 +206,25 @@
 	display: inline;
 }
 
+.photo-albums-slide-modal .modal-dialog {
+	width: 95%;
+	height: 95%;
+}
+.photo-albums-slide-modal .modal-content {
+	background-color: rgba(0, 0, 0, .8);
+}
+.photo-albums-slide-modal .modal-content,
+.photo-albums-slide-modal .carousel,
+.photo-albums-slide-modal .carousel-inner,
+.modal-dialog .photo-albums-slide-photo {
+	height: 100%;
+}
+.photo-albums-slide-modal .carousel-inner >.item{
+	width: 80%;
+	height: calc(100% - 88px);
+	position: absolute;
+	left: 10%;
+}
 .photo-albums-slide-photo {
 	height: 400px;
 	width: 100%;
@@ -216,7 +235,22 @@
 	-o-background-size: contain;
 	background-size: cover;
 }
-.modal-dialog .photo-albums-slide-photo {
+
+.carousel-caption {
+	width: 100%;
+	background: rgba(0, 0, 0, .5);
+	padding: 0;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	/*
+	max-height: 3em;
+	overflow: hidden;
+	-o-text-overflow: ellipsis;
+	text-overflow: ellipsis;
+	*/
+}
+.modal-dialog div.photo-albums-slide-photo {
 	height: 100%;
 	background-repeat: no-repeat;
 	background-position: center center;
@@ -225,20 +259,35 @@
 	-o-background-size: contain;
 	background-size: contain;
 }
-.photo-albums-photo-slide .modal-dialog {
-	width: 90%;
-	height: 95%;
+
+.modal-content .carousel-indicators {
+	width: 100%;
+	/* min-width: 296px; */
+	left: 0%;
+	bottom: 0px;
+	margin: auto;
+	color: #fff;
 }
-.photo-albums-photo-slide .modal-content {
-	background-color: rgba(0, 0, 0, .8);
+.modal-content .carousel-indicators li,
+.modal-content .carousel-indicators li > img {
+	width: 56px;
+	height: 56px;
 }
-.photo-albums-photo-slide .modal-content,
-.photo-albums-photo-slide .carousel,
-.photo-albums-photo-slide .carousel-inner,
-.photo-albums-photo-slide .carousel-inner>.item {
-	height: 100%;
+.modal-content .carousel-indicators li {
+	display: inline-block;
+	margin: 1px;
+	cursor: pointer;
+	border: 0;
+	background-color: rgba(0, 0, 0, 0);
 }
-.photo-albums-photo-slide-close {
+.carousel-indicators .active > img {
+	border: 2px solid #fff;
+}
+.modal-content .carousel-indicators li > img {
+	display: block;
+}
+
+.photo-albums-slide-modal-close {
 	position: absolute;
 	right: 0;
 	top: 0;
@@ -247,4 +296,3 @@
 	color: #fff;
 	opacity: .7;
 }
-

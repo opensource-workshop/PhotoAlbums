@@ -31,7 +31,7 @@ NetCommonsApp.controller('PhotoAlbumsPhotoController', ['$uibModal', '$http',
       $modal.open({
         templateUrl: url,
         controller: 'PhotoAlbumsModalController',
-        windowClass: 'photo-albums-photo-slide'
+        windowClass: 'photo-albums-slide-modal'
       });
     };
   }
