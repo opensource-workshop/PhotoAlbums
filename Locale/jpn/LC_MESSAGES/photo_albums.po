@@ -133,7 +133,7 @@ msgstr "アルバム一覧へ戻る"
 
 #: View/PhotoAlbums/edit.ctp:39
 msgid "Album Name"
-msgstr "アルバム名称"
+msgstr "アルバム名"
 
 #: View/PhotoAlbums/edit.ctp:52
 msgid "Album description"
