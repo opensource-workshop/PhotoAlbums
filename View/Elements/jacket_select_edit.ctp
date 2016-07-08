@@ -24,7 +24,7 @@
 				<img src="<?php echo $this->PhotoAlbumsImage->jacketUrl($this->request->data, 'medium'); ?>">
 			</div>
 			<div class="thumbnail photo-albums-thumbnail" ng-show="selectedJacket.url != undefind">
-				<img src="{{selectedJacket.url}}">
+				<img ng-src="{{selectedJacket.url}}">
 			</div>
 			<div class="text-center small">
 				<?php echo __d('photo_albums', 'Jacket preview'); ?>

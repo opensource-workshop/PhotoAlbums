@@ -101,16 +101,16 @@ NetCommonsApp.controller('PhotoAlbumsPreviewController', ['$scope',
         fileReader.onload = function() {
           $scope.$apply(function() {
             $scope.fileReaderResults[index] = fileReader.result;
+
+            if (Object.keys($scope.fileReaderResults).length == 1) {
+              $scope.selectedJacket = {
+                fileReaderResult: $scope.fileReaderResults[index],
+                index: index
+              };
+            }
+
+            $scope.fileReaderResultsCount = Object.keys($scope.fileReaderResults).length;
           });
-
-          if (Object.keys($scope.fileReaderResults).length == 1) {
-            $scope.selectedJacket = {
-              fileReaderResult: $scope.fileReaderResults[index],
-              index: index
-            };
-          }
-
-          $scope.fileReaderResultsCount = Object.keys($scope.fileReaderResults).length;
         };
       });
     };
