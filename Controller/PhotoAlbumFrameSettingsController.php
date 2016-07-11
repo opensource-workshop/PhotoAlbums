@@ -68,8 +68,8 @@ class PhotoAlbumFrameSettingsController extends PhotoAlbumsAppController {
 				'block_index' => array(
 					'url' => array(
 						'plugin' => 'photo_albums',
-						'controller' => 'photo_album_settings',
-						'action' => 'index'
+						'controller' => 'photo_albums',
+						'action' => 'setting'
 					),
 					'label' => array('net_commons', 'List')
 				),

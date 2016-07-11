@@ -18,14 +18,21 @@
 			<div class="pull-right photo-albums-album-edit-link">
 				<?php
 					if ($this->Workflow->canEdit('PhotoAlbum', $album)) {
+						$url = array(
+							'base' => false,
+							'plugin' => 'photo_albums',
+							'controller' => 'photo_albums',
+							'action' => 'edit',
+							Current::read('Block.id'),
+							$album['PhotoAlbum']['key'],
+							'?' => ['frame_id' => Current::read('Frame.id')],
+						);
+						if (end($this->request->params['pass']) == PhotoAlbumsComponent::SETTING_WORD) {
+							$url[] = PhotoAlbumsComponent::SETTING_WORD;
+						}
 						echo $this->LinkButton->edit(
 							__d('photo_albums', 'Edit album'),
-							array(
-								'plugin' => 'photo_albums',
-								'controller' => 'photo_albums',
-								'action' => 'edit',
-								'key' => $album['PhotoAlbum']['key']
-							),
+							$this->Html->url($url),
 							array(
 								'tooltip' => __d('photo_albums', 'Edit album'),
 							)
@@ -43,24 +50,38 @@
 
 		<div class="row">
 			<div class="col-sm-3 hidden-xs">
-				<a href="
-					<?php
-						echo $this->NetCommonsHtml->url(
-							array(
-								'controller' => 'photo_album_photos',
-								'action' => 'index',
-								$album['PhotoAlbum']['key']
-							)
-						);
-					?>
-				" class="thumbnail photo-albums-thumbnail">
-					<?php //echo $this->PhotoAlbums->jacketByBackground($album); ?>
-					<?php echo $this->PhotoAlbums->jacket($album); //imgタグ ?>
-				</a>
+				<?php //echo $this->PhotoAlbums->jacketByBackground($album); ?>
+				<?php echo $this->PhotoAlbums->jacket($album); //imgタグ ?>
 			</div>
 
 			<div class="col-sm-9">
-				<?php echo $this->element('PhotoAlbums.album_caption'); ?>
+				<h1 class="photo-albums-album-list-caption">
+					<?php echo h($album['PhotoAlbum']['name']); ?>
+				</h1>
+
+				<div class="photo-albums-album-note small">
+					<span>
+						<?php echo __d('photo_albums', '%s photos', $album['PhotoAlbum']['photo_count']); ?>
+					</span>
+					<span>
+						<?php echo __d('photo_albums', 'Updated date:%s', $this->Date->dateFormat($album['PhotoAlbum']['modified'])); ?>
+					</span>
+					<span>
+						<?php echo __d('photo_albums', 'Created date:%s', $this->Date->dateFormat($album['PhotoAlbum']['created'])); ?>
+					</span>
+					<span>
+						<?php echo $this->DisplayUser->handleLink($album, array('avatar' => true)); ?>
+					</span>
+				</div>
+
+				<?php if ($album['PhotoAlbum']['description']) : ?>
+					<button class="btn btn-default btn-xs" type="button" data-toggle="collapse" data-target="#photo-albums-description<?php echo $frameSetting['PhotoAlbumFrameSetting']['id']; ?>" aria-expanded="false" aria-controls="collapseExample">
+						<?php echo __d('photo_albums', 'Album description'); ?>
+					</button>
+					<div class="collapse" id="photo-albums-description<?php echo $frameSetting['PhotoAlbumFrameSetting']['id']; ?>">
+						<?php echo nl2br(h($album['PhotoAlbum']['description'])); ?>
+					</div>
+				<?php endif; ?>
 			</div>
 		</div>
 	</div>
@@ -109,4 +130,6 @@
 
 <?php echo $this->PhotoAlbums->approveAllButton($photos); ?>
 
-<?php echo $this->element('NetCommons.paginator');
+<?php echo $this->element('NetCommons.paginator'); ?>
+
+<?php echo $this->PhotoAlbums->albumListLink();

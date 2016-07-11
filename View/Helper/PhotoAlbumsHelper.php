@@ -27,6 +27,7 @@ class PhotoAlbumsHelper extends AppHelper {
 		'NetCommons.NetCommonsHtml',
 		'NetCommons.NetCommonsForm',
 		'NetCommons.LinkButton',
+		'NetCommons.BackTo',
 		'Workflow.Workflow',
 		'PhotoAlbums.PhotoAlbumsImage',
 	);
@@ -110,15 +111,22 @@ class PhotoAlbumsHelper extends AppHelper {
 		if (Current::permission('photo_albums_photo_creatable') &&
 			$this->Workflow->canEdit('PhotoAlbumPhoto', $data)
 		) {
+			$url = array(
+				'base' => false,
+				'plugin' => 'photo_albums',
+				'controller' => 'photo_album_photos',
+				'action' => 'edit',
+				Current::read('Block.id'),
+				$data['PhotoAlbumPhoto']['album_key'],
+				$data['PhotoAlbumPhoto']['key'],
+				'?' => ['frame_id' => Current::read('Frame.id')],
+			);
+			if (end($this->request->params['pass']) == PhotoAlbumsComponent::SETTING_WORD) {
+				$url[] = PhotoAlbumsComponent::SETTING_WORD;
+			}
 			$output .= $this->LinkButton->edit(
 				'',
-				array(
-					'plugin' => 'photo_albums',
-					'controller' => 'photo_album_photos',
-					'action' => 'edit',
-					$data['PhotoAlbumPhoto']['album_key'],
-					$data['PhotoAlbumPhoto']['key']
-				),
+				$this->Html->url($url),
 				array(
 					'iconSize' => 'btn-xs',
 				)
@@ -340,5 +348,40 @@ class PhotoAlbumsHelper extends AppHelper {
 		}
 
 		return '';
+	}
+
+/**
+ * Creates a tag for album list
+ *
+ * @return img tag
+ */
+	public function albumListLink() {
+		$output = '';
+
+		if (end($this->request->params['pass']) == PhotoAlbumsComponent::SETTING_WORD) {
+			$url = array(
+				'controller' => 'photo_albums',
+				'action' => 'setting',
+				'?' => array('frame_id' => Current::read('Frame.id'))
+			);
+			$output = $this->BackTo->linkButton(
+				__d('photo_albums', 'Back to album list'),
+				$url,
+				array('icon' => 'arrow-left')
+			);
+
+			return $this->Html->div('text-center', $output);
+		}
+
+		$frameSetting = $this->_View->viewVars['frameSetting'];
+		$displayType = $frameSetting['PhotoAlbumFrameSetting']['display_type'];
+		if ($displayType == PhotoAlbumFrameSetting::DISPLAY_TYPE_ALBUMS) {
+			$output = $this->BackTo->pageLinkButton(
+				__d('photo_albums', 'Back to album list'),
+				array('icon' => 'arrow-left')
+			);
+		}
+
+		return $this->Html->div('text-center', $output);
 	}
 }

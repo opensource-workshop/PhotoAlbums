@@ -12,15 +12,19 @@
 <header class="clearfix photo-albums-album-list-operation">
 	<div class='pull-right'>
 		<?php
+			$url = array(
+				'plugin' => 'photo_albums',
+				'controller' => 'photo_albums',
+				'action' => 'add',
+				'block_id' => Current::read('Block.id'),
+				'frame_id' => Current::read('Frame.id'),
+			);
+			if ($this->request->params['action'] == 'setting') {
+				$url[] = PhotoAlbumsComponent::SETTING_WORD;
+			}
 			echo $this->Workflow->addLinkButton(
 				__d('photo_albums', 'Add album'),
-				array(
-					'plugin' => 'photo_albums',
-					'controller' => 'photo_albums',
-					'action' => 'add',
-					'block_id' => Current::read('Block.id'),
-					'frame_id' => Current::read('Frame.id'),
-				),
+				$url,
 				array(
 					'tooltip' => __d('photo_albums', 'Create albums')
 				)
@@ -28,7 +32,7 @@
 		?>
 	</div>
 
-	<?php if ($this->request->params['controller'] == 'photo_albums'): ?>
+	<?php if ($this->request->params['action'] == 'index'): ?>
 		<div class="pull-left">
 			<span class="btn-group">
 				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">

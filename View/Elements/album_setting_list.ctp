@@ -26,12 +26,30 @@
 				<?php echo $this->TableList->tableData('PhotoAlbum.latest_photo_count', $this->Workflow->label($album['PhotoAlbum']['status']), ['escape' => false]); ?>
 				<td>
 					<div class="thumbnail photo-albums-setting-thumbnail">
-						<?php echo $this->PhotoAlbums->jacket($album, 'small'); ?>
+						<?php
+							$url = $this->Html->url(
+								array(
+									'controller' => 'photo_album_photos',
+									'action' => 'index',
+									Current::read('Block.id'),
+									$album['PhotoAlbum']['key'],
+									PhotoAlbumsComponent::SETTING_WORD,
+									'?' => ['frame_id' => Current::read('Frame.id')],
+								)
+							);
+						?>
+						<a href="<?php echo $url; ?>">
+							<?php echo $this->PhotoAlbums->jacket($album, 'small'); ?>
+						</a>
 					</div>
 
 					<div class="photo-albums-name">
-						<?php echo h($album['PhotoAlbum']['name']) ?>
+						<a href="<?php echo $url; ?>">
+							<?php echo h($album['PhotoAlbum']['name']) ?>
+						</a>
 						<?php
+							/*
+							// 写真一覧から編集できる。ここから編集させると戻り先の判断処理がややこしい
 							$url = $this->Html->url(
 								array(
 									'base' => false,
@@ -40,6 +58,7 @@
 									'action' => 'edit',
 									Current::read('Block.id'),
 									$album['PhotoAlbum']['key'],
+									PhotoAlbumsComponent::SETTING_WORD,
 									'?' => ['frame_id' => Current::read('Frame.id')],
 								)
 							);
@@ -48,6 +67,7 @@
 								$url,
 								array('iconSize' => ' btn-xs')
 							);
+							*/
 						?>
 					</div>
 				</td>

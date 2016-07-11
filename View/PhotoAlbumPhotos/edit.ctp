@@ -68,18 +68,24 @@
 <?php if ($this->request->params['action'] === 'edit' && $this->Workflow->canDelete('PhotoAlbumPhoto', $this->request->data)) : ?>
 	<div class="panel-footer text-right">
 		<?php
+			$url = array(
+				//'base' => false,	// NetCommonsのUrl関連Helperを使うと必要
+				'plugin' => 'photo_albums',
+				'controller' => 'photo_album_photos',
+				'action' => 'delete',
+				Current::read('Block.id'),
+				$this->request->data['PhotoAlbumPhoto']['album_key'],
+				$this->request->data['PhotoAlbumPhoto']['key'],
+				'?' => ['frame_id' => Current::read('Frame.id')],
+			);
+			if (end($this->request->params['pass']) == PhotoAlbumsComponent::SETTING_WORD) {
+				$url[] = PhotoAlbumsComponent::SETTING_WORD;
+			}
 			echo $this->NetCommonsForm->create(
 				'PhotoAlbumPhoto',
 				array(
 					'type' => 'delete',
-					'url' => array(
-						'plugin' => 'photo_albums',
-						'controller' => 'photo_album_photos',
-						'action' => 'delete',
-						Current::read('Block.id'),
-						$this->request->data['PhotoAlbumPhoto']['album_key'],
-						$this->request->data['PhotoAlbumPhoto']['key']
-					)
+					'url' => $url
 				)
 			);
 		?>

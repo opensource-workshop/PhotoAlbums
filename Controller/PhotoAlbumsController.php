@@ -43,6 +43,12 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
  * @var array
  */
 	public $components = array(
+		'NetCommons.Permission' => array(
+			'allow' => array(
+				'add,edit,delete' => 'content_creatable',
+				'setting' => 'page_editable'
+			),
+		),
 		'Pages.PageLayout',
 		'Paginator',
 		'Security',
@@ -133,27 +139,54 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 	}
 
 /**
- * setting method
+ * settingList method
  *
  * @return void
  */
 	public function setting() {
-		// ↓ブロックの設計次第でComponent共通化
-		$this->Paginator->settings = array(
-				'PhotoAlbum' => array(
-						'order' => array('PhotoAlbum.id' => 'desc'),
-						'conditions' => $this->PhotoAlbum->getBlockConditions(),
-				)
+		$this->PhotoAlbums->initializeSetting();
+
+		$this->helpers['Blocks.BlockTabs'] = array(
+			'mainTabs' => array(
+				'block_index' => array(
+					'url' => array(
+						'plugin' => 'photo_albums',
+						'controller' => 'photo_albums',
+						'action' => 'setting'
+					),
+					'label' => array('net_commons', 'List')
+				),
+				'frame_settings',
+				'role_permissions'
+			)
 		);
+		$this->helpers[] = 'NetCommons.TableList';
+		$this->helpers[] = 'Blocks.BlockIndex';
 
-		$albums = $this->Paginator->paginate('PhotoAlbum');
-		// ↑ここまで
+		$frameSetting = $this->PhotoAlbumFrameSetting->getFrameSetting();
 
-		App::uses('PhotoAlbumBlocksController', 'PhotoAlbums.Controller');
-		$dummyClass = new PhotoAlbumBlocksController();
-		$albums = $dummyClass->getDummy();
+		$conditions = $this->PhotoAlbum->getWorkflowConditions();
+		$conditions['PhotoAlbum.block_id'] = Current::read('Block.id');
+		$this->Paginator->settings = array(
+			'PhotoAlbum' => array(
+				'sort' => $frameSetting['PhotoAlbumFrameSetting']['albums_sort'],
+				'direction' => $frameSetting['PhotoAlbumFrameSetting']['albums_direction'],
+				'limit' => $frameSetting['PhotoAlbumFrameSetting']['albums_per_page'],
+				'conditions' => $conditions
+			)
+		);
+		$this->set('albums', $this->Paginator->paginate('PhotoAlbum'));
 
-		$this->set('albums', $albums);
+		$query = array(
+			'fields' => array(
+				'PhotoAlbumDisplayAlbum.album_key'
+			),
+			'conditions' => array(
+				'PhotoAlbumDisplayAlbum.frame_key' => Current::read('Frame.key')
+			),
+			'recursive' => -1
+		);
+		$this->set('displayAlbumKeys', $this->PhotoAlbumDisplayAlbum->find('list', $query));
 	}
 
 /**
@@ -186,8 +219,7 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 			$this->request->data['PhotoAlbum']['status'] = $this->Workflow->parseStatus();
 			$album = $this->PhotoAlbum->saveAlbumForAdd($this->request->data);
 			if ($album) {
-				// ＴＯＤＯ:設定画面からの戻り先処理
-				$this->redirect(
+				$url = $this->PhotoAlbums->getRedirectUrl(
 					array(
 						'controller' => 'photo_album_photos',
 						'action' => 'index',
@@ -196,6 +228,7 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 						'?' => array('frame_id' => Current::read('Frame.id'))
 					)
 				);
+				$this->redirect($url);
 			}
 			$this->NetCommons->handleValidationError($this->PhotoAlbum->validationErrors);
 		} else {
@@ -245,14 +278,16 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 			$data = $this->request->data;
 			$data['PhotoAlbum']['status'] = $this->Workflow->parseStatus();
 			if ($this->PhotoAlbum->saveAlbumForEdit($data)) {
-				// ＴＯＤＯ:設定画面からの戻り先処理
-				$this->redirect(
+				$url = $this->PhotoAlbums->getRedirectUrl(
 					array(
+						'controller' => 'photo_album_photos',
 						'action' => 'index',
 						Current::read('Block.id'),
+						$data['PhotoAlbum']['key'],
 						'?' => array('frame_id' => Current::read('Frame.id'))
 					)
 				);
+				$this->redirect($url);
 			}
 			$this->NetCommons->handleValidationError($this->PhotoAlbum->validationErrors);
 			$this->request->data['PhotoAlbum']['id'] = $album['PhotoAlbum']['id'];
@@ -308,11 +343,20 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 			return false;
 		}
 
-		if (! $this->PhotoAlbum->deleteAlbum($album)) {
+		if (!$this->PhotoAlbum->deleteAlbum($album)) {
 			$this->throwBadRequest();
 			return;
 		}
 
-		$this->redirect(NetCommonsUrl::backToPageUrl());
+		if (!$this->PhotoAlbums->isSetting()) {
+			$this->redirect(NetCommonsUrl::backToPageUrl());
+		}
+
+		$this->redirect(
+			array(
+				'action' => 'setting',
+				'?' => array('frame_id' => Current::read('Frame.id'))
+			)
+		);
 	}
 }

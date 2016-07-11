@@ -1,6 +1,6 @@
 <?php
 /**
- * PhotoAlbumSettings index template
+ * PhotoAlbumSettings setting template
  *
  * @copyright Copyright 2014, NetCommons Project
  * @author Kohei Teraguchi <kteraguchi@commonsnet.org>

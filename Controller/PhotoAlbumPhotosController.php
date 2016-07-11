@@ -54,6 +54,7 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 		'Security',
 		'Workflow.Workflow',
 		'PhotoAlbums.PhotoAlbumPhotos',
+		'PhotoAlbums.PhotoAlbums',
 		'Files.Download'
 	);
 
@@ -159,7 +160,7 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 		if ($this->request->is('post')) {
 			$this->request->data['PhotoAlbumPhoto']['status'] = $this->Workflow->parseStatus();
 			if ($this->PhotoAlbumPhoto->savePhoto($this->request->data)) {
-				$this->redirect(
+				$url = $this->PhotoAlbums->getRedirectUrl(
 					array(
 						'plugin' => 'photo_albums',
 						'controller' => 'photo_album_photos',
@@ -169,7 +170,13 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 						'?' => array('frame_id' => Current::read('Frame.id'))
 					)
 				);
+				$this->redirect($url);
 			}
+
+			if ($this->PhotoAlbums->isSetting($this)) {
+				$this->layout = 'NetCommons.setting';
+			}
+			$this->NetCommons->handleValidationError($this->PhotoAlbumPhoto->validationErrors);
 		} else {
 			$this->request->data = $photo;
 			$this->request->data['PhotoAlbumPhoto']['album_key'] = $this->request->params['pass'][1];
@@ -204,7 +211,7 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 			$data = $this->request->data;
 			$data['PhotoAlbumPhoto']['status'] = $this->Workflow->parseStatus();
 			if ($this->PhotoAlbumPhoto->savePhoto($data)) {
-				$this->redirect(
+				$url = $this->PhotoAlbums->getRedirectUrl(
 					array(
 						'plugin' => 'photo_albums',
 						'controller' => 'photo_album_photos',
@@ -214,6 +221,7 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 						'?' => array('frame_id' => Current::read('Frame.id'))
 					)
 				);
+				$this->redirect($url);
 			}
 			$this->NetCommons->handleValidationError($this->PhotoAlbum->validationErrors);
 		} else {
@@ -252,7 +260,7 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 			return;
 		}
 
-		$this->redirect(
+		$url = $this->PhotoAlbums->getRedirectUrl(
 			array(
 				'plugin' => 'photo_albums',
 				'controller' => 'photo_album_photos',
@@ -262,6 +270,7 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 				'?' => array('frame_id' => Current::read('Frame.id'))
 			)
 		);
+		$this->redirect($url);
 	}
 
 /**
@@ -312,6 +321,17 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 			return;
 		}
 
-		$this->redirect(NetCommonsUrl::backToPageUrl());
+		// アルバム一覧表示以外は、ページに戻る？？
+		$url = $this->PhotoAlbums->getRedirectUrl(
+			array(
+				'plugin' => 'photo_albums',
+				'controller' => 'photo_album_photos',
+				'action' => 'index',
+				Current::read('Block.id'),
+				$this->request->params['pass'][1],
+				'?' => array('frame_id' => Current::read('Frame.id'))
+			)
+		);
+		$this->redirect($url);
 	}
 }
