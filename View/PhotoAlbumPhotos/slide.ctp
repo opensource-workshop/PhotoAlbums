@@ -90,10 +90,10 @@ $srcPrefix = $this->Html->url(
 	<?php endforeach; ?>
 </uib-carousel>
 
-<?php if ($frameSetting['PhotoAlbumFrameSetting']['display_type'] != PhotoAlbumFrameSetting::DISPLAY_TYPE_SLIDE): ?>
-	<button class="close photo-albums-slide-modal-close" type="button"
-			tooltip="<?php echo __d('net_commons', 'Close'); ?>"
-			ng-click="cancel()">
-		<span class="glyphicon glyphicon-remove"></span>
-	</button>
-<?php endif;
+<button class="close photo-albums-slide-modal-close"
+	type="button"
+	tooltip="<?php echo __d('net_commons', 'Close'); ?>"
+	ng-click="cancel()"
+>
+	<span class="glyphicon glyphicon-remove"></span>
+</button>

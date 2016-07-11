@@ -295,4 +295,8 @@
 	font-size: 1.5em;
 	color: #fff;
 	opacity: .7;
+	display: none;
+}
+.modal-content .photo-albums-slide-modal-close {
+	display: block;
 }
