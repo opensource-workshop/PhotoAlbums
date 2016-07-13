@@ -18,18 +18,17 @@
 			<div class="pull-right photo-albums-album-edit-link">
 				<?php
 					if ($this->Workflow->canEdit('PhotoAlbum', $album)) {
-						$url = array(
-							'base' => false,
-							'plugin' => 'photo_albums',
-							'controller' => 'photo_albums',
-							'action' => 'edit',
-							Current::read('Block.id'),
-							$album['PhotoAlbum']['key'],
-							'?' => ['frame_id' => Current::read('Frame.id')],
+						$url = PhotoAlbumsSettingUtility::settingUrl(
+							array(
+								'base' => false,
+								'plugin' => 'photo_albums',
+								'controller' => 'photo_albums',
+								'action' => 'edit',
+								Current::read('Block.id'),
+								$album['PhotoAlbum']['key'],
+								'?' => ['frame_id' => Current::read('Frame.id')],
+							)
 						);
-						if (end($this->request->params['pass']) == PhotoAlbumsComponent::SETTING_WORD) {
-							$url[] = PhotoAlbumsComponent::SETTING_WORD;
-						}
 						echo $this->LinkButton->edit(
 							__d('photo_albums', 'Edit album'),
 							$this->Html->url($url),
@@ -98,7 +97,7 @@
 						<?php
 							echo $this->NetCommonsHtml->url(
 								array(
-									'plugin' => 'photo_albums',
+									//'plugin' => 'photo_albums',
 									'controller' => 'photo_album_photos',
 									'action' => 'slide',
 									$album['PhotoAlbum']['key'],

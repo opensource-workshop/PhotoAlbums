@@ -13,17 +13,16 @@
 	<?php if (Current::permission('photo_albums_photo_creatable')): ?>
 		<div class="pull-right" ng-controller="PhotoAlbumsPhotoController as PhotoController">
 			<?php
-				$url = array(
-					'plugin' => 'photo_albums',
-					'controller' => 'photo_album_photos',
-					'action' => 'add',
-					Current::read('Block.id'),
-					$album['PhotoAlbum']['key'],
-					'?' => ['frame_id' => Current::read('Frame.id')],
+				$url = PhotoAlbumsSettingUtility::settingUrl(
+					array(
+						'plugin' => 'photo_albums',
+						'controller' => 'photo_album_photos',
+						'action' => 'add',
+						Current::read('Block.id'),
+						$album['PhotoAlbum']['key'],
+						'?' => ['frame_id' => Current::read('Frame.id')],
+					)
 				);
-				if (end($this->request->params['pass']) == PhotoAlbumsComponent::SETTING_WORD) {
-					$url[] = PhotoAlbumsComponent::SETTING_WORD;
-				}
 				echo $this->Button->addLink(
 					__d('photo_albums', 'Add photo'),
 					'#',

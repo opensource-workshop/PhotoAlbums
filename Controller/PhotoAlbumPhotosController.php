@@ -9,6 +9,7 @@
  */
 
 App::uses('PhotoAlbumsAppController', 'PhotoAlbums.Controller');
+App::uses('PhotoAlbumsSettingUtility', 'PhotoAlbums.Utility');
 
 /**
  * PhotoAlbumPhotos Controller
@@ -160,7 +161,7 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 		if ($this->request->is('post')) {
 			$this->request->data['PhotoAlbumPhoto']['status'] = $this->Workflow->parseStatus();
 			if ($this->PhotoAlbumPhoto->savePhoto($this->request->data)) {
-				$url = $this->PhotoAlbums->getRedirectUrl(
+				$url = PhotoAlbumsSettingUtility::settingUrl(
 					array(
 						'plugin' => 'photo_albums',
 						'controller' => 'photo_album_photos',
@@ -173,7 +174,7 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 				$this->redirect($url);
 			}
 
-			if ($this->PhotoAlbums->isSetting($this)) {
+			if (PhotoAlbumsSettingUtility::isSetting()) {
 				$this->layout = 'NetCommons.setting';
 			}
 			$this->NetCommons->handleValidationError($this->PhotoAlbumPhoto->validationErrors);
@@ -211,7 +212,7 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 			$data = $this->request->data;
 			$data['PhotoAlbumPhoto']['status'] = $this->Workflow->parseStatus();
 			if ($this->PhotoAlbumPhoto->savePhoto($data)) {
-				$url = $this->PhotoAlbums->getRedirectUrl(
+				$url = PhotoAlbumsSettingUtility::settingUrl(
 					array(
 						'plugin' => 'photo_albums',
 						'controller' => 'photo_album_photos',
@@ -260,7 +261,7 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 			return;
 		}
 
-		$url = $this->PhotoAlbums->getRedirectUrl(
+		$url = PhotoAlbumsSettingUtility::settingUrl(
 			array(
 				'plugin' => 'photo_albums',
 				'controller' => 'photo_album_photos',
@@ -322,7 +323,7 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 		}
 
 		// アルバム一覧表示以外は、ページに戻る？？
-		$url = $this->PhotoAlbums->getRedirectUrl(
+		$url = PhotoAlbumsSettingUtility::settingUrl(
 			array(
 				'plugin' => 'photo_albums',
 				'controller' => 'photo_album_photos',

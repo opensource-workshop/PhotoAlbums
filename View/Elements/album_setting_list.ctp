@@ -33,7 +33,7 @@
 									'action' => 'index',
 									Current::read('Block.id'),
 									$album['PhotoAlbum']['key'],
-									PhotoAlbumsComponent::SETTING_WORD,
+									PhotoAlbumsSettingUtility::SETTING_WORD,
 									'?' => ['frame_id' => Current::read('Frame.id')],
 								)
 							);
@@ -58,7 +58,7 @@
 									'action' => 'edit',
 									Current::read('Block.id'),
 									$album['PhotoAlbum']['key'],
-									PhotoAlbumsComponent::SETTING_WORD,
+									PhotoAlbumsSettingUtility::SETTING_WORD,
 									'?' => ['frame_id' => Current::read('Frame.id')],
 								)
 							);

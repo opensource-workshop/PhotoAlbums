@@ -9,6 +9,7 @@
  */
 
 App::uses('PhotoAlbumsAppController', 'PhotoAlbums.Controller');
+App::uses('PhotoAlbumsSettingUtility', 'PhotoAlbums.Utility');
 
 /**
  * PhotoAlbums Controller
@@ -219,7 +220,7 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 			$this->request->data['PhotoAlbum']['status'] = $this->Workflow->parseStatus();
 			$album = $this->PhotoAlbum->saveAlbumForAdd($this->request->data);
 			if ($album) {
-				$url = $this->PhotoAlbums->getRedirectUrl(
+				$url = PhotoAlbumsSettingUtility::settingUrl(
 					array(
 						'controller' => 'photo_album_photos',
 						'action' => 'index',
@@ -278,7 +279,7 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 			$data = $this->request->data;
 			$data['PhotoAlbum']['status'] = $this->Workflow->parseStatus();
 			if ($this->PhotoAlbum->saveAlbumForEdit($data)) {
-				$url = $this->PhotoAlbums->getRedirectUrl(
+				$url = PhotoAlbumsSettingUtility::settingUrl(
 					array(
 						'controller' => 'photo_album_photos',
 						'action' => 'index',
@@ -348,7 +349,7 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 			return;
 		}
 
-		if (!$this->PhotoAlbums->isSetting()) {
+		if (!PhotoAlbumsSettingUtility::isSetting()) {
 			$this->redirect(NetCommonsUrl::backToPageUrl());
 		}
 

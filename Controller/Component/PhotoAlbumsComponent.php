@@ -9,26 +9,13 @@
  */
 
 App::uses('Component', 'Controller');
+App::uses('PhotoAlbumsSettingUtility', 'PhotoAlbums.Utility');
 
 /**
  * PhotoAlbums Component
  *
  */
 class PhotoAlbumsComponent extends Component {
-
-/**
- * Constant for display type
- *
- * @var int
- */
-	const SETTING_WORD = 'setting';
-
-/**
- * Constant for display type
- *
- * @var int
- */
-	private $__isSetting = false;
 
 /**
  * Called after the Controller::beforeFilter() and before the controller action
@@ -39,40 +26,9 @@ class PhotoAlbumsComponent extends Component {
  * @link http://book.cakephp.org/2.0/en/controllers/components.html#Component::startup
  */
 	public function startup(Controller $controller) {
-		$this->__isSetting = (
-			$controller->request->params['action'] == 'setting' ||
-			end($controller->request->params['pass']) == self::SETTING_WORD
-		);
-
-		if ($this->__isSetting) {
+		if (PhotoAlbumsSettingUtility::isSetting()) {
 			$controller->layout = 'NetCommons.setting';
 		}
-	}
-
-/**
- * Called after the Controller::beforeFilter() and before the controller action
- *
- * @param array $url Redirect url
- * @return array
- * @link http://book.cakephp.org/2.0/en/controllers/components.html#Component::startup
- */
-
-	public function getRedirectUrl($url) {
-		if ($this->__isSetting) {
-			$url[] = self::SETTING_WORD;
-		}
-
-		return $url;
-	}
-
-/**
- * Initialize album setting and frame setting
- *
- * @param Controller $controller Controller with components to startup
- * @return bool True on setting
- */
-	public function isSetting(Controller $controller) {
-		return $this->__isSetting;
 	}
 
 /**

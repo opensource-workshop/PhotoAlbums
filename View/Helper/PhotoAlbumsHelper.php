@@ -9,6 +9,7 @@
  */
 
 App::uses('AppHelper', 'View/Helper');
+App::uses('PhotoAlbumsSettingUtility', 'PhotoAlbums.Utility');
 
 /**
  * PhotoAlbumsHelper
@@ -111,19 +112,18 @@ class PhotoAlbumsHelper extends AppHelper {
 		if (Current::permission('photo_albums_photo_creatable') &&
 			$this->Workflow->canEdit('PhotoAlbumPhoto', $data)
 		) {
-			$url = array(
-				'base' => false,
-				'plugin' => 'photo_albums',
-				'controller' => 'photo_album_photos',
-				'action' => 'edit',
-				Current::read('Block.id'),
-				$data['PhotoAlbumPhoto']['album_key'],
-				$data['PhotoAlbumPhoto']['key'],
-				'?' => ['frame_id' => Current::read('Frame.id')],
+			$url = PhotoAlbumsSettingUtility::settingUrl(
+				array(
+					'base' => false,
+					'plugin' => 'photo_albums',
+					'controller' => 'photo_album_photos',
+					'action' => 'edit',
+					Current::read('Block.id'),
+					$data['PhotoAlbumPhoto']['album_key'],
+					$data['PhotoAlbumPhoto']['key'],
+					'?' => ['frame_id' => Current::read('Frame.id')],
+				)
 			);
-			if (end($this->request->params['pass']) == PhotoAlbumsComponent::SETTING_WORD) {
-				$url[] = PhotoAlbumsComponent::SETTING_WORD;
-			}
 			$output .= $this->LinkButton->edit(
 				'',
 				$this->Html->url($url),
@@ -155,17 +155,19 @@ class PhotoAlbumsHelper extends AppHelper {
 			return $output;
 		}
 
+		$url = PhotoAlbumsSettingUtility::settingUrl(
+			array(
+				'plugin' => 'photo_albums',
+				'controller' => 'photo_album_photos',
+				'action' => 'publish',
+				Current::read('Block.id'),
+				$data['PhotoAlbumPhoto']['album_key'],
+				'?' => array('frame_id' => Current::read('Frame.id'))
+			)
+		);
 		$output .= $this->NetCommonsForm->create(
 			'PhotoAlbumPhoto',
-			array(
-				'url' => array(
-					'plugin' => 'photo_albums',
-					'controller' => 'photo_album_photos',
-					'action' => 'publish',
-					Current::read('Block.id'),
-					$data['PhotoAlbumPhoto']['album_key']
-				)
-			)
+			array('url' => $url)
 		);
 		$options = array('value' => $data['PhotoAlbumPhoto']['id']);
 		$output .= $this->NetCommonsForm->hidden('PhotoAlbumPhoto.0.id', $options);
@@ -205,16 +207,20 @@ class PhotoAlbumsHelper extends AppHelper {
 			return $output;
 		}
 
+		$url = PhotoAlbumsSettingUtility::settingUrl(
+			array(
+				'plugin' => 'photo_albums',
+				'controller' => 'photo_album_photos',
+				'action' => 'publish',
+				Current::read('Block.id'),
+				$data[0]['PhotoAlbumPhoto']['album_key'],
+				'?' => array('frame_id' => Current::read('Frame.id'))
+			)
+		);
 		$formTag = $this->NetCommonsForm->create(
 			'PhotoAlbumPhoto',
 			array(
-				'url' => array(
-					'plugin' => 'photo_albums',
-					'controller' => 'photo_album_photos',
-					'action' => 'publish',
-					Current::read('Block.id'),
-					$data[0]['PhotoAlbumPhoto']['album_key']
-				),
+				'url' => $url,
 				'class' => 'text-right'
 			)
 		);
@@ -358,7 +364,7 @@ class PhotoAlbumsHelper extends AppHelper {
 	public function albumListLink() {
 		$output = '';
 
-		if (end($this->request->params['pass']) == PhotoAlbumsComponent::SETTING_WORD) {
+		if (PhotoAlbumsSettingUtility::isSetting()) {
 			$url = array(
 				'controller' => 'photo_albums',
 				'action' => 'setting',
