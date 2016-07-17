@@ -67,7 +67,7 @@
 									'plugin' => 'photo_albums',
 									'controller' => 'photo_album_photos',
 									'action' => 'index',
-									$this->request->params['pass'][1],
+									'key' => $this->request->params['key'],
 								)
 							);
 						?>
@@ -80,7 +80,7 @@
 									'plugin' => 'photo_albums',
 									'controller' => 'photo_album_photos',
 									'action' => 'index',
-									$this->request->params['pass'][1],
+									'key' => $this->request->params['key'],
 									'status' => WorkflowComponent::STATUS_APPROVED
 								)
 							);
@@ -94,7 +94,7 @@
 									'plugin' => 'photo_albums',
 									'controller' => 'photo_album_photos',
 									'action' => 'index',
-									$this->request->params['pass'][1],
+									'key' => $this->request->params['key'],
 									'status' => WorkflowComponent::STATUS_DISAPPROVED
 								)
 							);
@@ -108,7 +108,7 @@
 									'plugin' => 'photo_albums',
 									'controller' => 'photo_album_photos',
 									'action' => 'index',
-									$this->request->params['pass'][1],
+									'key' => $this->request->params['key'],
 									'status' => WorkflowComponent::STATUS_IN_DRAFT
 								)
 							);

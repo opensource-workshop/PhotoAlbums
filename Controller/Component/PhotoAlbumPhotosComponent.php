@@ -25,10 +25,11 @@ class PhotoAlbumPhotosComponent extends Component {
  * @link http://book.cakephp.org/2.0/en/controllers/components.html#Component::startup
  */
 	public function startup(Controller $controller) {
+		CakeLog::debug(var_export($controller->request->params, true));
 		$query = array(
 			'conditions' => $controller->PhotoAlbum->getWorkflowConditions() + array(
 				'PhotoAlbum.block_id' => Current::read('Block.id'),
-				'PhotoAlbum.key' => $controller->request->params['pass'][1]
+				'PhotoAlbum.key' => $controller->request->params['key']
 			),
 			'recursive' => 0,
 		);

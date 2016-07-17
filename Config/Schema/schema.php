@@ -7,6 +7,7 @@
 /**
  * PhotoAlbumsSchema Class
  *
+ * @SuppressWarnings(PHPMD.LongVariable)
  */
 class PhotoAlbumsSchema extends CakeSchema {
 
@@ -17,6 +18,7 @@ class PhotoAlbumsSchema extends CakeSchema {
 
 /**
  * before
+ *
  * @param array $event event
  * @return bool
  */
@@ -26,6 +28,7 @@ class PhotoAlbumsSchema extends CakeSchema {
 
 /**
  * after
+ *
  * @param array $event event
  * @return bool
  */

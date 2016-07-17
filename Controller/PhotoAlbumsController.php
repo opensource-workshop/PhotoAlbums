@@ -248,7 +248,7 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 		$query = array(
 			'conditions' => $this->PhotoAlbum->getWorkflowConditions() + array(
 				'PhotoAlbum.block_id' => Current::read('Block.id'),
-				'PhotoAlbum.key' => $this->request->params['pass'][1]
+				'PhotoAlbum.key' => $this->request->params['key']
 			),
 			'recursive' => -1,
 		);
@@ -309,10 +309,10 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
  */
 	public function jacket() {
 		App::uses('PhotoAlbum', 'PhotoAlbums.Model');
-		$contentId = $this->request->params['pass'][1];
+		$contentId = $this->request->params['key'];
 		$options = array(
 			'field' => PhotoAlbum::ATTACHMENT_FIELD_NAME,
-			'size' => $this->request->params['pass'][2]
+			'size' => $this->request->params['pass'][0]
 		);
 
 		return $this->Download->doDownload($contentId, $options);

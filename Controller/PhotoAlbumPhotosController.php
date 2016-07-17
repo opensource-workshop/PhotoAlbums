@@ -90,7 +90,7 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 		$this->set('frameSetting', $frameSetting);
 
 		$conditions = $this->PhotoAlbumPhoto->getWorkflowConditions();
-		$conditions['PhotoAlbumPhoto.album_key'] = $this->request->params['pass'][1];
+		$conditions['PhotoAlbumPhoto.album_key'] = $this->request->params['key'];
 		$status = Hash::get($this->request->params, ['named', 'status']);
 		if ($status) {
 			$conditions['PhotoAlbumPhoto.status'] = $status;
@@ -117,7 +117,7 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 		$this->set('frameSetting', $frameSetting);
 
 		$conditions = $this->PhotoAlbumPhoto->getWorkflowConditions();
-		$conditions['PhotoAlbumPhoto.album_key'] = $this->request->params['pass'][1];
+		$conditions['PhotoAlbumPhoto.album_key'] = $this->request->params['key'];
 
 		$this->Paginator->settings = array(
 			'PhotoAlbumPhoto' => array(
@@ -128,7 +128,7 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 			)
 		);
 		$this->set('photos', $this->Paginator->paginate('PhotoAlbumPhoto'));
-		$this->set('active', Hash::get($this->request->params['pass'], 2));
+		$this->set('active', Hash::get($this->request->params['pass'], 0));
 	}
 
 /**
@@ -166,8 +166,8 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 						'plugin' => 'photo_albums',
 						'controller' => 'photo_album_photos',
 						'action' => 'index',
-						Current::read('Block.id'),
-						$this->request->params['pass'][1],
+						'block_id' => Current::read('Block.id'),
+						'key' => $this->request->params['key'],
 						'?' => array('frame_id' => Current::read('Frame.id'))
 					)
 				);
@@ -180,7 +180,7 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 			$this->NetCommons->handleValidationError($this->PhotoAlbumPhoto->validationErrors);
 		} else {
 			$this->request->data = $photo;
-			$this->request->data['PhotoAlbumPhoto']['album_key'] = $this->request->params['pass'][1];
+			$this->request->data['PhotoAlbumPhoto']['album_key'] = $this->request->params['key'];
 		}
 	}
 
@@ -193,8 +193,8 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 	public function edit() {
 		$query = array(
 			'conditions' => $this->PhotoAlbumPhoto->getWorkflowConditions() + array(
-				'PhotoAlbumPhoto.album_key' => $this->request->params['pass'][1],
-				'PhotoAlbumPhoto.key' => $this->request->params['pass'][2]
+				'PhotoAlbumPhoto.album_key' => $this->request->params['key'],
+				'PhotoAlbumPhoto.key' => $this->request->params['pass'][0]
 			),
 			'recursive' => -1,
 		);
@@ -217,8 +217,8 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 						'plugin' => 'photo_albums',
 						'controller' => 'photo_album_photos',
 						'action' => 'index',
-						Current::read('Block.id'),
-						$this->request->params['pass'][1],
+						'block_id' => Current::read('Block.id'),
+						'key' => $this->request->params['key'],
 						'?' => array('frame_id' => Current::read('Frame.id'))
 					)
 				);
@@ -248,7 +248,7 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 
 		$query = array(
 			'conditions' => array(
-				'PhotoAlbumPhoto.album_key' => $this->request->params['pass'][1],
+				'PhotoAlbumPhoto.album_key' => $this->request->params['key'],
 				'PhotoAlbumPhoto.id' => Hash::extract($this->request->data, 'PhotoAlbumPhoto.{n}.id')
 			),
 			'recursive' => -1,
@@ -266,8 +266,8 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 				'plugin' => 'photo_albums',
 				'controller' => 'photo_album_photos',
 				'action' => 'index',
-				Current::read('Block.id'),
-				$this->request->params['pass'][1],
+				'block_id' => Current::read('Block.id'),
+				'key' => $this->request->params['key'],
 				'?' => array('frame_id' => Current::read('Frame.id'))
 			)
 		);
@@ -282,10 +282,10 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
  */
 	public function photo() {
 		App::uses('PhotoAlbumPhoto', 'PhotoAlbums.Model');
-		$contentId = $this->request->params['pass'][2];
+		$contentId = $this->request->params['content_id'];
 		$options = array(
 			'field' => PhotoAlbumPhoto::ATTACHMENT_FIELD_NAME,
-			'size' => $this->request->params['pass'][3]
+			'size' => $this->request->params['size']
 		);
 
 		return $this->Download->doDownload($contentId, $options);
@@ -305,8 +305,8 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 
 		$query = array(
 			'conditions' => $this->PhotoAlbumPhoto->getWorkflowConditions() + array(
-				'PhotoAlbumPhoto.album_key' => $this->request->params['pass'][1],
-				'PhotoAlbumPhoto.key' => $this->request->params['pass'][2]
+				'PhotoAlbumPhoto.album_key' => $this->request->params['key'],
+				'PhotoAlbumPhoto.key' => $this->request->params['pass'][0]
 			),
 			'recursive' => -1,
 		);
@@ -328,8 +328,8 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 				'plugin' => 'photo_albums',
 				'controller' => 'photo_album_photos',
 				'action' => 'index',
-				Current::read('Block.id'),
-				$this->request->params['pass'][1],
+				'block_id' => Current::read('Block.id'),
+				'key' => $this->request->params['key'],
 				'?' => array('frame_id' => Current::read('Frame.id'))
 			)
 		);
