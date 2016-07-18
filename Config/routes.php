@@ -12,7 +12,7 @@ Router::connect(
 	'/photo_albums/photo_album_photos/photo/:block_id/:key/:content_id/:size',
 	array('plugin' => 'photo_albums', 'controller' => 'photo_album_photos', 'action' => 'photo'),
 	array(
-		'block_id' => '[0-9]+', 'key' => '[0-9a-zA-Z_]', 'content_id' => '[0-9]+',
+		'block_id' => '[0-9]+', 'key' => '[0-9a-zA-Z_]+', 'content_id' => '[0-9]+',
 		'size' => 'big|medium|small|thumb'
 	)
 );
@@ -23,11 +23,11 @@ Router::connect(
 		'plugin' => 'photo_albums', 'controller' => 'photo_album_photos',
 		'action' => 'photo', 'size' => 'big'
 	),
-	array('block_id' => '[0-9]+', 'key' => '[0-9a-zA-Z_]', 'content_id' => '[0-9]+')
+	array('block_id' => '[0-9]+', 'key' => '[0-9a-zA-Z_]+', 'content_id' => '[0-9]+')
 );
 
 Router::connect(
-	'/photo_albums/photo_albums/jacket/:block_id/:key/:field_name/:size',
+	'/photo_albums/photo_albums/jacket/:block_id/:key/:size',
 	array('plugin' => 'photo_albums', 'controller' => 'photo_albums', 'action' => 'jacket'),
-	array('block_id' => '[0-9]+', 'key' => '[0-9a-zA-Z_]', 'size' => 'big|medium|small|thumb')
+	array('block_id' => '[0-9]+', 'key' => '[0-9a-zA-Z_]+', 'size' => 'big|medium|small|thumb')
 );
