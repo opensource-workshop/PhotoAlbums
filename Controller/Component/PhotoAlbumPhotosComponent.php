@@ -28,7 +28,7 @@ class PhotoAlbumPhotosComponent extends Component {
 		$query = array(
 			'conditions' => $controller->PhotoAlbum->getWorkflowConditions() + array(
 				'PhotoAlbum.block_id' => Current::read('Block.id'),
-				'PhotoAlbum.key' => $controller->request->params['pass'][1]
+				'PhotoAlbum.key' => $controller->request->params['key']
 			),
 			'recursive' => 0,
 		);

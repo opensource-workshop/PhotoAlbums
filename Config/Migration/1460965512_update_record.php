@@ -9,7 +9,7 @@ App::uses('NetCommonsMigration', 'NetCommons.Config/Migration');
  * UpdateRecord Class
  *
  */
- class UpdateRecord extends NetCommonsMigration {
+class UpdateRecord extends NetCommonsMigration {
 
 /**
  * Migration description
@@ -42,4 +42,5 @@ App::uses('NetCommonsMigration', 'NetCommons.Config/Migration');
 		}
 		return true;
 	}
+
 }
