@@ -8,13 +8,21 @@
  * @license http://www.netcommons.org/license.txt NetCommons License
  */
 
-App::uses('PhotoAlbumsAppModel', 'PhotoAlbums.Model');
 App::uses('Current', 'NetCommons.Utility');
+App::uses('BlockBaseModel', 'Blocks.Model');
+App::uses('BlockSettingBehavior', 'Blocks.Model/Behavior');
 
 /**
  * Summary for PhotoAlbumSetting Model
  */
-class PhotoAlbumSetting extends PhotoAlbumsAppModel {
+class PhotoAlbumSetting extends BlockBaseModel {
+
+/**
+ * Custom database table name
+ *
+ * @var string
+ */
+	public $useTable = false;
 
 /**
  * List of behaviors
@@ -24,74 +32,25 @@ class PhotoAlbumSetting extends PhotoAlbumsAppModel {
 	public $actsAs = array(
 		'Blocks.Block',
 		'Blocks.BlockRolePermission',
+		'Blocks.BlockSetting' => array(
+			BlockSettingBehavior::FIELD_USE_LIKE,
+			BlockSettingBehavior::FIELD_USE_UNLIKE,
+			BlockSettingBehavior::FIELD_USE_COMMENT,
+			BlockSettingBehavior::FIELD_USE_WORKFLOW,
+			BlockSettingBehavior::FIELD_USE_COMMENT_APPROVAL,
+		),
 	);
-
-/**
- * beforeValidate
- *
- * @param array $options Options passed from Model::save().
- * @return bool True if validate operation should continue, false to abort
- * @link http://book.cakephp.org/2.0/ja/models/callback-methods.html#beforevalidate
- * @see Model::save()
- */
-	public function beforeValidate($options = array()) {
-		$this->validate = Hash::merge($this->validate, array(
-			'use_workflow' => array(
-				'boolean' => array(
-					'rule' => array('boolean'),
-					'message' => __d('net_commons', 'Invalid request.') . 'use_workflow',
-				),
-			),
-			'use_like' => array(
-				'boolean' => array(
-					'rule' => array('boolean'),
-					'message' => __d('net_commons', 'Invalid request.') . 'use_like',
-				),
-			),
-			'use_unlike' => array(
-				'boolean' => array(
-					'rule' => array('boolean'),
-					'message' => __d('net_commons', 'Invalid request.') . 'use_unlike',
-				),
-			),
-			'use_comment' => array(
-				'boolean' => array(
-					'rule' => array('boolean'),
-					'message' => __d('net_commons', 'Invalid request.') . 'use_comment',
-				),
-			),
-			'use_comment_approval' => array(
-				'boolean' => array(
-					'rule' => array('boolean'),
-					'message' => __d('net_commons', 'Invalid request.') . 'use_comment_approval',
-				),
-			),
-		));
-
-		return parent::beforeValidate($options);
-	}
 
 /**
  * Get PhotoAlbumSetting data
  * If not exists, call create method for set default data
  *
  * @return array PhotoAlbumSetting data
+ * @see BlockSettingBehavior::getBlockSetting() 取得
+ * @see BlockSettingBehavior::createBlockSetting() getBlockSetting()でデータなければ新規作成
  */
 	public function getSetting() {
-		$data = array(
-			'block_key' => Current::read('Block.key'),
-		);
-		$query = array(
-			'conditions' => $data,
-			'recursive' => -1
-		);
-		$blockSetting = $this->find('first', $query);
-
-		if (!$blockSetting) {
-			$blockSetting = $this->create();
-		}
-
-		return $blockSetting;
+		return $this->getBlockSetting();
 	}
 
 /**
@@ -111,9 +70,8 @@ class PhotoAlbumSetting extends PhotoAlbumsAppModel {
 		}
 
 		try {
-			if (!$this->save(null, false)) {
-				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-			}
+			// useTable = falseでsaveすると必ずfalseになるので、throwしない
+			$this->save(null, false);
 
 			$this->commit();
 

@@ -10,8 +10,6 @@
 ?>
 
 <?php echo $this->element('Blocks.form_hidden'); ?>
-<?php echo $this->NetCommonsForm->hidden('PhotoAlbumSetting.id'); ?>
-<?php echo $this->NetCommonsForm->hidden('PhotoAlbumSetting.block_key'); ?>
 
 <?php
 	echo $this->element(
