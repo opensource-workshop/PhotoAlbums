@@ -10,6 +10,7 @@
 
 App::uses('PhotoAlbumSetting', 'PhotoAlbums.Model');
 App::uses('PhotoAlbumTestCurrentUtility', 'PhotoAlbums.Test/Case/Model');
+App::uses('Current', 'NetCommons.Utility');
 
 /**
  * Summary for PhotoAlbumSettingGetSetting Test Case
@@ -22,7 +23,7 @@ class PhotoAlbumSettingGetSettingTest extends CakeTestCase {
  * @var array
  */
 	public $fixtures = array(
-		'plugin.photo_albums.photo_album_setting',
+		'plugin.photo_albums.block_setting_for_photo_album',
 	);
 
 /**
@@ -32,6 +33,9 @@ class PhotoAlbumSettingGetSettingTest extends CakeTestCase {
  */
 	public function setUp() {
 		parent::setUp();
+		Current::write('Plugin.key', 'photo_albums');
+		Current::write('Block.key', 'block_1');
+		Current::write('Room.need_approval', '1'); // ルーム承認する
 		$this->PhotoAlbumSetting = ClassRegistry::init('PhotoAlbums.PhotoAlbumSetting');
 	}
 
@@ -55,7 +59,13 @@ class PhotoAlbumSettingGetSettingTest extends CakeTestCase {
 		$currentValue['Block']['key'] = 'Lorem ipsum dolor sit amet';
 		PhotoAlbumTestCurrentUtility::setValue($currentValue);
 
-		$expected = (new PhotoAlbumSettingFixture())->records[0];
+		$expected = array(
+			'use_workflow' => 1,
+			'use_like' => 1,
+			'use_unlike' => 1,
+			'use_comment' => 1,
+			'use_comment_approval' => 1,
+		);
 		$actual = $this->PhotoAlbumSetting->getSetting();
 		$this->assertEquals($expected, $actual['PhotoAlbumSetting']);
 
@@ -71,6 +81,5 @@ class PhotoAlbumSettingGetSettingTest extends CakeTestCase {
 		$actual = $this->PhotoAlbumSetting->getSetting();
 
 		$this->assertArrayHasKey('PhotoAlbumSetting', $actual);
-		$this->assertArrayNotHasKey('id', $actual['PhotoAlbumSetting']);
 	}
 }

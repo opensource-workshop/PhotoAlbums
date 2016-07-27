@@ -22,7 +22,7 @@ class PhotoAlbumBlockRolePermissionsControllerEditTest extends BlockRolePermissi
  * @var array
  */
 	public $fixtures = array(
-		'plugin.photo_albums.photo_album_setting',
+		'plugin.photo_albums.block_setting_for_photo_album',
 	);
 
 /**

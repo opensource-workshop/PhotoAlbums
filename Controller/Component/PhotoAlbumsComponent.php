@@ -70,15 +70,9 @@ class PhotoAlbumsComponent extends Component {
 
 		$PhotoAlbumSetting = ClassRegistry::init('PhotoAlbums.PhotoAlbumSetting');
 		if (!$block) {
-			$data = $PhotoAlbumSetting->create();
+			$data = $PhotoAlbumSetting->createBlockSetting();
 		} else {
-			$query = array(
-				'conditions' => array(
-					'PhotoAlbumSetting.block_key' => $block['Block']['key']
-				),
-				'recursive' => -1
-			);
-			$data = $PhotoAlbumSetting->find('first', $query);
+			$data = $PhotoAlbumSetting->getBlockSetting($block['Block']['key']);
 		}
 		$data['Frame']['id'] = $frame['id'];
 		$data += $block;
