@@ -47,12 +47,11 @@ class PhotoAlbumSettingSaveSettingTest extends NetCommonsSaveTest {
  */
 	public function setUp() {
 		parent::setUp();
-		ClassRegistry::removeObject('PhotoAlbumSetting');
-		$this->PhotoAlbumSetting = ClassRegistry::init('PhotoAlbums.PhotoAlbumSetting');
-
 		Current::write('Plugin.key', 'photo_albums');
 		Current::write('Block.key', 'block_1');
 		Current::write('Room.need_approval', '1'); // ルーム承認する
+		ClassRegistry::removeObject('PhotoAlbumSetting');
+		$this->PhotoAlbumSetting = ClassRegistry::init('PhotoAlbums.PhotoAlbumSetting');
 	}
 
 /**

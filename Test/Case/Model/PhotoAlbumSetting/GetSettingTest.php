@@ -10,6 +10,7 @@
 
 App::uses('PhotoAlbumSetting', 'PhotoAlbums.Model');
 App::uses('PhotoAlbumTestCurrentUtility', 'PhotoAlbums.Test/Case/Model');
+App::uses('Current', 'NetCommons.Utility');
 
 /**
  * Summary for PhotoAlbumSettingGetSetting Test Case
@@ -32,11 +33,10 @@ class PhotoAlbumSettingGetSettingTest extends CakeTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$this->PhotoAlbumSetting = ClassRegistry::init('PhotoAlbums.PhotoAlbumSetting');
-
 		Current::write('Plugin.key', 'photo_albums');
 		Current::write('Block.key', 'block_1');
 		Current::write('Room.need_approval', '1'); // ルーム承認する
+		$this->PhotoAlbumSetting = ClassRegistry::init('PhotoAlbums.PhotoAlbumSetting');
 	}
 
 /**
