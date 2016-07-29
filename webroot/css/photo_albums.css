@@ -216,10 +216,11 @@
 .photo-albums-slide-modal .modal-content,
 .photo-albums-slide-modal .carousel,
 .photo-albums-slide-modal .carousel-inner,
+.photo-albums-slide-modal .carousel-inner > .item > div,
 .modal-dialog .photo-albums-slide-photo {
 	height: 100%;
 }
-.photo-albums-slide-modal .carousel-inner >.item{
+.photo-albums-slide-modal .carousel-inner > .item {
 	width: 80%;
 	height: calc(100% - 88px);
 	position: absolute;
