@@ -4,15 +4,15 @@
     "type": "cakephp-plugin",
     "require": {
         "cakedc/migrations": "~2.2",
-        "netcommons/blocks": "dev-master",
-        "netcommons/mails": "dev-master",
-        "netcommons/files": "dev-master",
-        "netcommons/net-commons": "dev-master",
-        "netcommons/pages": "dev-master",
-        "netcommons/plugin-manager": "dev-master",
-        "netcommons/topics": "dev-master",
-        "netcommons/users": "dev-master",
-        "netcommons/workflow": "dev-master"
+        "netcommons/blocks": "@stable",
+        "netcommons/mails": "@stable",
+        "netcommons/files": "@stable",
+        "netcommons/net-commons": "@stable",
+        "netcommons/pages": "@stable",
+        "netcommons/plugin-manager": "@stable",
+        "netcommons/topics": "@stable",
+        "netcommons/users": "@stable",
+        "netcommons/workflow": "@stable"
     },
     "license": "NetCommons License",
     "authors": [
