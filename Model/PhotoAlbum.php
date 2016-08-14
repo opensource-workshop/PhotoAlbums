@@ -61,7 +61,9 @@ class PhotoAlbum extends PhotoAlbumsAppModel {
 				'name' => array(
 					'notBlank' => array(
 						'rule' => array('notBlank'),
-						'message' => __d('net_commons', 'Invalid request.'),
+						'message' => sprintf(
+							__d('net_commons', 'Please input %s.'), __d('photo_albums', 'Album Name')
+						),
 						'allowEmpty' => false,
 						'required' => true,
 					),

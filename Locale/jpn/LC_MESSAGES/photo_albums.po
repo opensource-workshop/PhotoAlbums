@@ -24,7 +24,7 @@ msgstr "写真一覧"
 #: View/Elements/album_list.ctp:70
 #: View/PhotoAlbumPhotos/edit.ctp:12
 msgid "Add photo"
-msgstr "写真を追加"
+msgstr "写真の追加"
 
 #: View/Elements/album_list.ctp:95
 #: View/Elements/album_setting_list.ctp:76
@@ -129,7 +129,7 @@ msgstr "一時保存のみ"
 
 #: View/PhotoAlbumPhotos/index.ctp:213
 msgid "Back to album list"
-msgstr "アルバム一覧へ戻る"
+msgstr "アルバム一覧へ"
 
 #: View/PhotoAlbums/edit.ctp:39
 msgid "Album Name"
@@ -145,14 +145,14 @@ msgstr "アルバム"
 
 #: View/PhotoAlbums/index.ctp:19
 msgid "Create albums"
-msgstr "アルバムを作成"
+msgstr "アルバム作成"
 
 #: View/PhotoAlbums/index.ctp:27
 msgid "Album data not found"
 msgstr "アルバムがありません。"
 
 msgid "Add album"
-msgstr "アルバムを追加"
+msgstr "アルバム作成"
 
 msgid "%s in this album."
 msgstr "このアルバムには %s があります。"
@@ -177,6 +177,9 @@ msgstr "表紙に設定できる写真がありません。選択写真一覧か
 
 msgid "Click the photo, then the jacket changes."
 msgstr "※写真をクリックすると表紙の写真を変える事ができます。"
+
+msgid "Please select a photo to the cover from the following photos."
+msgstr "※下記の写真から表紙にする写真を選択してください。"
 
 msgid "Created date:%s"
 msgstr "作成：%s"

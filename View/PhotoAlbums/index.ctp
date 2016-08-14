@@ -14,7 +14,7 @@
 	echo $this->element('PhotoAlbums.album_list_operation');
 
 	if (empty($albums)) {
-		echo h(__d('photo_albums', 'Album data not found'));
+		echo '<article class="nc-not-found">' . h(__d('photo_albums', 'Album data not found')) . '</article>';
 	} else {
 		echo $this->element('PhotoAlbums.album_list');
 	}
