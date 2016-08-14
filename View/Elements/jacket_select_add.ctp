@@ -50,7 +50,7 @@
 				</div>
 				<div class="clearfix" ng-show="selectedJacket.index != undfind">
 					<div class="pull-left">
-						<?php echo __d('photo_albums', 'Click the photo, then the jacket changes.'); ?>
+						<?php echo __d('photo_albums', 'Please select a photo to the cover from the following photos.'); ?>
 					</div>
 					<div class="pull-right">
 						<?php echo __d('photo_albums', '%s photos', '{{fileReaderResultsCount}}'); ?>
