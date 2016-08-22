@@ -69,6 +69,8 @@
 </div>
 
 <?php
+	$this->Form->unlockField('PhotoAlbumFrameSetting.albums_order');
+	echo $this->NetCommonsForm->hidden('PhotoAlbumFrameSetting.albums_order');
 	echo $this->NetCommonsForm->input(
 		'PhotoAlbumFrameSetting.albums_order',
 		array(
@@ -78,14 +80,18 @@
 				'PhotoAlbum.created asc' => __d('net_commons', 'Oldest'),
 				'PhotoAlbum.name asc' => __d('net_commons', 'Title')
 			),
-			'label' => __d('photo_albums', 'Albums display order')
+			'label' => __d('photo_albums', 'Albums display order'),
+			'ng-disabled' => 'FrameSettingController.displayType == ' . PhotoAlbumFrameSetting::DISPLAY_TYPE_PHOTOS,
 		)
 	);
 
+	$this->Form->unlockField('PhotoAlbumFrameSetting.albums_per_page');
+	echo $this->NetCommonsForm->hidden('PhotoAlbumFrameSetting.albums_per_page');
 	echo $this->DisplayNumber->select(
 		'PhotoAlbumFrameSetting.albums_per_page',
 		array(
 			'label' => __d('photo_albums', 'Show albums per page'),
+			'ng-disabled' => 'FrameSettingController.displayType == ' . PhotoAlbumFrameSetting::DISPLAY_TYPE_PHOTOS,
 		)
 	);
 ?>
@@ -104,10 +110,13 @@
 			)
 		);
 
+		$this->Form->unlockField('PhotoAlbumFrameSetting.photos_per_page');
+		echo $this->NetCommonsForm->hidden('PhotoAlbumFrameSetting.photos_per_page');
 		echo $this->DisplayNumber->select(
 			'PhotoAlbumFrameSetting.photos_per_page',
 			array(
 				'label' => __d('photo_albums', 'Show photos per page'),
+				'ng-disabled' => 'FrameSettingController.checkDisplayTypeSlide == true',
 			)
 		);
 	?>
