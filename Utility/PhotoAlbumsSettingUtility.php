@@ -44,7 +44,8 @@ class PhotoAlbumsSettingUtility {
 		$request = Router::getRequest(true);
 		self::$__isSetting = (
 			$request->params['action'] == 'setting' ||
-			end($request->params['pass']) == self::SETTING_WORD
+			end($request->params['pass']) == self::SETTING_WORD ||
+			Hash::get($request->params, ['key']) == self::SETTING_WORD
 		);
 
 		return self::$__isSetting;
