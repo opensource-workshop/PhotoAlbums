@@ -162,9 +162,12 @@ class PhotoAlbumsHelper extends AppHelper {
 				'action' => 'publish',
 				Current::read('Block.id'),
 				$data['PhotoAlbumPhoto']['album_key'],
-				'?' => array('frame_id' => Current::read('Frame.id'))
+
 			)
-		);
+		) +
+		$this->_View->request->params['named'] +
+		array('?' => array('frame_id' => Current::read('Frame.id')));
+
 		$output .= $this->NetCommonsForm->create(
 			'PhotoAlbumPhoto',
 			array('url' => $url)
@@ -216,7 +219,10 @@ class PhotoAlbumsHelper extends AppHelper {
 				$data[0]['PhotoAlbumPhoto']['album_key'],
 				'?' => array('frame_id' => Current::read('Frame.id'))
 			)
-		);
+		) +
+		$this->_View->request->params['named'] +
+		array('?' => array('frame_id' => Current::read('Frame.id')));
+
 		$formTag = $this->NetCommonsForm->create(
 			'PhotoAlbumPhoto',
 			array(

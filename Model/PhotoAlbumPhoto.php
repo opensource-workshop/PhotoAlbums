@@ -92,6 +92,20 @@ class PhotoAlbumPhoto extends PhotoAlbumsAppModel {
 	}
 
 /**
+ * Called before each find operation. Return false if you want to halt the find
+ * call, otherwise return the (modified) query data.
+ *
+ * @param array $query Data used to execute this query, i.e. conditions, order, etc.
+ * @return mixed true if the operation should continue, false if it should abort; or, modified
+ *  $query to continue with new $query
+ * @link http://book.cakephp.org/2.0/en/models/callback-methods.html#beforefind
+ */
+	public function beforeFind($query) {
+		$query['order'] += array('PhotoAlbumPhoto.key' => 'asc');
+		return $query;
+	}
+
+/**
  * Save photo
  *
  * @param array $data received post data
@@ -143,7 +157,8 @@ class PhotoAlbumPhoto extends PhotoAlbumsAppModel {
 			unset($photo['PhotoAlbumPhoto']['id']);
 			$photo['PhotoAlbumPhoto']['status'] = WorkflowComponent::STATUS_PUBLISHED;
 
-			$this->create($photo);
+			$this->create();
+			$this->set($photo);
 			if (!$this->validates()) {
 				return false;
 			}
@@ -247,7 +262,8 @@ class PhotoAlbumPhoto extends PhotoAlbumsAppModel {
  */
 	private function __regenerateDataForZip($data) {
 		$files = array();
-		if ($data['PhotoAlbumPhoto']['photo']['type'] == 'application/x-zip-compressed') {
+		$zipType = ['application/zip', 'application/x-zip-compressed'];
+		if (in_array($data['PhotoAlbumPhoto']['photo']['type'], $zipType)) {
 			$zip = new UnZip($data['PhotoAlbumPhoto']['photo']['tmp_name']);
 			$unzipedFolder = $zip->extract();
 			$dir = new Folder($unzipedFolder->path);
