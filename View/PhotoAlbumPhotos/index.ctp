@@ -73,6 +73,7 @@
 					</span>
 				</div>
 
+				<!--
 				<?php if ($album['PhotoAlbum']['description']) : ?>
 					<button class="btn btn-default btn-xs" type="button" data-toggle="collapse" data-target="#photo-albums-description<?php echo $frameSetting['PhotoAlbumFrameSetting']['id']; ?>" aria-expanded="false" aria-controls="collapseExample">
 						<?php echo __d('photo_albums', 'Album description'); ?>
@@ -81,6 +82,7 @@
 						<?php echo nl2br(h($album['PhotoAlbum']['description'])); ?>
 					</div>
 				<?php endif; ?>
+				-->
 			</div>
 		</div>
 	</div>
