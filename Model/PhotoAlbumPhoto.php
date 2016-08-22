@@ -103,7 +103,11 @@ class PhotoAlbumPhoto extends PhotoAlbumsAppModel {
 
 		$regenerateData = $this->__regenerateDataForZip($data);
 
-		foreach ($regenerateData as $data) {
+		foreach ($regenerateData as $index => $data) {
+			if ($index > 0) {
+				$this->create();
+			}
+
 			$this->set($data);
 			if (!$this->validates()) {
 				$this->rollback();
