@@ -158,12 +158,12 @@ msgid "%s in this album."
 msgstr "このアルバムには %s があります。"
 
 msgid "You can see this value on album list or top of photo list."
-msgstr "※アルバムの説明はアルバム一覧に表示されます。<br>※写貞一覧からはページ上部のアルバム情報「アルバムの説明を見る」から確認できます。"
+msgstr "※アルバムの説明はアルバム一覧に表示されます。<br>※写真一覧からはページ上部のアルバム情報「アルバムの説明を見る」から確認できます。"
 
 msgid "Upload photos"
 msgstr "写真のアップロード"
 
-msgid "Select photo file. You can select multiple.<br>Selected photo is disapproved and the album is published then then the jacket is published."
+msgid "Select photo file. You can select multiple.<br>Selected photo is disapproved and the album is published then the jacket is published."
 msgstr "※アルバムを作成するには1枚以上の写真が必要です。<br>※写真選択時にshiftキーを押しながら選択すれば一度にアップすることができます。<br>※写真が非公開でも、アルバムが公開されると表紙も公開されます。<br>※アップロードには枚数や大きさに応じた時間がかかります。<br>※画像の容量が大きいとアップロードできない場合があります。その場合は何回かに分けてアップしてください。"
 
 msgid "Jacket preview"

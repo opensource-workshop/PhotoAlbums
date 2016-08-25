@@ -19,7 +19,7 @@
 			'PhotoAlbumPhoto..' . PhotoAlbumPhoto::ATTACHMENT_FIELD_NAME,
 			array(
 				'label' => __d('photo_albums', 'Upload photos'),
-				'help' => __d('photo_albums', 'Select photo file. You can select multiple.<br>Selected photo is disapproved and the album is published then then the jacket is published.'),
+				'help' => __d('photo_albums', 'Select photo file. You can select multiple.<br>Selected photo is disapproved and the album is published then the jacket is published.'),
 				'required' => true,
 				'multiple',
 				'nc-photo-albums-preview' => 'preview()',
