@@ -77,7 +77,7 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
  */
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->allow('photo');
+		$this->Auth->allow('photo', 'slide');
 	}
 
 /**
