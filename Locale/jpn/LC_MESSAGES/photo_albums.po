@@ -195,3 +195,6 @@ msgstr "状態"
 
 msgid "Change displayed alubum on %s"
 msgstr "表示されているアルバムは、%sで設定してください。"
+
+msgid "Slide photo height(px)"
+msgstr "スライド写真の高さ(px)"

@@ -34,7 +34,7 @@
 		);
 	?>
 	<div class="form-checkbox-outer">
-			<div class="checkbox">
+		<div class="checkbox">
 			<label class="control-label">
 				<?php
 					echo $this->NetCommonsForm->input(
@@ -49,6 +49,20 @@
 							'ng-change' => 'FrameSettingController.checkDisplayTypeSlide && (FrameSettingController.displayType=' . PhotoAlbumFrameSetting::DISPLAY_TYPE_PHOTOS . ')',
 						)
 					) . __d('photo_albums', 'Slide show');
+
+					$this->Form->unlockField('PhotoAlbumFrameSetting.slide_height');
+					echo $this->NetCommonsForm->hidden('PhotoAlbumFrameSetting.slide_height');
+					echo $this->NetCommonsForm->input(
+						'PhotoAlbumFrameSetting.slide_height',
+						array(
+							'type' => 'number',
+							'label' => __d('photo_albums', 'Slide photo height(px)'),
+							'div' => 'form-inline',
+							'min' => 10,
+							'max' => 10000,
+							'ng-disabled' => 'FrameSettingController.checkDisplayTypeSlide == false',
+						)
+					);
 				?>
 			</label>
 		</div>

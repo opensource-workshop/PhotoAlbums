@@ -93,6 +93,13 @@ class PhotoAlbumFrameSetting extends PhotoAlbumsAppModel {
 					'required' => true,
 				),
 			),
+			'slide_height' => array(
+				'numeric' => array(
+					'rule' => array('numeric'),
+					'message' => __d('net_commons', 'Invalid request.'),
+					'required' => true,
+				),
+			)
 		));
 
 		return parent::beforeValidate($options);

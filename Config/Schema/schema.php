@@ -68,6 +68,7 @@ class PhotoAlbumsSchema extends CakeSchema {
 		'photos_order' => array('type' => 'string', 'null' => true, 'default' => 'PhotoAlbumPhoto.modified desc', 'length' => 128, 'collate' => 'utf8_general_ci', 'comment' => 'Sort field name', 'charset' => 'utf8'),
 		'photos_sort' => array('type' => 'string', 'null' => true, 'default' => 'PhotoAlbumPhoto.modified', 'length' => 128, 'collate' => 'utf8_general_ci', 'comment' => 'Sort field name', 'charset' => 'utf8'),
 		'photos_direction' => array('type' => 'string', 'null' => true, 'default' => 'desc', 'length' => 4, 'collate' => 'utf8_general_ci', 'comment' => 'ASC or DESC', 'charset' => 'utf8'),
+		'slide_height' => array('type' => 'integer', 'null' => true, 'default' => '400', 'unsigned' => false, 'comment' => 'Slide show height'),
 		'created_user' => array('type' => 'integer', 'null' => true, 'default' => null, 'unsigned' => false),
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'modified_user' => array('type' => 'integer', 'null' => true, 'default' => null, 'unsigned' => false),
