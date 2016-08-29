@@ -86,6 +86,7 @@ class PhotoAlbumSaveZipFileTest extends WorkflowSaveTest {
 		$data['PhotoAlbumPhoto'][$field]['type'] = 'application/x-zip-compressed';
 		$data['PhotoAlbumPhoto'][$field]['size'] = filesize($path);
 		$data['PhotoAlbumPhoto'][$field]['tmp_name'] = $Folder->path . DS . 'test.zip';
+		$data['PhotoAlbumPhoto'][$field]['error'] = UPLOAD_ERR_OK;
 
 		// * 編集の登録処理
 		$results[0] = array($data);

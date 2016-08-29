@@ -100,6 +100,7 @@ class PhotoAlbumSaveAlbumForAddTest extends WorkflowSaveTest {
 		$data['PhotoAlbumPhoto'][0][$field]['type'] = 'image/jpeg';
 		$data['PhotoAlbumPhoto'][0][$field]['size'] = filesize($path);
 		$data['PhotoAlbumPhoto'][0][$field]['tmp_name'] = $Folder->path . DS . 'editTest.jpg';
+		$data['PhotoAlbumPhoto'][0][$field]['error'] = UPLOAD_ERR_OK;
 
 		$results = array();
 		// * 編集の登録処理
