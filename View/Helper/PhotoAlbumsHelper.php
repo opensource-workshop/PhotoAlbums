@@ -382,7 +382,7 @@ class PhotoAlbumsHelper extends AppHelper {
 				array('icon' => 'arrow-left')
 			);
 
-			return $this->Html->div('text-center', $output);
+			return $output;
 		}
 
 		$frameSetting = $this->_View->viewVars['frameSetting'];
@@ -394,6 +394,6 @@ class PhotoAlbumsHelper extends AppHelper {
 			);
 		}
 
-		return $this->Html->div('text-center', $output);
+		return $output;
 	}
 }

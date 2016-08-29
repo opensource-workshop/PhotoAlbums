@@ -12,6 +12,10 @@
 <?php echo $this->NetCommonsHtml->css('/photo_albums/css/photo_albums.css'); ?>
 <?php echo $this->NetCommonsHtml->script('/photo_albums/js/photo_albums.js'); ?>
 
+<header>
+	<?php echo $this->PhotoAlbums->albumListLink(); ?>
+</header>
+
 <article class="panel panel-default photo-albums-album-information">
 	<div class="panel-body">
 		<div class="clearfix">
@@ -132,5 +136,3 @@
 <?php echo $this->PhotoAlbums->approveAllButton($photos); ?>
 
 <?php echo $this->element('NetCommons.paginator'); ?>
-
-<?php echo $this->PhotoAlbums->albumListLink();
