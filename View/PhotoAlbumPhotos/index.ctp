@@ -135,4 +135,4 @@
 
 <?php echo $this->PhotoAlbums->approveAllButton($photos); ?>
 
-<?php echo $this->element('NetCommons.paginator'); ?>
+<?php echo $this->element('NetCommons.paginator');
