@@ -217,8 +217,8 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 						'plugin' => 'photo_albums',
 						'controller' => 'photo_album_photos',
 						'action' => 'index',
-						'block_id' => Current::read('Block.id'),
-						'key' => $this->request->params['key'],
+						Current::read('Block.id'),
+						$this->request->params['key'],
 						'?' => array('frame_id' => Current::read('Frame.id'))
 					)
 				);
