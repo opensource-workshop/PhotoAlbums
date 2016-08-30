@@ -87,6 +87,9 @@
 					</div>
 				<?php endif; ?>
 				-->
+				<div>
+					<?php echo nl2br(h($album['PhotoAlbum']['description'])); ?>
+				</div>
 			</div>
 		</div>
 	</div>
