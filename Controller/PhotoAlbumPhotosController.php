@@ -225,6 +225,7 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 				$this->redirect($url);
 			}
 			$this->NetCommons->handleValidationError($this->PhotoAlbum->validationErrors);
+			$this->request->data['PhotoAlbumPhoto']['id'] = $photo['PhotoAlbumPhoto']['id'];
 		} else {
 			$this->request->data = $photo;
 		}
