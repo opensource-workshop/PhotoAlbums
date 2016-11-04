@@ -39,6 +39,10 @@ class PhotoAlbumTestCurrentUtility {
 			self::$__currentProperty->setAccessible(true);
 		}
 
+		if (! isset($value['Room']['id'])) {
+			$value['Room']['id'] = '2';
+		}
+
 		self::$__originValue = self::$__currentProperty->getValue();
 		self::$__currentProperty->setValue(array_merge(self::$__originValue, $value));
 	}

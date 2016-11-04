@@ -56,15 +56,15 @@ class PhotoAlbumSettingGetSettingTest extends CakeTestCase {
  * @return void
  */
 	public function testGetSetting() {
-		$currentValue['Block']['key'] = 'Lorem ipsum dolor sit amet';
+		$currentValue['Block']['key'] = 'block_1';
 		PhotoAlbumTestCurrentUtility::setValue($currentValue);
 
 		$expected = array(
-			'use_workflow' => 1,
-			'use_like' => 1,
-			'use_unlike' => 1,
-			'use_comment' => 1,
-			'use_comment_approval' => 1,
+			'use_workflow' => '1',
+			'use_like' => '1',
+			'use_unlike' => '1',
+			'use_comment' => '1',
+			'use_comment_approval' => '1',
 		);
 		$actual = $this->PhotoAlbumSetting->getSetting();
 		$this->assertEquals($expected, $actual['PhotoAlbumSetting']);
