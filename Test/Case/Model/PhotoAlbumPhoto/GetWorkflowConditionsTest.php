@@ -10,11 +10,12 @@
 
 App::uses('PhotoAlbumPhoto', 'PhotoAlbums.Model');
 App::uses('PhotoAlbumTestCurrentUtility', 'PhotoAlbums.Test/Case/Model');
+App::uses('NetCommonsCakeTestCase', 'NetCommons.TestSuite');
 
 /**
  * Summary for PhotoAlbumPhotoGetWorkflowConditions Test Case
  */
-class PhotoAlbumPhotoGetWorkflowConditionsTest extends CakeTestCase {
+class PhotoAlbumPhotoGetWorkflowConditionsTest extends NetCommonsCakeTestCase {
 
 /**
  * Fixtures

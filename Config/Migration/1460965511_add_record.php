@@ -54,11 +54,11 @@ class AddRecord extends NetCommonsMigration {
 		),
 		'PluginsRoom' => array(
 			//パブリックスペース
-			array('room_id' => '1', 'plugin_key' => 'photo_albums', ),
-			//プライベートスペース
 			array('room_id' => '2', 'plugin_key' => 'photo_albums', ),
-			//グループスペース
+			//プライベートスペース
 			array('room_id' => '3', 'plugin_key' => 'photo_albums', ),
+			//グループスペース
+			array('room_id' => '4', 'plugin_key' => 'photo_albums', ),
 		),
 		'DefaultRolePermission' => array(
 			// 写真の投稿権限
