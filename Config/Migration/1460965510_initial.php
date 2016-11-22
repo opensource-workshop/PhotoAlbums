@@ -81,7 +81,7 @@ class Initial extends CakeMigration {
 					'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB'),
 				),
 				'photo_album_settings' => array(
-					'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'unsigned' => false, 'key' => 'primary', 'comment' => 'ID |  |  | '),
+					'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'unsigned' => false, 'key' => 'primary', 'comment' => 'ID'),
 					'block_key' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 					'use_workflow' => array('type' => 'boolean', 'null' => false, 'default' => '1', 'comment' => '0:Unused, 1:Use'),
 					'use_like' => array('type' => 'boolean', 'null' => false, 'default' => '0', 'comment' => '0:Unused, 1:Use'),
