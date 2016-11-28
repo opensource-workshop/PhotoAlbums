@@ -62,7 +62,6 @@ class PhotoAlbumsComponent extends Component {
 			'conditions' => array(
 				'Block.room_id' => $frame['room_id'],
 				'Block.plugin_key' => $frame['plugin_key'],
-				'Block.language_id' => $frame['language_id'],
 			),
 			'recursive' => -1
 		);
