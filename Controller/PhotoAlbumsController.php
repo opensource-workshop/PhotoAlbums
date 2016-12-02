@@ -199,7 +199,7 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
  */
 	public function view($id = null) {
 		if (!$this->PhotoAlbum->exists($id)) {
-			throw new NotFoundException(__('Invalid photo album'));
+			throw new NotFoundException(__d('photo_albums', 'Invalid photo album'));
 		}
 		$options = array('conditions' => array('PhotoAlbum.' . $this->PhotoAlbum->primaryKey => $id));
 		$this->set('photoAlbum', $this->PhotoAlbum->find('first', $options));
@@ -260,7 +260,7 @@ class PhotoAlbumsController extends PhotoAlbumsAppController {
 		}
 
 		if (!$album) {
-			throw new NotFoundException(__('Invalid photo album'));
+			throw new NotFoundException(__d('photo_albums', 'Invalid photo album'));
 		}
 
 		$frameSetting = $this->PhotoAlbumFrameSetting->getFrameSetting();

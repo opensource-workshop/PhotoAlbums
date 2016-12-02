@@ -35,7 +35,7 @@ class PhotoAlbumPhotosComponent extends Component {
 		$album = $controller->PhotoAlbum->find('first', $query);
 
 		if (empty($album)) {
-			throw new NotFoundException(__('Invalid photo album photo'));
+			throw new NotFoundException(__d('photo_albums', 'Invalid photo album photo'));
 		}
 
 		$controller->set('album', $album);

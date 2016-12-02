@@ -140,7 +140,7 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
  */
 	public function view($id = null) {
 		if (!$this->PhotoAlbumPhoto->exists($id)) {
-			throw new NotFoundException(__('Invalid photo album photo'));
+			throw new NotFoundException(__d('photo_albums', 'Invalid photo album photo'));
 		}
 		$options = array('conditions' => array(
 			'PhotoAlbumPhoto.' . $this->PhotoAlbumPhoto->primaryKey => $id)
@@ -206,7 +206,7 @@ class PhotoAlbumPhotosController extends PhotoAlbumsAppController {
 		}
 
 		if (!$photo) {
-			throw new NotFoundException(__('Invalid photo album photo'));
+			throw new NotFoundException(__d('photo_albums', 'Invalid photo album photo'));
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			$data = $this->request->data;
