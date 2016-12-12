@@ -26,13 +26,6 @@ class PhotoAlbumFrameSetting extends PhotoAlbumsAppModel {
 	const DISPLAY_TYPE_SLIDE = 3;
 
 /**
- * Use database config
- *
- * @var string
- */
-	public $useDbConfig = 'master';
-
-/**
  * Called during validation operations, before validation. Please note that custom
  * validation rules can be defined in $validate.
  *

@@ -17,13 +17,6 @@ App::uses('Current', 'NetCommons.Utility');
 class PhotoAlbumDisplayAlbum extends PhotoAlbumsAppModel {
 
 /**
- * Use database config
- *
- * @var string
- */
-	public $useDbConfig = 'master';
-
-/**
  * Called during validation operations, before validation. Please note that custom
  * validation rules can be defined in $validate.
  *
