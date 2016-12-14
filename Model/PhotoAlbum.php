@@ -38,8 +38,7 @@ class PhotoAlbum extends PhotoAlbumsAppModel {
 		'Workflow.WorkflowComment',
 		//多言語
 		'M17n.M17n' => array(
-			//'allUpdateField' => array('weight'), //現状ないため。
-			'allUpdateField' => true,
+			//'commonFields' => array('weight'), //現状ないため。
 			'associations' => array(
 				'UploadFilesContent' => array(
 					'class' => 'Files.UploadFilesContent',
