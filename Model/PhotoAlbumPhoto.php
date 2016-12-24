@@ -27,13 +27,6 @@ class PhotoAlbumPhoto extends PhotoAlbumsAppModel {
 	const ATTACHMENT_FIELD_NAME = 'photo';
 
 /**
- * Use database config
- *
- * @var string
- */
-	public $useDbConfig = 'master';
-
-/**
  * use behaviors
  *
  * @var array
@@ -43,6 +36,16 @@ class PhotoAlbumPhoto extends PhotoAlbumsAppModel {
 		'Files.Attachment' => [PhotoAlbumPhoto::ATTACHMENT_FIELD_NAME],
 		'Workflow.Workflow',
 		'Workflow.WorkflowComment',
+		//多言語
+		'M17n.M17n' => array(
+			//'commonFields' => array('weight'), //現状ないため。
+			'associations' => array(
+				'UploadFilesContent' => array(
+					'class' => 'Files.UploadFilesContent',
+					'foreignKey' => 'content_id',
+				),
+			),
+		),
 	);
 
 /**
@@ -117,6 +120,8 @@ class PhotoAlbumPhoto extends PhotoAlbumsAppModel {
 
 		$regenerateData = $this->__regenerateDataForZip($data);
 
+		$photo = array();
+
 		foreach ($regenerateData as $index => $data) {
 			if ($index > 0) {
 				$this->create();
@@ -129,16 +134,18 @@ class PhotoAlbumPhoto extends PhotoAlbumsAppModel {
 			}
 
 			try {
-				if (!$photo[] = $this->save(null, false)) {
+				$result = $this->save(null, false);
+				if (! $result) {
 					throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 				}
-
-				$this->commit();
+				$photo[] = $result;
 
 			} catch (Exception $ex) {
 				$this->rollback($ex);
 			}
 		}
+
+		$this->commit();
 
 		return $photo;
 	}
@@ -244,11 +251,13 @@ class PhotoAlbumPhoto extends PhotoAlbumsAppModel {
 
 		$langConditions = array(
 			$this->alias . '.language_id' => Current::read('Language.id'),
+			$this->alias . '.is_translation' => false,
 		);
 
-		$conditions = Hash::merge($langConditions, array(
-			'OR' => array($activeConditions, $latestConditons)
-		));
+		$conditions = array(
+			array('OR' => $langConditions),
+			array('OR' => array($activeConditions, $latestConditons))
+		);
 
 		return $conditions;
 	}

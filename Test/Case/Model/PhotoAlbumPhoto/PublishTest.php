@@ -10,11 +10,13 @@
 
 App::uses('PhotoAlbumPhoto', 'PhotoAlbums.Model');
 App::uses('PhotoAlbumTestCurrentUtility', 'PhotoAlbums.Test/Case/Model');
+App::uses('Current', 'NetCommons.Utility');
+App::uses('NetCommonsCakeTestCase', 'NetCommons.TestSuite');
 
 /**
  * Summary for PhotoAlbumPhotoPublish Test Case
  */
-class PhotoAlbumPhotoPublishTest extends CakeTestCase {
+class PhotoAlbumPhotoPublishTest extends NetCommonsCakeTestCase {
 
 /**
  * Fixtures
@@ -25,6 +27,7 @@ class PhotoAlbumPhotoPublishTest extends CakeTestCase {
 		'plugin.photo_albums.photo_album_photo',
 		'plugin.site_manager.site_setting',	// For Files plugin
 		'plugin.users.user',
+		'plugin.workflow.workflow_comment',
 	);
 
 /**
@@ -34,6 +37,8 @@ class PhotoAlbumPhotoPublishTest extends CakeTestCase {
  */
 	public function setUp() {
 		parent::setUp();
+
+		Current::write('Language.id', '1');
 		$this->PhotoAlbumPhoto = ClassRegistry::init('PhotoAlbums.PhotoAlbumPhoto');
 	}
 
@@ -58,7 +63,8 @@ class PhotoAlbumPhotoPublishTest extends CakeTestCase {
 		PhotoAlbumTestCurrentUtility::setValue($currentValue);
 
 		$data['PhotoAlbumPhoto']['id'] = 1;
-		$actual = $this->PhotoAlbumPhoto->publish($data);
+		$data['PhotoAlbumPhoto']['language_id'] = 1;
+		$actual = $this->PhotoAlbumPhoto->publish([$data]);
 		$this->assertTrue($actual);
 
 		PhotoAlbumTestCurrentUtility::setOriginValue();
@@ -71,7 +77,8 @@ class PhotoAlbumPhotoPublishTest extends CakeTestCase {
  */
 	public function testPublishNoPermission() {
 		$data['PhotoAlbumPhoto']['id'] = 1;
-		$actual = $this->PhotoAlbumPhoto->publish($data);
+		$data['PhotoAlbumPhoto']['language_id'] = 1;
+		$actual = $this->PhotoAlbumPhoto->publish([$data]);
 		$this->assertFalse($actual);
 	}
 
@@ -92,7 +99,8 @@ class PhotoAlbumPhotoPublishTest extends CakeTestCase {
 
 		$this->setExpectedException('InternalErrorException');
 		$data['PhotoAlbumPhoto']['id'] = 1;
-		$MockPhotoAlbumPhoto->publish($data);
+		$data['PhotoAlbumPhoto']['language_id'] = 1;
+		$MockPhotoAlbumPhoto->publish([$data]);
 
 		PhotoAlbumTestCurrentUtility::setOriginValue();
 	}

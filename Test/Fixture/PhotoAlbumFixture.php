@@ -14,32 +14,6 @@
 class PhotoAlbumFixture extends CakeTestFixture {
 
 /**
- * Fields
- *
- * @var array
- */
-	public $fields = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'unsigned' => false, 'key' => 'primary'),
-		'key' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => 'Serial key of content history', 'charset' => 'utf8'),
-		'weight' => array('type' => 'integer', 'null' => false, 'default' => '0', 'unsigned' => false, 'comment' => 'Sequence number of each block'),
-		'block_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'unsigned' => false),
-		'language_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'unsigned' => false),
-		'status' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 4, 'unsigned' => false, 'comment' => '1:Published, 2:Pending, 3:In draft, 4:Disapproved'),
-		'is_active' => array('type' => 'boolean', 'null' => false, 'default' => '0', 'comment' => '0:Deactive, 1:Acive'),
-		'is_latest' => array('type' => 'boolean', 'null' => false, 'default' => '0', 'comment' => '0:Not latest, 1:Latest'),
-		'name' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'description' => array('type' => 'text', 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'created_user' => array('type' => 'integer', 'null' => true, 'default' => null, 'unsigned' => false),
-		'created' => array('type' => 'datetime', 'null' => true, 'default' => null),
-		'modified_user' => array('type' => 'integer', 'null' => true, 'default' => null, 'unsigned' => false),
-		'modified' => array('type' => 'datetime', 'null' => true, 'default' => null),
-		'indexes' => array(
-			'PRIMARY' => array('column' => 'id', 'unique' => 1)
-		),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
-	);
-
-/**
  * Records
  *
  * @var array
@@ -78,5 +52,16 @@ class PhotoAlbumFixture extends CakeTestFixture {
 			'modified' => '2016-05-25 02:23:20'
 		),
 	);
+
+/**
+ * Initialize the fixture.
+ *
+ * @return void
+ */
+	public function init() {
+		require_once App::pluginPath('PhotoAlbums') . 'Config' . DS . 'Schema' . DS . 'schema.php';
+		$this->fields = (new PhotoAlbumsSchema())->tables[Inflector::tableize($this->name)];
+		parent::init();
+	}
 
 }

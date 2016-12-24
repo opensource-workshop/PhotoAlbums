@@ -27,13 +27,6 @@ class PhotoAlbum extends PhotoAlbumsAppModel {
 	const ATTACHMENT_FIELD_NAME = 'jacket';
 
 /**
- * Use database config
- *
- * @var string
- */
-	public $useDbConfig = 'master';
-
-/**
  * use behaviors
  *
  * @var array
@@ -43,6 +36,16 @@ class PhotoAlbum extends PhotoAlbumsAppModel {
 		'Files.Attachment' => [PhotoAlbum::ATTACHMENT_FIELD_NAME],
 		'Workflow.Workflow',
 		'Workflow.WorkflowComment',
+		//多言語
+		'M17n.M17n' => array(
+			//'commonFields' => array('weight'), //現状ないため。
+			'associations' => array(
+				'UploadFilesContent' => array(
+					'class' => 'Files.UploadFilesContent',
+					'foreignKey' => 'content_id',
+				),
+			),
+		),
 	);
 
 /**

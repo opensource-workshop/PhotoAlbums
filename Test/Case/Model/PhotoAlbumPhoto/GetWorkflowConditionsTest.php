@@ -58,11 +58,18 @@ class PhotoAlbumPhotoGetWorkflowConditionsTest extends NetCommonsCakeTestCase {
 		PhotoAlbumTestCurrentUtility::setValue($currentValue);
 
 		$expected = array (
-			'PhotoAlbumPhoto.language_id' => 99,
-			'OR' => array(
-				array (),
-				array ('PhotoAlbumPhoto.is_latest' => true),
-			)
+			array(
+				'OR' => array(
+					'PhotoAlbumPhoto.language_id' => 99,
+					'PhotoAlbumPhoto.is_translation' => false,
+				),
+			),
+			array(
+				'OR' => array(
+					array (),
+					array ('PhotoAlbumPhoto.is_latest' => true),
+				)
+			),
 		);
 		$actual = $this->PhotoAlbumPhoto->getWorkflowConditions();
 		$this->assertEquals($expected, $actual);
@@ -83,17 +90,24 @@ class PhotoAlbumPhotoGetWorkflowConditionsTest extends NetCommonsCakeTestCase {
 		PhotoAlbumTestCurrentUtility::setValue($currentValue);
 
 		$expected = array (
-			'PhotoAlbumPhoto.language_id' => 99,
-			'OR' => array(
-				array (
-					'PhotoAlbumPhoto.is_active' => true,
-					'PhotoAlbumPhoto.created_user !=' => 88
+			array(
+				'OR' => array(
+					'PhotoAlbumPhoto.language_id' => 99,
+					'PhotoAlbumPhoto.is_translation' => false,
 				),
-				array (
-					'PhotoAlbumPhoto.is_latest' => true,
-					'PhotoAlbumPhoto.created_user' => 88
+			),
+			array(
+				'OR' => array(
+					array (
+						'PhotoAlbumPhoto.is_active' => true,
+						'PhotoAlbumPhoto.created_user !=' => 88
+					),
+					array (
+						'PhotoAlbumPhoto.is_latest' => true,
+						'PhotoAlbumPhoto.created_user' => 88
+					)
 				)
-			)
+			),
 		);
 		$actual = $this->PhotoAlbumPhoto->getWorkflowConditions();
 		$this->assertEquals($expected, $actual);
@@ -114,13 +128,20 @@ class PhotoAlbumPhotoGetWorkflowConditionsTest extends NetCommonsCakeTestCase {
 		PhotoAlbumTestCurrentUtility::setValue($currentValue);
 
 		$expected = array (
-			'PhotoAlbumPhoto.language_id' => 99,
-			'OR' => array(
-				array (
-					'PhotoAlbumPhoto.is_active' => true,
+			array(
+				'OR' => array(
+					'PhotoAlbumPhoto.language_id' => 99,
+					'PhotoAlbumPhoto.is_translation' => false,
 				),
-				array ()
-			)
+			),
+			array(
+				'OR' => array(
+					array (
+						'PhotoAlbumPhoto.is_active' => true,
+					),
+					array ()
+				)
+			),
 		);
 		$actual = $this->PhotoAlbumPhoto->getWorkflowConditions();
 		$this->assertEquals($expected, $actual);

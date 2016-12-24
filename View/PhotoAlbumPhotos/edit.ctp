@@ -36,6 +36,7 @@
 			<?php echo $this->NetCommonsForm->hidden('album_key'); ?>
 			<?php echo $this->NetCommonsForm->hidden('key'); ?>
 			<?php echo $this->NetCommonsForm->hidden('language_id'); ?>
+			<?php echo $this->NetCommonsForm->hidden('block_id'); ?>
 			<?php echo $this->NetCommonsForm->hidden('status'); ?>
 
 			<?php

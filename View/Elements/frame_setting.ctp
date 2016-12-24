@@ -30,6 +30,7 @@
 				'error' => false,
 				'ng-change' => 'FrameSettingController.checkDisplayTypeSlide = false',
 				'ng-model' => 'FrameSettingController.displayType',
+				'escape' => false
 			)
 		);
 	?>
