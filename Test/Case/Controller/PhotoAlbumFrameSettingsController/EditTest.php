@@ -24,6 +24,7 @@ class PhotoAlbumFrameSettingsControllerEditTest extends FrameSettingsControllerT
 	public $fixtures = array(
 		'plugin.photo_albums.photo_album_frame_setting',
 		'plugin.photo_albums.photo_album_display_album',
+		'plugin.photo_albums.photo_album_photo',
 		'plugin.photo_albums.photo_album',
 	);
 
