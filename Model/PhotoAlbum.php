@@ -136,7 +136,7 @@ class PhotoAlbum extends PhotoAlbumsAppModel {
 			);
 			$pendingCount = Hash::get(
 				$photoCount,
-				[$albumKey, WorkflowComponent::STATUS_APPROVED],
+				[$albumKey, WorkflowComponent::STATUS_APPROVAL_WAITING],
 				0
 			);
 			$draftCount = Hash::get(

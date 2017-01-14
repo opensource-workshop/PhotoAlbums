@@ -149,7 +149,7 @@ class PhotoAlbumsHelper extends AppHelper {
 			return $output;
 		}
 
-		if ($data['PhotoAlbumPhoto']['status'] != WorkflowComponent::STATUS_APPROVED &&
+		if ($data['PhotoAlbumPhoto']['status'] != WorkflowComponent::STATUS_APPROVAL_WAITING &&
 				$data['PhotoAlbumPhoto']['status'] != WorkflowComponent::STATUS_DISAPPROVED
 		) {
 			return $output;
@@ -233,7 +233,7 @@ class PhotoAlbumsHelper extends AppHelper {
 
 		$hiddenTags = '';
 		foreach ($data as $index => $photo) {
-			if ($photo['PhotoAlbumPhoto']['status'] != WorkflowComponent::STATUS_APPROVED &&
+			if ($photo['PhotoAlbumPhoto']['status'] != WorkflowComponent::STATUS_APPROVAL_WAITING &&
 				$photo['PhotoAlbumPhoto']['status'] != WorkflowComponent::STATUS_DISAPPROVED
 			) {
 				continue;
@@ -287,7 +287,7 @@ class PhotoAlbumsHelper extends AppHelper {
 					'controller' => 'photo_album_photos',
 					'action' => 'index',
 					$data['PhotoAlbum']['key'],
-					'status' => WorkflowComponent::STATUS_APPROVED,
+					'status' => WorkflowComponent::STATUS_APPROVAL_WAITING,
 				)
 			);
 			$pending = __d(
