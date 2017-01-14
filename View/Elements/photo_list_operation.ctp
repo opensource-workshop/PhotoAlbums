@@ -53,7 +53,7 @@
 			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 				<?php
 					switch (Hash::get($this->request->params, ['named', 'status'])) {
-						case WorkflowComponent::STATUS_APPROVED:
+						case WorkflowComponent::STATUS_APPROVAL_WAITING:
 							echo __d('photo_albums', 'Pending approved');
 							break;
 						case WorkflowComponent::STATUS_DISAPPROVED:
@@ -85,7 +85,7 @@
 						echo $this->Paginator->link(
 							__d('photo_albums', 'Pending approved'),
 							array(
-								'status' => WorkflowComponent::STATUS_APPROVED,
+								'status' => WorkflowComponent::STATUS_APPROVAL_WAITING,
 								'page' => 1,
 							)
 						);

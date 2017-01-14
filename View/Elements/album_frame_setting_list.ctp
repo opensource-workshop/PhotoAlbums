@@ -130,7 +130,7 @@
 						<span class="workflow-label label label-info" ng-switch-when="<?php echo WorkflowComponent::STATUS_IN_DRAFT ?>">
 							<?php echo __d('net_commons', 'Temporary'); ?>
 						</span>
-						<span class="workflow-label label label-warning" ng-switch-when="<?php echo WorkflowComponent::STATUS_APPROVED ?>">
+						<span class="workflow-label label label-warning" ng-switch-when="<?php echo WorkflowComponent::STATUS_APPROVAL_WAITING ?>">
 							<?php echo __d('net_commons', 'Approving'); ?>
 						</span>
 						<span class="workflow-label label label-danger" ng-switch-when="<?php echo WorkflowComponent::STATUS_DISAPPROVED ?>">
