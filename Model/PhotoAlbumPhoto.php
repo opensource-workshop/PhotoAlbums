@@ -43,6 +43,7 @@ class PhotoAlbumPhoto extends PhotoAlbumsAppModel {
 				'UploadFilesContent' => array(
 					'class' => 'Files.UploadFilesContent',
 					'foreignKey' => 'content_id',
+					'isM17n' => false,
 				),
 			),
 		),
