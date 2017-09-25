@@ -74,13 +74,18 @@ class PhotoAlbumSettingSaveSettingTest extends NetCommonsSaveTest {
  * @return array テストデータ
  */
 	public function dataProviderSave() {
-		$data['PhotoAlbumSetting'] = array(
-			'use_workflow' => 1,
-			'use_like' => 1,
-			'use_unlike' => 1,
-			'use_comment' => 1,
-			'use_comment_approval' => 1,
-		);
+		$data = [
+			'PhotoAlbumSetting' => [
+				'use_workflow' => 1,
+				'use_like' => 1,
+				'use_unlike' => 1,
+				'use_comment' => 1,
+				'use_comment_approval' => 1,
+			],
+			'Frame' => [
+				'id' => '6'
+			],
+		];
 
 		$results = array();
 		// * 編集の登録処理
@@ -106,7 +111,7 @@ class PhotoAlbumSettingSaveSettingTest extends NetCommonsSaveTest {
 
 		//登録データ取得
 		$actual = $this->$model->getSetting();
-		$expected = $data;
+		$expected['PhotoAlbumSetting'] = $data['PhotoAlbumSetting'];
 
 		$this->assertEquals($expected, $actual);
 	}
@@ -125,7 +130,7 @@ class PhotoAlbumSettingSaveSettingTest extends NetCommonsSaveTest {
 		$data = $this->dataProviderSave()[0][0];
 
 		return array(
-			array($data[$this->_modelName], 'Blocks.BlockSetting', 'saveMany'),
+			array($data, 'Blocks.BlockSetting', 'saveMany'),
 		);
 	}
 
