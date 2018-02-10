@@ -72,7 +72,7 @@ class PhotoAlbumPhoto extends PhotoAlbumsAppModel {
 			$validate['photoExtension'] = array(
 				'rule' => array(
 					'extension',
-					array('gif', 'jpeg', 'png', 'jpg', 'zip')
+					array('gif', 'jpeg', 'png', 'jpg', 'zip', 'bmp')
 				),
 				'message' => array(__d('files', 'It is upload disabled file format'))
 			);
